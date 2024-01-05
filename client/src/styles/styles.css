@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Font Collections */
+@font-face { font-family: netflix-light; src: url("../Assets/font/NetflixSans-Light.otf"); } 
+@font-face { font-family: netflix-regular; src: url("../assets//font/NetflixSans-Regular.otf"); } 
+@font-face { font-family: netflix-medium; src: url("../Assets/font/NetflixSans-Medium.otf"); } 
+@font-face { font-family: netflix-bold; src: url("../Assets/font/NetflixSans-Bold.otf"); } 
+
+/* Base CSS */
+* {
+    font-size: 16px;
+}
+body {
+    font-family: netflix-regular;
+    margin: 0 auto;
+    background-color: #181414;
+}
+html {
+    scroll-behavior: smooth;
+}
+  
+/* Hide eye icon on input in MS Edge */
+input::-ms-reveal,
+input::-ms-clear {
+    display: none;
+}
+/* Hide arrow in input type number */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+img,
+video,
+svg,
+picture {
+    display: block;
+    max-width: 100%;
+}
+button:hover {
+    cursor: pointer;
+}
+
+/* Custom CSS */
+@layer components {
+    /* Disable Highlighting */
+    .disable-highlight {
+      user-select: none;
+      -moz-user-select: none;
+      -webkit-user-drag: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+    }
+
+    /* Netflix Fonts */
+    .netflix-font-light {
+        font-family: netflix-light;
+    }
+    .netflix-font-regular {
+        font-family: netflix-regular;
+    }
+    .netflix-font-medium {
+        font-family: netflix-medium;
+    }
+    .netflix-font-bold {
+        font-family: netflix-bold;
+    }
+    .movie-title-font {
+        font-family: 'Permanent Marker', cursive;
+    }
+    
+    /* Transition Duration */
+    .custom-transition-duration-3s {
+        transition: .3s;
+    }
+    .custom-transition-duration-10s {
+        transition: 1s;
+    }
+
+    /* Custom Background for Navbar */
+    .navbar-glassmorphim {
+        background: rgba( 74, 74, 74, 0.25 );
+        box-shadow: 0 8px 32px 0 rgba(10, 12, 36, 0.37);
+        backdrop-filter: blur( 8.5px );
+        -webkit-backdrop-filter: blur( 8.5px );
+    }
+
+    /* Custom Image Inline Shadow */
+    .image-inline-shadow {
+        border-image: fill 0 linear-gradient(#0003, #000);
+    }
+
+    .shadowing {
+        background-image: linear-gradient(0, transparent, #333333);
+    }
+    .button-shadow {
+        box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    }
+    .shadowing-hero {
+        z-index: 11;
+        width: 100%;
+        height: 12.5rem;
+        position: absolute;
+        left: 0;
+        background-image: linear-gradient(180deg, transparent, #181414, #181414);
+    }
+    
+}

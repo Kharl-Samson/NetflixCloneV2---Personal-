@@ -14,7 +14,7 @@ export const NavbarSmall = ( {scrollDirection, isAtTop} : NavbarProps ) => {
 
       {/* Top Section */}
       <div className="flex justify-between items-center">
-        <p className="text-white netflix-font-medium text-base">For {userName}</p>
+        <p className="text-white  font-semibold text-base">For {userName}</p>
         <img src={searchIcon} alt="Search Image" className="h-5"/>
       </div>
 
@@ -25,9 +25,9 @@ export const NavbarSmall = ( {scrollDirection, isAtTop} : NavbarProps ) => {
           custom-transition-duration-3s ${scrollDirection === "down" || !isAtTop ? "h-0" : "mt-4 h-auto"}`
         }
       >
-          <div className="text-sm text-nowrap netflix-font-regular py-1 px-3 rounded-full border-[1px] border-custom-light-2 active:scale-[.98]">TV Shows</div>
-          <div className="text-sm text-nowrap netflix-font-regular py-1 px-3 rounded-full border-[1px] border-custom-light-2 active:scale-[.98]">Movies</div>
-          <div className="text-sm text-nowrap netflix-font-regular py-1 px-3 rounded-full border-[1px] border-custom-light-2 active:scale-[.98]">Categories &nbsp;v</div>
+          <div className="text-sm text-nowrap  py-1 px-3 rounded-full border-[1px] border-custom-light-2 active:scale-[.98]">TV Shows</div>
+          <div className="text-sm text-nowrap  py-1 px-3 rounded-full border-[1px] border-custom-light-2 active:scale-[.98]">Movies</div>
+          <div className="text-sm text-nowrap  py-1 px-3 rounded-full border-[1px] border-custom-light-2 active:scale-[.98]">Categories &nbsp;v</div>
       </div>
     </nav>
   )

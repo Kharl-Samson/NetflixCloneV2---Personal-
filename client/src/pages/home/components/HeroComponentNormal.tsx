@@ -96,12 +96,12 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer} : H
             <div className="mt-10 flex gap-x-[15px]">
               <button className="rounded-md flex items-center gap-x-[15px] font-netflix_regular py-[11px] px-[35px] transition duration-400 bg-white hover:opacity-80">
                 <img src={play} alt="Play Icon" className="h-[27px]"/>
-                <span className="text-[1.4rem]">Play</span>
+                <span className="text-[1.4rem] font-semibold">Play</span>
               </button>
 
               <button className="rounded-md flex items-center gap-x-[15px] font-netflix_regular py-[11px] px-[35px] transition duration-400 bg-[#857e7ea8] hover:opacity-80">
                 <img src={info} alt="Info Icon" className="h-[27px]"/>
-                <span className="text-[1.4rem] text-white">More Info</span>
+                <span className="text-[1.4rem] text-white font-semibold">More Info</span>
               </button>
             </div>
         </div>

@@ -34,8 +34,8 @@ export const NavbarLarge = ( {scrollDirection, isAtTop, active} : NavbarProps ) 
                 arrayLink?.map((res: string) => (
                     <li 
                       key={res} 
-                      className={`text-sm cursor-pointer hover:opacity-80 custom-transition-duration-3s 
-                      ${active === res ? "text-white netflix-font-medium" : "netflix-font-regular"}`}
+                      className={`text-sm cursor-pointer hover:opacity-80 custom-transition-duration-3s font-light
+                      ${active === res ? "text-white " : ""}`}
                     >
                       {res}
                     </li>

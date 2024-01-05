@@ -50,7 +50,7 @@ export const SearchInput = () => {
             value={searchValue}
             onChange={handleChange}
             className={
-                `border-none h-10 bg-transparent outline-none netflix-font-regular text-white text-sm pl-1 w-0 custom-transition-duration-3s ${isSearchClick && "w-48"}`
+                `border-none h-10 bg-transparent outline-none  text-white text-sm pl-1 w-0 custom-transition-duration-3s ${isSearchClick && "w-48"}`
             }
         />
 

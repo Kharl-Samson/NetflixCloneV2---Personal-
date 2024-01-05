@@ -25,7 +25,7 @@ export const NavbarMedium = ( {scrollDirection, isAtTop} : NavbarProps ) => {
             <img src={searchIcon} alt="Search Image" className="h-5 mx-3"/>
             <input 
                 type="text" 
-                className="bg-transparent h-9 outline-none text-base netflix-font-regular text-white w-64" 
+                className="bg-transparent h-9 outline-none text-base  text-white w-64" 
                 placeholder="Titles, people, genres"
                 autoComplete="off"
             />

@@ -20,7 +20,7 @@ export const NavbarLarge = ( {scrollDirection, isAtTop, active} : NavbarProps ) 
 
   return (
     <nav 
-      className={`w-full py-4 px-14 fixed top-0 flex justify-between items-center custom-transition-duration-3s
+      className={`w-full py-4 px-14 fixed max-w-[3000px] mx-auto top-0 flex justify-between items-center custom-transition-duration-3s
         z-50 ${scrollDirection === "down" || !isAtTop ? "bg-black" : "shadowing"}`
       }
     >

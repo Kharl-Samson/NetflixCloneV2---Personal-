@@ -8,6 +8,20 @@
 @font-face { font-family: netflix-medium; src: url("../Assets/font/NetflixSans-Medium.otf"); } 
 @font-face { font-family: netflix-bold; src: url("../Assets/font/NetflixSans-Bold.otf"); } 
 
+/* Netflix Fonts */
+.netflix-font-light {
+ font-family: netflix-light;
+}
+.netflix-font-regular {
+    font-family: netflix-regular;
+}
+.netflix-font-medium {
+    font-family: netflix-medium;
+}
+.netflix-font-bold {
+    font-family: netflix-bold;
+}
+
 /* Base CSS */
 * {
     font-size: 16px;
@@ -60,19 +74,7 @@ button:hover {
       -ms-user-select: none;
     }
 
-    /* Netflix Fonts */
-    .netflix-font-light {
-        font-family: netflix-light;
-    }
-    .netflix-font-regular {
-        font-family: netflix-regular;
-    }
-    .netflix-font-medium {
-        font-family: netflix-medium;
-    }
-    .netflix-font-bold {
-        font-family: netflix-bold;
-    }
+    /* Fonts */
     .movie-title-font {
         font-family: 'Permanent Marker', cursive;
     }

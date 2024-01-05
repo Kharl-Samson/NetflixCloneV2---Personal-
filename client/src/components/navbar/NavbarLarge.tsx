@@ -29,10 +29,16 @@ export const NavbarLarge = ( {scrollDirection, isAtTop, active} : NavbarProps ) 
             <img src={Logo} alt="Image Logo" className="h-7"/>
 
             {/* Menu */}
-            <ul className="flex gap-x-5 text-custom-light-2 netflix-font-light disable-highlight">
+            <ul className="flex gap-x-5 text-custom-light-2 disable-highlight">
                 {// Links Mapping
                 arrayLink?.map((res: string) => (
-                    <li key={res} className={`text-sm cursor-pointer hover:opacity-80 custom-transition-duration-3s ${active === res && "text-white netflix-font-medium"}`}>{res}</li>
+                    <li 
+                      key={res} 
+                      className={`text-sm cursor-pointer hover:opacity-80 custom-transition-duration-3s 
+                      ${active === res ? "text-white netflix-font-medium" : "netflix-font-light"}`}
+                    >
+                      {res}
+                    </li>
                 ))
                 }
             </ul>

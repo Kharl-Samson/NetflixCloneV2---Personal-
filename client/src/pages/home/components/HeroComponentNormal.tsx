@@ -76,8 +76,9 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer} : H
 
         {/* Main Content */
         screenWidth > 800 && 
-        <div className="max-w-[3000px] max-h-[90rem] mx-auto z-20 absolute  hidden 801size:flex flex-col 
+        <div className="max-w-[3000px] max-h-[90rem] mx-auto z-20 absolute hidden 801size:flex flex-col 
             justify-center w-full h-[50rem] 951size:h-screen px-7 951size:px-14"
+            style = {{background: "linear-gradient(0deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.40) 100%)"}}
         >
             <p 
                 className={`mt-[-5rem] text-white custom-transition-duration-10s

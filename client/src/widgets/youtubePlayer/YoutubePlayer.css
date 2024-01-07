@@ -9,14 +9,20 @@
         width: 300%;
         height: 100rem;
         margin-top: -20rem;
-        margin-left: -50rem;
+        margin-left: -40rem;
         pointer-events: none;
     }
 
     /* 951size breakpoint styles */
+    @media (min-width: 801px) {
+        #youtubePlayer {
+            margin-left: -50rem;
+        }
+    }
+    
+    /* 951size breakpoint styles */
     @media (min-width: 951px) {
         #youtubePlayer {
-            width: 300%;
             height: 170rem;
             margin-top: -55rem;
             margin-left: -60rem;

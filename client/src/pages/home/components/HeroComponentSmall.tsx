@@ -3,6 +3,7 @@ import play from "../../../assets/images/icons/play.png"
 import add from "../../../assets/images/icons/add.png"
 import { getGenres } from "../../../services/apiFetchShowList"
 import { useQuery } from "react-query"
+import { useEffect, useState } from "react"
 
 type HeroProps = {
     myData : {
@@ -33,19 +34,29 @@ export const HeroComponentSmall = ( {myData} : HeroProps ) => {
         }
     }
 
-  return (
+    // Random Color
+    const colorsArray : string[] = ["#7A1E9A", "#153A70", "#2C3D2E", "#BF742E", "#37B19B", "#BF2E2E", "#636011", "#470A2B", "#03472F", "#053477"]
+    const [color, setColor] = useState<string>("")
+    
+    // Generate random color
+    useEffect(() => {
+        const randomIndex = Math.floor(Math.random() * colorsArray.length)
+        setColor(colorsArray[randomIndex])
+    },[])
+
+    return (
     <>
     {/* Image Banner */
-    screenWidth <= 800 && 
-        <div className="801size:hidden mt-2 sm:mt-4 w-full h-auto px-5">
+    screenWidth < 640 && 
+        <div className="sm:hidden pt-[6.5rem] sm:mt-4 w-full h-auto px-5" style={{ background : `linear-gradient(173deg, ${color} -40.63%, #181414 75.27%)`}}>
             <div 
                 style = {{
-                    backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.40) 100%), url(${import.meta.env.VITE_BASE_IMAGE_URL}${myData?.backdrop_path})`
+                    backgroundImage: `linear-gradient(176deg, rgba(0, 0, 0, 0.20) 60%, ${color} 140%), url(${import.meta.env.VITE_BASE_IMAGE_URL}${myData?.backdrop_path})`
                 }}
-                className="w-full px-4 h-[28rem] rounded-xl bg-cover bg-top flex flex-col justify-end"
+                className="w-full px-4 h-[30rem] rounded-xl bg-cover bg-top flex flex-col justify-end"
             >
                 {/* Show Title */}
-                <p className="mb-3 text-white text-center text-4xl sm:text-7xl movie-title-font">{myData?.original_title}</p>
+                <p className="mb-3 text-white text-center text-4xl sm:text-7xl movie-title-font-small">{myData?.original_title}</p>
 
                 {/* Genre */}
                 <div className="mb-3 flex flex-wrap justify-center gap-x-5 text-white">

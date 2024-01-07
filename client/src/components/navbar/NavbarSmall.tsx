@@ -10,7 +10,7 @@ export const NavbarSmall = ( {scrollDirection, isAtTop} : NavbarProps ) => {
   const userName : string = "Kharl"
 
   return (
-    <nav className={`sm:hidden w-full py-4 px-5 sticky top-0 z-50 ${scrollDirection === "down" || !isAtTop ? "navbar-glassmorphim" : "bg-custom-color-hero-1"}`}>
+    <nav className={`sm:hidden w-full py-4 px-5 fixed top-0 z-50 ${scrollDirection === "down" || !isAtTop && "navbar-glassmorphim"}`}>
 
       {/* Top Section */}
       <div className="flex justify-between items-center">

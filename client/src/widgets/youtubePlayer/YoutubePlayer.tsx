@@ -9,8 +9,8 @@ type YoutubePlayerProps = {
     setShowVideoFalse? : () => void 
     setShowVideoTrue? :  () => void 
     setVideoEnded? : () => void
-    playAgain : boolean
     setPlayAgainFalse : () => void
+    playAgain : boolean
     isFetchedTrailer? : boolean
     isMuted? : boolean
 }
@@ -19,7 +19,7 @@ export const YoutubePlayer = ( {
     id, videoId, duration, 
     setShowVideoFalse, setShowVideoTrue, 
     setVideoEnded, 
-    playAgain, setPlayAgainFalse,
+    setPlayAgainFalse, playAgain,
     isFetchedTrailer, isMuted
   } : YoutubePlayerProps) => {
 
@@ -28,7 +28,7 @@ export const YoutubePlayer = ( {
     // React Youtube Configuration
     const onReady: YouTubeProps["onReady"] = (event) => {
       setVideo(() => event.target)
-      if(isFetchedTrailer && videoId) {
+      if(isFetchedTrailer && videoId && event.target.getVideoData().video_id && event.target.getVideoData().isPlayable) {
         const timeOut = setTimeout(() => setShowVideoTrue && setShowVideoTrue(), duration)
         return () => clearTimeout(timeOut)
       }
@@ -52,14 +52,12 @@ export const YoutubePlayer = ( {
     useEffect(() => {
       isMuted ? video?.mute() : video?.unMute()
       playAgain && video?.playVideo()
-
     },[isMuted, playAgain])
 
   return (
     <YouTube  
       id = {id}
       videoId = {videoId}
-      // videoId = {"FUKmyRLOlAA"} 
       opts = {opts}
       onReady = {onReady}
       onEnd = {videoEnded}

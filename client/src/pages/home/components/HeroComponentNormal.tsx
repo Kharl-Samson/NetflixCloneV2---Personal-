@@ -75,11 +75,11 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer} : H
         {/* Main Content */
         screenWidth >= 640 && 
             <div className="max-w-[3000px] max-h-[90rem] mx-auto z-20 absolute top-0 hidden sm:flex flex-col 
-                justify-center w-full h-[45rem] 801size:h-[50rem] 951size:h-screen px-7 951size:px-14"
+                justify-end w-full h-[45rem] 801size:h-[50rem] 951size:h-screen px-7 951size:px-14"
                 style = {{background: "linear-gradient(0deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.40) 100%)"}}
             >
                 <p 
-                    className={`mt-[0rem] text-white custom-transition-duration-10s
+                    className={`text-white custom-transition-duration-10s
                         movie-title-font-large max-w-[40rem] xl:max-w-[80%] 
                         leading-tight ${textAnim ? "text-4xl 801size:text-5xl xl:text-7xl" : "text-5xl 801size:text-7xl xl:text-8xl"}`}
                 >
@@ -92,7 +92,7 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer} : H
                     {myData?.overview}
                 </p>
 
-                <div className="mt-10 flex gap-x-[15px]">
+                <div className="mt-10 mb-[16rem] flex gap-x-[15px]">
                   <button className="rounded-md flex items-center gap-x-[15px] font-netflix_regular py-[11px] px-[35px] transition duration-400 bg-white hover:opacity-80">
                     <img src={play} alt="Play Icon" className="h-[27px]"/>
                     <span className="text-[1.4rem] font-semibold">Play</span>

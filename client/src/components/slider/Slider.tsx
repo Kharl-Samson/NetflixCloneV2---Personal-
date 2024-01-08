@@ -56,6 +56,7 @@ export const Slider = ({titleStyles, title, queryType, queryKey} : SliderProps) 
   const [smallDeviceClick, setSmallDeviceClick] = useState<boolean>(false)
   const smallDevClick = () => setSmallDeviceClick(true)
 
+
   return (
     <div className="mt-3 801size:z-20 801size:relative 801size:mt-[-14rem]">
         <p className={`text-white text-lg sm:text-3xl font-medium sm:font-bold ${titleStyles}`}>{title}</p>
@@ -72,10 +73,11 @@ export const Slider = ({titleStyles, title, queryType, queryKey} : SliderProps) 
               navigation={false}
               modules={[Navigation]}
               className="w-full h-[9rem] gap-x-4"
+              onSlideChange={smallDevClick}
             >
               {
                 combinedData?.results?.map((res : ItemType, index : number) => (
-                  <SwiperSlide className={`h-full swiperSlide ${index === 0 && !smallDeviceClick && "ml-2"}`} key={index} onClick={smallDevClick}>
+                  <SwiperSlide className={`h-full swiperSlide ${index === 0 && !smallDeviceClick && "ml-2"}`} key={index}>
                     {/* In smaller device */
                     screenWidth < 640 &&
                       <LazyLoadImage

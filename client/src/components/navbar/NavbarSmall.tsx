@@ -14,8 +14,8 @@ export const NavbarSmall = ( {scrollDirection, isAtTop} : NavbarProps ) => {
 
       {/* Top Section */}
       <div className="flex justify-between items-center">
-        <p className="text-white  font-semibold text-base">For {userName}</p>
-        <img src={searchIcon} alt="Search Image" className="h-5"/>
+        <p className="text-white  font-semibold text-lg whitespace-nowrap overflow-hidden text-ellipsis">For {userName}</p>
+        <img src={searchIcon} alt="Search Image" className="h-6"/>
       </div>
 
       {/* Bottom Section */}

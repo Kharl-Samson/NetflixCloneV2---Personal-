@@ -2,6 +2,7 @@ import { NavbarLarge } from "../../components/navbar/NavbarLarge"
 import { NavbarMedium } from "../../components/navbar/NavbarMedium"
 import { NavbarNormal } from "../../components/navbar/NavbarNormal"
 import { NavbarSmall } from "../../components/navbar/NavbarSmall"
+import { Slider } from "../../components/slider/Slider"
 import { useAppStore } from "../../store/ZustandStore"
 import { Hero } from "./sections/Hero"
 
@@ -32,6 +33,18 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
 
       {/* Hero Section */}
       <Hero/>
+
+      {/* Trending Section */}
+      <Slider
+        titleStyles = { 
+          screenWidth < 640 ? "ml-2" : 
+          screenWidth <= 800 ? "ml-7" : 
+          screenWidth <= 950 ? "ml-7" : "ml-14"
+        }
+        title = "Trending Now"
+        queryType = "trending now"
+        queryKey = "trendingNow"
+      />
     </div>
   )
 }

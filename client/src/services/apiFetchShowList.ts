@@ -1,9 +1,22 @@
 import axios from "axios"
 
 // Get Data List
-export const getShowList = async (category : string, language?: string, genres?: number, page?: number) => {
+export const getShowList = async (queryType: string, category : string | null, language?: string, genres?: number | null, page?: number) => {
+  let url : string = ""
+  switch(queryType){
+    case "hero":
+      url = `${import.meta.env.VITE_SERVER_URL}/discover/${category}`
+      break
+    case "trending now":
+      url = `${import.meta.env.VITE_SERVER_URL}/trending/all/day`
+      break
+    default:
+      url = ""
+      break
+  }
+
   try {
-    const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/discover/${category}`, {
+    const response = await axios.get(url, {
       params: {
         api_key: import.meta.env.VITE_API_KEY,
         language: language,

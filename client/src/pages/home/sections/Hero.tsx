@@ -11,6 +11,9 @@ type MyData = {
 }
 
 export const Hero = () => {
+    // State from zustand
+    const {screenWidth} = useAppStore()
+
     const categoryArray : string[] = ["movie"]
     const randomCategoryIndex : number = Math.floor(Math.random() * categoryArray.length)
     const [randomPageArray, setRandomPageArray] = useState<number>(1)
@@ -31,7 +34,7 @@ export const Hero = () => {
     // Fetch data to be showned in hero section 
     const { data, isFetched: isFetchedData, isError: isDataError } = useQuery(
         ["heroKey"],
-        () => getShowList(categoryArray[randomCategoryIndex], "en-US", 14, randomPageArray)
+        () => getShowList("hero",categoryArray[randomCategoryIndex], "en-US", 14, randomPageArray)
     )
 
     // Fetch trailer data
@@ -62,9 +65,6 @@ export const Hero = () => {
             }
         }
     }, [isFetchedData, data, myData, isFetchedTrailer, myTrailerData])
-
-        // State from zustand
-        const {screenWidth} = useAppStore()
 
   return (
     <section className="w-full"> 

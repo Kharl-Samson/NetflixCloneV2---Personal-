@@ -48,7 +48,7 @@ export const HeroComponentSmall = ( {myData} : HeroProps ) => {
     <>
     {/* Image Banner */
     screenWidth < 640 && 
-        <div className="sm:hidden pt-[6.5rem] sm:mt-4 w-full h-auto px-5" style={{ background : `linear-gradient(173deg, ${color} -40.63%, #181414 75.27%)`}}>
+        <div className="sm:hidden pt-[12rem] 211size:pt-[9rem] 329size:pt-[6.5rem] sm:mt-4 w-full h-auto px-5" style={{ background : `linear-gradient(173deg, ${color} -40.63%, #181414 75.27%)`}}>
             <div 
                 style = {{
                     backgroundImage: `linear-gradient(176deg, rgba(0, 0, 0, 0.20) 60%, ${color} 140%), url(${import.meta.env.VITE_BASE_IMAGE_URL}${myData?.backdrop_path})`

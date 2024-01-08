@@ -75,13 +75,13 @@ export const Slider = ({titleStyles, title, queryType, queryKey} : SliderProps) 
             >
               {
                 combinedData?.results?.map((res : ItemType, index : number) => (
-                  <SwiperSlide className={`h-full swiperSlide ${index === 0 && !smallDeviceClick && "ml-2"}`} key={index} onMouseOver={smallDevClick}>
+                  <SwiperSlide className={`h-full swiperSlide ${index === 0 && !smallDeviceClick && "ml-2"}`} key={index} onClick={smallDevClick}>
                     {/* In smaller device */
                     screenWidth < 640 &&
                       <LazyLoadImage
                         alt="Show Image"
                         src={`${import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
-                        className="h-full w-full rounded object-cover object-center block sm:hidden"
+                        className="h-full w-full rounded block sm:hidden"
                         onError={handleImageError}
                       />
                     }

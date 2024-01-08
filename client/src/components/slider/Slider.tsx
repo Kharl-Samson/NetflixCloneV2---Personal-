@@ -55,7 +55,15 @@ export const Slider = ({titleStyles, title, queryType, queryKey} : SliderProps) 
   // Swiper Controllers
   const [smallDeviceClick, setSmallDeviceClick] = useState<boolean>(false)
   const smallDevClick = () => setSmallDeviceClick(true)
-
+  
+  const userAgent = navigator.userAgent.toLowerCase();
+  if (
+    userAgent.match(/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i)
+  ) {
+    alert("User is using a phone or tablet");
+  } else {
+    alert("User is using a PC or laptop");
+  }
 
   return (
     <div className="mt-3 801size:z-20 801size:relative 801size:mt-[-14rem]">
@@ -73,10 +81,10 @@ export const Slider = ({titleStyles, title, queryType, queryKey} : SliderProps) 
               navigation={false}
               modules={[Navigation]}
               className="w-full h-[9rem] gap-x-4"
-              onSlideChange={smallDevClick}
+              onSliderMove={smallDevClick}
             >
               {
-                combinedData?.results?.map((res : ItemType, index : number) => (
+               combinedData?.results?.map((res : ItemType, index : number) => (
                   <SwiperSlide className={`h-full swiperSlide ${index === 0 && !smallDeviceClick && "ml-2"}`} key={index}>
                     {/* In smaller device */
                     screenWidth < 640 &&

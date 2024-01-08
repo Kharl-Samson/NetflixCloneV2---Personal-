@@ -16,7 +16,7 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
   const {screenWidth} = useAppStore()
   
   return (
-    <div className="bg-custom-color-hero-1">
+    <div className="bg-custom-color-hero-1  overflow-hidden h-[200dvh]">
         
       {// My Navigation
         screenWidth < 640 ?
@@ -36,7 +36,7 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
 
       {/* Trending Section */}
       <Slider
-        titleStyles = { 
+        marginStyle = { 
           screenWidth < 640 ? "ml-2" : 
           screenWidth <= 800 ? "ml-7" : 
           screenWidth <= 950 ? "ml-7" : "ml-14"

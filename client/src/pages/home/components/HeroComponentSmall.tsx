@@ -61,7 +61,7 @@ export const HeroComponentSmall = ( {myData} : HeroProps ) => {
                 {/* Genre */}
                 <div className="mb-3 flex flex-wrap justify-center gap-x-5 text-white">
                     {/* Genres Mapping */
-                        getGenreNames()?.map((res: string, index: number) => <p className=""key={index} >{index !== 0 && '•'} {res}</p> ) 
+                        getGenreNames()?.map((res: string, index: number) => <p key={index} >{index !== 0 && '•'} {res}</p> ) 
                     }
                 </div>
 

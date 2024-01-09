@@ -146,7 +146,9 @@ button:hover {
     .swiperSlide {
         width: 6.5rem !important;
     }
-
+    .imageSwiper {
+        height: 1rem !important;
+    }
     /* 951size breakpoint styles */
     @media (min-width: 640px) {
         .swiperSlide {

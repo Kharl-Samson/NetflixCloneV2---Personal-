@@ -10,29 +10,29 @@ type YoutubePlayerProps = {
     isFetchedTrailer? : boolean
 }
 
-export const YoutubePlayer = ( {
+export const YoutubePlayerItem = ( {
     id, videoId, duration, isFetchedTrailer
   } : YoutubePlayerProps) => {
 
     const [video, setVideo] = useState<any>(undefined)
 
     // React Youtube State
-    const { setShowVideo, isMuted, setVideoEnded, playAgain, setPlayAgain, pause } = useAppStore()
+    const { setShowVideoItems, isMutedItems, setVideoEndedItems, playAgainItems, setPlayAgainItems } = useAppStore()
 
     // React Youtube Configuration
     const onReady: YouTubeProps["onReady"] = (event) => {
       setVideo(() => event.target)
       if(isFetchedTrailer && videoId && event.target.getVideoData().video_id && event.target.getVideoData().isPlayable) {
-        const timeOut = setTimeout(() => setShowVideo(true), duration)
+        const timeOut = setTimeout(() => setShowVideoItems(true), duration)
         return () => clearTimeout(timeOut)
       }
       event.target.setPlaybackQuality("highres")
     }
 
     const videoEnded = () => {
-      setVideoEnded(true)
-      setShowVideo(false)
-      setPlayAgain(false)
+      setVideoEndedItems(true)
+      setShowVideoItems(false)
+      setPlayAgainItems(false)
     }
 
     // React Youtube Configuration
@@ -45,12 +45,12 @@ export const YoutubePlayer = ( {
 
     useEffect(() => {
       // Mute
-      isMuted ? video?.mute() : video?.unMute()
+      isMutedItems ? video?.mute() : video?.unMute()
       // Play Again
-      playAgain && video?.playVideo()
+      playAgainItems && video?.playVideo()
       // Pause
-      pause ? video?.pauseVideo() : video?.playVideo()
-    },[isMuted, playAgain, pause])
+      // if(pauseVideo)  video?.pauseVideo()
+    },[isMutedItems, playAgainItems])
   
   return (
     <YouTube  

@@ -4,7 +4,7 @@
 
 /* Custom CSS */
 @layer components {
-    /* Youtube Player */
+    /* Youtube Player  -> For here*/ 
     #youtubePlayer {
         width: 300%;
         height: 100rem;
@@ -12,6 +12,8 @@
         margin-left: -40rem;
         pointer-events: none;
     }
+
+    /* Youtubel Player -> When hovering items */
 
     /* 951size breakpoint styles */
     @media (min-width: 801px) {

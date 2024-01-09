@@ -135,7 +135,7 @@ export const Slider = ({marginStyle, title, queryType, queryKey, classCount} : S
     // setDeviceType("Phone") : setDeviceType("Desktop")
   return (
     <div className="mt-3 sm:z-20 sm:relative sm:mt-[-14rem]">
-        <p className={`text-white text-lg sm:text-3xl font-semibold tracking-wide sm:tracking-normal sm:font-bold ${marginStyle}`}>{title}</p>
+        <p className={`text-white text-lg sm:text-3xl font-semibold sm:font-bold ${marginStyle}`}>{title}</p>
     
         {/* Slider Container */}
         <div 

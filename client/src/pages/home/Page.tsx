@@ -44,6 +44,7 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
         title = "Trending Now"
         queryType = "trending now"
         queryKey = "trendingNow"
+        classCount = {0}
       />
     </div>
   )

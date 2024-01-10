@@ -14,6 +14,7 @@ type ItemSliderProps = {
     imageUrl : string
     trailerData : string
     isFetchedTrailer : boolean
+    isDetailsFetched : boolean
 }
 
 const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
@@ -35,6 +36,7 @@ export const ItemSlider = ({
         imageUrl,
         trailerData,
         isFetchedTrailer,
+        isDetailsFetched
     }: ItemSliderProps
 ) => {
 
@@ -60,20 +62,20 @@ export const ItemSlider = ({
   return (
     <div
       className = {`swiperSlide cursor-pointer bg-[#181818] h-[10rem] eachSwiper
-        rounded-md overflow-hidden custom-transition-duration-3s ${itemHover === index && hoverStyle}`
+        rounded-md overflow-hidden custom-transition-duration-3s ${itemHover === index && isDetailsFetched && hoverStyle}`
       } 
     >
       {/* Show Cover */}
       <LazyLoadImage
         alt="Show Image"
         src={`${import.meta.env.VITE_BASE_IMAGE_URL}${imageUrl}`} 
-        className={`w-full showSkeleton relative ${itemHover !== index && "rounded"}
-          custom-transition-duration-10s ${showVideoItems && itemHover === index ? "opacity-0 z-0" : "opacity-100 z-10"}`}
+        className={`w-full showSkeleton relative ${itemHover !== index && isDetailsFetched && "rounded"}
+          custom-transition-duration-10s ${showVideoItems && itemHover === index && isDetailsFetched ? "opacity-0 z-0" : "opacity-100 z-10"}`}
         onError={handleImageError}
       />
 
       { /* Show Trailer Video */
-      itemHover === index &&
+      itemHover === index && isDetailsFetched &&
         <div className={`w-full h-[14.063rem] mt-[-14.063rem] overflow-hidden flex items-center justify-center relative z-0`}>
           <YoutubePlayerItem
               id = "youtubePlayerItems"
@@ -95,7 +97,7 @@ export const ItemSlider = ({
       }
 
       {/* Show when hover */
-      itemHover === index &&
+      itemHover === index && isDetailsFetched && 
         <div className="p-4">
           {/* Buttons */}
           <div className="flex items-center gap-x-2">

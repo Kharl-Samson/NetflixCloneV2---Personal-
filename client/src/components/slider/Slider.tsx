@@ -3,8 +3,8 @@ import "swiper/css"
 import "swiper/css/pagination"
 import "swiper/css/navigation"
 import { Navigation }  from "swiper/modules"
-import { useQuery } from "react-query"
-import { getShowList, getShowTrailer } from "../../services/apiFetchShowList"
+import { useMutation, useQuery } from "react-query"
+import { cancelGetShowDetails, getShowDetails, getShowList, getShowTrailer } from "../../services/apiFetchShowList"
 import { useEffect, useMemo, useState } from "react"
 import { ItemType } from "../../types/itemTypes"
 import { LazyLoadImage } from "react-lazy-load-image-component"
@@ -21,6 +21,8 @@ type SliderProps = {
   queryKey : string
   classCount : number
 }
+
+type GetShowDetailsResponse = string
 
 
 export const Slider = ({marginStyle, title, queryType, queryKey, classCount} : SliderProps) => {
@@ -75,13 +77,43 @@ export const Slider = ({marginStyle, title, queryType, queryKey, classCount} : S
     const [videoId, setVideoId] = useState<string>("")
     const [itemHover, setItemHover] = useState<number | null>(null)
 
+    // fetch show details when hover
+    const [isDetailsFetched, setDetailsFetched] = useState<boolean>(false)
+    const mutation = useMutation<
+      GetShowDetailsResponse, Error,
+      { category: string; trailerId: string | number; language?: string }
+    >(
+      ({ category, trailerId, language }) =>
+        getShowDetails(category, trailerId, language),
+      {
+        onSuccess: (res) => {
+          console.log(res)
+          setDetailsFetched(true)
+        },
+        onError: (error) => {
+          console.log(error)
+          setDetailsFetched(true)
+        }
+      }
+    )
+
     const handleHover = (index : number,  media_type : string, id : string) => {
+      mutation.mutate({
+        category: media_type,
+        trailerId: id,
+        language: "en-US"
+      })
+
       setCategory(media_type)
       setVideoId(id)
       setItemHover(index)
       showVideo && setPause(true)
     }
+
     const handleHoverOut = () => {
+      setDetailsFetched(false)
+      cancelGetShowDetails()
+      
       setItemHover(null)
       setShowVideoItems(false)
       setTrailerData("")
@@ -132,7 +164,7 @@ export const Slider = ({marginStyle, title, queryType, queryKey, classCount} : S
       // @ts-ignore
       document.getElementsByClassName("swiper-button-next")[classCount].click()
     }
-    // setDeviceType("Phone") : setDeviceType("Desktop")
+
   return (
     <div className="mt-3 sm:z-20 sm:relative sm:mt-[-14rem]">
         <p className={`text-white text-lg sm:text-3xl font-semibold sm:font-bold ${marginStyle}`}>{title}</p>
@@ -141,7 +173,7 @@ export const Slider = ({marginStyle, title, queryType, queryKey, classCount} : S
         <div 
           className="w-full h-auto mt-1 sm:mt-3" 
           onMouseOver={() => deviceType === "Desktop" && setSwiperHover(true)} 
-          onMouseOut={() => deviceType === "Desktop" &&setSwiperHover(false)}
+          onMouseOut={() => deviceType === "Desktop" && setSwiperHover(false)}
         >
             {/* Swiper Controller */
             screenWidth >= 640 &&
@@ -201,6 +233,7 @@ export const Slider = ({marginStyle, title, queryType, queryKey, classCount} : S
                         imageUrl = {res?.backdrop_path}
                         trailerData = {trailerData}
                         isFetchedTrailer = {isFetchedTrailer}
+                        isDetailsFetched = {isDetailsFetched}
                       />
                   </SwiperSlide>
                 ))

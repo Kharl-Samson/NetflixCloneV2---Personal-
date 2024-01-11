@@ -91,7 +91,7 @@ export const ItemSliderSmall = ({
   return (
     <div
       className = {`swiperSlideSmall cursor-pointer bg-[#181818] h-[13rem] eachSwiper float-right
-        rounded-md overflow-hidden custom-transition-duration-3s ${itemHover === index && triggerAnimItems && hoverStyle}`
+        rounded overflow-hidden custom-transition-duration-3s ${itemHover === index && triggerAnimItems && hoverStyle}`
       } 
     >
      {/* <h1 className="text-[13rem] font-bold absolute ml-[-5rem] custom-text-stroke">{index ? index + 1 : 1}</h1> */}

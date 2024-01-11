@@ -7,8 +7,6 @@ import { useMutation, useQuery } from "react-query"
 import { getShowDetails, getShowList, getShowTrailer } from "../../services/apiFetchShowList"
 import { useEffect, useState } from "react"
 import { ItemType } from "../../types/itemTypes"
-import { LazyLoadImage } from "react-lazy-load-image-component"
-import { handleImageError } from "../../types/errorTypes"
 import { useAppStore } from "../../store/ZustandStore"
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight"
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft"
@@ -50,6 +48,7 @@ export const SliderSmall = ({marginStyle, relativeStyle, title, queryType, query
     // Swiper Controllers
     const [smallDeviceClick, setSmallDeviceClick] = useState<boolean>(false)
     const smallDevClick = () => setSmallDeviceClick(true)
+    console.log(smallDeviceClick)
 
     // React Youtube State
     const { showVideo, setShowVideoItems, setIsMutedItems, setPause, setTriggerAnimItems} = useAppStore()

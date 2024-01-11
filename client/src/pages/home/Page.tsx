@@ -3,6 +3,7 @@ import { NavbarMedium } from "../../components/navbar/NavbarMedium"
 import { NavbarNormal } from "../../components/navbar/NavbarNormal"
 import { NavbarSmall } from "../../components/navbar/NavbarSmall"
 import { Slider } from "../../components/slider/Slider"
+import { SliderSmall } from "../../components/slider/SliderSmall"
 import { useAppStore } from "../../store/ZustandStore"
 import { Hero } from "./sections/Hero"
 
@@ -34,6 +35,20 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
       {/* Hero Section */}
       <Hero/>
 
+      {/* Top 10 TV Shows */}
+      <SliderSmall
+        marginStyle = { 
+          screenWidth < 640 ? "ml-2" : 
+          screenWidth <= 800 ? "ml-7" : 
+          screenWidth <= 950 ? "ml-7" : "ml-14"
+        }
+        relativeStyle = "sm:mt-[-14rem] sm:relative"
+        title = "Top 10 TV Shows in the Philippines Today"
+        queryType = "Top 10 TV Shows"
+        queryKey = "top10TVshow"
+        classCount = {0}
+      />
+
       {/* Trending Section */}
       <Slider
         marginStyle = { 
@@ -41,10 +56,11 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
           screenWidth <= 800 ? "ml-7" : 
           screenWidth <= 950 ? "ml-7" : "ml-14"
         }
+        relativeStyle = "sm:mt-14 sm:relative"
         title = "Trending Now"
-        queryType = "trending now"
+        queryType = "Trending Now"
         queryKey = "trendingNow"
-        classCount = {0}
+        classCount = {1}
       />
     </div>
   )

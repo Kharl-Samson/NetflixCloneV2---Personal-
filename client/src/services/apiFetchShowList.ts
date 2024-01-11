@@ -1,14 +1,17 @@
-import axios, { CancelToken } from "axios"
+import axios from "axios"
 
 // Get Data List
 export const getShowList = async (queryType: string, category : string | null, language?: string, genres?: number | null, page?: number) => {
   let url : string = ""
   switch(queryType){
-    case "hero":
+    case "Hero":
       url = `${import.meta.env.VITE_SERVER_URL}/discover/${category}`
       break
-    case "trending now":
+    case "Trending Now":
       url = `${import.meta.env.VITE_SERVER_URL}/trending/all/day`
+      break
+    case "Top 10 TV Shows":
+      url = `${import.meta.env.VITE_SERVER_URL}/trending/${category}/day`
       break
     default:
       url = ""
@@ -65,8 +68,6 @@ export const getShowTrailer = async (category : string, trailerId: string | numb
 }
 
 // Get Show Details
-const CancelToken = axios.CancelToken
-const cancelTokenSource = CancelToken.source()
 export const getShowDetails = async (category : string, trailerId: string | number, language?: string) => {
   if(trailerId){
     try {
@@ -77,15 +78,11 @@ export const getShowDetails = async (category : string, trailerId: string | numb
         },
         headers: {
           'Content-Type': 'application/json',
-        },
-        cancelToken: cancelTokenSource.token
+        }
       })
       return response.data
     } catch (error : unknown | string) {
-      if (axios.isCancel(error)) {
-        // Request was cancelled
-      }
-      else if (typeof error === 'string') {
+      if (typeof error === 'string') {
         throw new Error(error)
       } else if (error instanceof Error) {
         throw error
@@ -95,10 +92,6 @@ export const getShowDetails = async (category : string, trailerId: string | numb
     }
   }
 }
-
-// Cancel the request externally
-export const cancelGetShowDetails = () => cancelTokenSource.cancel('Operation canceled')
-
 
 // Get Genres
 export const getGenres = async (category : string) => {

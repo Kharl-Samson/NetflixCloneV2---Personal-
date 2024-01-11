@@ -10,7 +10,7 @@ export const NavbarSmall = ( {scrollDirection, isAtTop} : NavbarProps ) => {
   const userName : string = "Kharl"
 
   return (
-    <nav className={`sm:hidden w-full py-4 px-5 fixed top-0 z-50 ${scrollDirection === "down" || !isAtTop && "navbar-glassmorphim"}`}>
+    <nav className={`sm:hidden w-full py-4 px-5 fixed top-0 z-50 ${(scrollDirection === "down" || !isAtTop) && "navbar-glassmorphim"}`}>
 
       {/* Top Section */}
       <div className="flex justify-between items-center">
@@ -22,7 +22,7 @@ export const NavbarSmall = ( {scrollDirection, isAtTop} : NavbarProps ) => {
       <div 
         className={
           `flex flex-wrap gap-x-2 gap-y-3 text-custom-light-2 overflow-hidden
-          custom-transition-duration-3s ${scrollDirection === "down" || !isAtTop ? "h-0" : "mt-4 h-auto"}`
+          custom-transition-duration-3s ${scrollDirection === "down" ? "h-0" : "mt-4 h-auto"}`
         }
       >
           <div className="text-sm text-nowrap  py-1 px-3 rounded-full border-[1px] border-custom-light-2 active:scale-[.98]">TV Shows</div>

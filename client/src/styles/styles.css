@@ -117,6 +117,16 @@ button:hover {
         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     }
     
+    /* Custom Color */
+    .custom-transparent-bg {
+        background-color: rgba(51,51,51,.6);
+    }
+
+    /* Text Stroke */
+    .custom-text-stroke {
+        -webkit-text-stroke: 1px #595959;
+        text-stroke: 1px #595959;
+    }
 
     /* Skeleton in each show */
     .showSkeleton{
@@ -144,6 +154,9 @@ button:hover {
     }
     .swiperSlide {
         width: 6.5rem !important;
+    }
+    .swiperSlideSmall {
+        width: 9.5rem !important;
     }
     .imageSwiper {
         height: 1rem !important;

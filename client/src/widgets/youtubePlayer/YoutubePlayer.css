@@ -12,6 +12,9 @@
         margin-left: -40rem;
         pointer-events: none;
     }
+    #youtubePlayerItems {
+        pointer-events: none;
+    }
 
     /* Youtubel Player -> When hovering items */
 

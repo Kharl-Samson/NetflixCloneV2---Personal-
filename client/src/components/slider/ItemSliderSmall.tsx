@@ -8,6 +8,7 @@ import down from "../../assets/images/icons/down.png"
 import { useAppStore } from "../../store/ZustandStore"
 import { YoutubePlayerItem } from "../../widgets/youtubePlayer/YoutubePlayerItem"
 import { useEffect, useState } from "react"
+import rankData from "../../data/rankData"
 
 type ItemSliderProps = {
     itemHover : number | null
@@ -32,7 +33,7 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
     },
   }))
 
-export const ItemSlider = ({
+export const ItemSliderSmall = ({
         itemHover,
         index,
         imageUrl,
@@ -86,18 +87,23 @@ export const ItemSlider = ({
     const showRuntime = mediaType === "movie" ? convertToHoursAndMinutes(showDetails?.runtime || 0) : null
     const { hours, minutes } = showRuntime || { hours: 0, minutes: 0 }
 
+    
   return (
     <div
-      className = {`swiperSlide cursor-pointer bg-[#181818] h-[10rem] eachSwiper
+      className = {`swiperSlideSmall cursor-pointer bg-[#181818] h-[13rem] eachSwiper float-right
         rounded-md overflow-hidden custom-transition-duration-3s ${itemHover === index && triggerAnimItems && hoverStyle}`
       } 
     >
+     {/* <h1 className="text-[13rem] font-bold absolute ml-[-5rem] custom-text-stroke">{index ? index + 1 : 1}</h1> */}
+      {rankData[index || 0]}
+
       {/* Show Cover */}
       <LazyLoadImage
         alt="Show Image"
         src={`${import.meta.env.VITE_BASE_IMAGE_URL}${imageUrl}`} 
-        className={`w-full showSkeleton relative ${itemHover !== index && triggerAnimItems && "rounded"}
-          custom-transition-duration-10s ${showVideoItems && itemHover === index && triggerAnimItems ? "opacity-0 z-0" : "opacity-100 z-10"}`}
+        className={`w-full h-[full] max-h-[13rem] showSkeleton relative custom-transition-duration-10s
+            ${itemHover !== index && triggerAnimItems && "rounded"} ${showVideoItems && itemHover === index && triggerAnimItems ? "opacity-0 z-0" : "opacity-100 z-10"}
+            ${itemHover === index && triggerAnimItems && "object-cover"}`}
         onError={handleImageError}
       />
 
@@ -125,7 +131,7 @@ export const ItemSlider = ({
 
       {/* Show when hover */
       itemHover === index && triggerAnimItems && 
-        <div className="p-4">
+        <div className="p-4 relative bg-[#181818]">
           {/* Buttons */}
           <div className="flex items-center gap-x-2">
             {/* Play */}

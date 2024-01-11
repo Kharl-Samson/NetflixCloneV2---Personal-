@@ -53,7 +53,7 @@ export const HeroComponentSmall = ( {myData} : HeroProps ) => {
                 style = {{
                     backgroundImage: `linear-gradient(176deg, rgba(0, 0, 0, 0.20) 60%, ${color} 140%), url(${import.meta.env.VITE_BASE_IMAGE_URL}${myData?.backdrop_path})`
                 }}
-                className="w-full px-4 h-[30rem] rounded-xl bg-cover bg-top flex flex-col justify-end"
+                className="bg-custom-color-hero-1 w-full px-4 h-[30rem] rounded-xl bg-cover bg-top flex flex-col justify-end"
             >
                 {/* Show Title */}
                 <p className="mb-3 text-white text-center text-4xl sm:text-7xl movie-title-font-small">{myData?.original_title}</p>

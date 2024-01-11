@@ -25,6 +25,8 @@ type appStore = {
   setVideoEndedItems: (value: boolean) => void
   playAgainItems: boolean
   setPlayAgainItems: (value: boolean) => void
+  triggerAnimItems: boolean
+  setTriggerAnimItems: (value: boolean) => void
 }
 
 const useAppStore = create<appStore>()(
@@ -55,6 +57,8 @@ const useAppStore = create<appStore>()(
     setVideoEndedItems: (value: boolean) => set({ videoEndedItems: value }),
     playAgainItems: false,
     setPlayAgainItems: (value: boolean) => set({ playAgainItems: value }),
+    triggerAnimItems: false,
+    setTriggerAnimItems: (value: boolean) => set({ triggerAnimItems: value }),
   })
 })
 

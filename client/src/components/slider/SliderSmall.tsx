@@ -5,14 +5,14 @@ import "swiper/css/navigation"
 import { Navigation }  from "swiper/modules"
 import { useMutation, useQuery } from "react-query"
 import { getShowDetails, getShowList, getShowTrailer } from "../../services/apiFetchShowList"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { ItemType } from "../../types/itemTypes"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import { handleImageError } from "../../types/errorTypes"
 import { useAppStore } from "../../store/ZustandStore"
-import { ItemSlider } from "./ItemSlider"
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight"
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft"
+import { ItemSliderSmall } from "./ItemSliderSmall"
 
 type SliderProps = {
   marginStyle : string
@@ -25,38 +25,20 @@ type SliderProps = {
 
 type GetShowDetailsResponse = string
 
-
-export const Slider = ({marginStyle, relativeStyle, title, queryType, queryKey, classCount} : SliderProps) => {
+export const SliderSmall = ({marginStyle, relativeStyle, title, queryType, queryKey, classCount} : SliderProps) => {
     // State from zustand
     const {screenWidth} = useAppStore()
 
-    let dataCategory1 : string | null = null, dataCategory2 : string | null = null
-    if(queryType === "Trending Now"){
-      dataCategory1 = null
-      dataCategory2 = null
+    let dataCategory : string | null = null
+    if(queryType === "Top 10 TV Shows"){
+      dataCategory = "tv"
     }
 
-    // Fetch data to be showned in section -> First Data
-    const { data : data1, isFetched: isFetchedData1, isError: isDataError1 } = useQuery(
-      [`${queryKey}1`, dataCategory1, dataCategory2],
-      () => getShowList(queryType, dataCategory1, "en-US", null, 1)
+    // Fetch data to be showned in section
+    const { data } = useQuery(
+      [`${queryKey}`, dataCategory],
+      () => getShowList(queryType, dataCategory, "en-US", null, 1)
     )
-
-    // Fetch data to be showned in section -> Second Data
-    const { data : data2, isFetched: isFetchedData2, isError: isDataError2 } = useQuery(
-      [`${queryKey}2`, dataCategory1, dataCategory2],
-      () => getShowList(queryType, dataCategory1, "en-US", null, 2)
-    )
-
-    // Combining the results when both requests have been resolved
-    const combinedData = useMemo(() => {
-      if (isFetchedData1 && !isDataError1 && isFetchedData2 && !isDataError2) {
-        return {
-          results: (data1?.results || []).concat(data2?.results || []),
-        }
-      }
-      return null
-    }, [isFetchedData1, data1, isFetchedData2, data2])
 
     // Device Checker
     const [deviceType, setDeviceType] = useState<string | null>(null)
@@ -167,7 +149,7 @@ export const Slider = ({marginStyle, relativeStyle, title, queryType, queryKey, 
     }
 
   return (
-    <div className={`mt-3 sm:z-20 ${relativeStyle}`}>
+    <div className={`mt-3 sm:z-40 ${relativeStyle}`}>
         <p className={`text-white text-lg sm:text-2xl font-semibold sm:font-bold ${marginStyle}`}>{title}</p>
     
         {/* Slider Container */}
@@ -179,7 +161,7 @@ export const Slider = ({marginStyle, relativeStyle, title, queryType, queryKey, 
             {/* Swiper Controller */
             screenWidth >= 640 &&
             <div className="hidden sm:block">
-              <div className={`cursor-pointer absolute h-40 w-[3.75rem] bg-[hsla(0,0%,8%,.5)] text-white
+              <div className={`cursor-pointer absolute h-[13rem] w-[3.75rem] bg-[hsla(0,0%,8%,.5)] text-white
                   z-20 items-center justify-center custom-transition-duration-3s rounded-r ${swiperHover && showLeftSwipe ? "flex" : "hidden"}`}
                 onClick={swipeLeft}  
                 onMouseOver={() => deviceType === "Desktop" && setLeftSwiperHover(true)}
@@ -187,7 +169,7 @@ export const Slider = ({marginStyle, relativeStyle, title, queryType, queryKey, 
               >
                 <KeyboardArrowLeftIcon sx={{ fontSize: leftSwiperHover ? "5rem" : "3rem", fontWeight: "bold", transition : ".3s"}}/>
               </div>
-              <div className={`cursor-pointer absolute h-40 w-[3.75rem] bg-[hsla(0,0%,8%,.5)] text-white right-0
+              <div className={`cursor-pointer absolute h-[13rem] w-[3.75rem] bg-[hsla(0,0%,8%,.5)] text-white right-0
                   z-20 items-center justify-center custom-transition-duration-3s rounded-l ${swiperHover ? "flex" : "hidden"}`}
                 onClick={swipeRight} 
                 onMouseOver={() => deviceType === "Desktop" && setRightSwiperHover(true)}
@@ -201,42 +183,36 @@ export const Slider = ({marginStyle, relativeStyle, title, queryType, queryKey, 
             {/* Carousel Using React Swiper */}
             <Swiper
               mousewheel={true}
-              slidesPerView={7}
-              spaceBetween={8}
-              grabCursor={false}
+              slidesPerView={6}
+              spaceBetween={148}
+              grabCursor={true}
               loop={true}
               navigation={true}
               modules={[Navigation]}
-              className={`w-full h-[9rem] sm:h-auto ${marginStyle} overflow-visible mySwiper`}
+              className={`w-full h-[13rem] sm:h-auto ${marginStyle} overflow-visible mySwiper`}
               onSliderMove={smallDevClick}
             >
               {
-               combinedData?.results?.map((res : ItemType, index : number) => (
-                screenWidth < 640 ?
-                  <SwiperSlide className={`h-full swiperSlide ${index === 0 && !smallDeviceClick && "ml-2"}`} key={index}>
-                      <LazyLoadImage
-                        alt="Show Image"
-                        src={`${import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
-                        className="showSkeleton h-full w-full rounded"
-                        onError={handleImageError}
-                      />
-                  </SwiperSlide>
-                  :
+               data?.results?.map((res : ItemType, index : number) => (
                   <SwiperSlide 
-                    className = "swiperSlide h-[10rem] cursor-pointer"
+                    className = {`swiperSlideSmall h-[13rem] cursor-pointer ${index >= 10 && "hidden"}
+                    ${index === 0 && "ml-[10rem]"}
+                    `}
                     key={index}
                     onMouseOver={() => deviceType === "Desktop" && handleHover(index, res?.media_type, res?.id)}
                     onMouseLeave={() => deviceType === "Desktop" && handleHoverOut()}
                   >
-                      <ItemSlider
+                    {index < 10 &&
+                      <ItemSliderSmall
                         itemHover = {itemHover}
                         index = {index}
-                        imageUrl = {res?.backdrop_path}
+                        imageUrl = {res?.poster_path}
                         trailerData = {trailerData}
                         isFetchedTrailer = {isFetchedTrailer}
                         mediaType = {res?.media_type}
                         showDetails = {showDetails}
                       />
+                    }
                   </SwiperSlide>
                 ))
               }

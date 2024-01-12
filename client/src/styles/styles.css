@@ -156,16 +156,25 @@ button:hover {
         width: 6.5rem !important;
     }
     .swiperSlideSmall {
-        width: 9.5rem !important;
+        width: 6.5rem !important;
     }
-    .imageSwiper {
-        height: 1rem !important;
+    .swiperSlideSmall2 {
+        width: 11.6rem !important;
     }
     /* 951size breakpoint styles */
     @media (min-width: 640px) {
         .swiperSlide {
             width: 18rem !important;
         }
+
+
+        .swiperSlideSmall {
+            width: 9.5rem !important;
+        }
+        .swiperSlideSmall2 {
+            width: 17.7rem !important;
+        }
+
         .swiperSlideHover {
             width: 25rem !important;
         }

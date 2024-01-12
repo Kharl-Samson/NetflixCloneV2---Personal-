@@ -44,7 +44,8 @@ export const ItemSliderSmall = ({
     }: ItemSliderProps
 ) => {
     // Style when hover the item
-    const hoverStyle = `swiperSlideHover h-auto relative z-30 cursor-pointer overflow-auto item-shadow mt-[-6.25rem] rounded-lg ${itemHover !== 0 && "ml-[-3.438rem]"}`
+    const hoverStyle = `swiperSlideHover sm:h-auto relative z-30 cursor-pointer overflow-auto item-shadow mt-[-6.25rem] rounded-lg 
+      ${itemHover === 0 ? "mr-[-7rem]": "mr-[-5rem]"}`
 
     // React Youtube State
     const { showVideoItems, setShowVideoItems, triggerAnimItems, isMutedItems, setIsMutedItems, videoEndedItems, setVideoEndedItems, setPlayAgainItems} = useAppStore()
@@ -90,18 +91,20 @@ export const ItemSliderSmall = ({
     
   return (
     <div
-      className = {`swiperSlideSmall cursor-pointer bg-[#181818] h-[13rem] eachSwiper float-right
-        rounded overflow-hidden custom-transition-duration-3s ${itemHover === index && triggerAnimItems && hoverStyle}`
+      className = {`swiperSlideSmall cursor-pointer eachSwiper float-right rounded overflow-hidden
+        custom-transition-duration-3s ${itemHover === index && triggerAnimItems && hoverStyle}`
       } 
     >
-     {/* <h1 className="text-[13rem] font-bold absolute ml-[-5rem] custom-text-stroke">{index ? index + 1 : 1}</h1> */}
-      {rankData[index || 0]}
+     
+      {// Ranking Number
+      rankData[index || 0]
+      }
 
       {/* Show Cover */}
       <LazyLoadImage
         alt="Show Image"
         src={`${import.meta.env.VITE_BASE_IMAGE_URL}${imageUrl}`} 
-        className={`w-full h-[full] max-h-[13rem] showSkeleton relative custom-transition-duration-10s
+        className={`w-full h-[9rem] sm:h-[13rem] relative custom-transition-duration-10s bg-[#181818]
             ${itemHover !== index && triggerAnimItems && "rounded"} ${showVideoItems && itemHover === index && triggerAnimItems ? "opacity-0 z-0" : "opacity-100 z-10"}
             ${itemHover === index && triggerAnimItems && "object-cover"}`}
         onError={handleImageError}

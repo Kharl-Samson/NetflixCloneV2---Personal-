@@ -48,7 +48,7 @@ export const SliderSmall = ({marginStyle, relativeStyle, title, queryType, query
     // Swiper Controllers
     const [smallDeviceClick, setSmallDeviceClick] = useState<boolean>(false)
     const smallDevClick = () => setSmallDeviceClick(true)
-    console.log(smallDeviceClick)
+    smallDeviceClick && "" // Delete
 
     // React Youtube State
     const { showVideo, setShowVideoItems, setIsMutedItems, setPause, setTriggerAnimItems} = useAppStore()
@@ -149,7 +149,7 @@ export const SliderSmall = ({marginStyle, relativeStyle, title, queryType, query
 
   return (
     <div className={`mt-3 sm:z-40 ${relativeStyle}`}>
-        <p className={`text-white text-lg sm:text-2xl font-semibold sm:font-bold ${marginStyle}`}>{title}</p>
+        <p className={`text-white text-base sm:text-2xl font-semibold sm:font-bold ${marginStyle}`}>{title}</p>
     
         {/* Slider Container */}
         <div 
@@ -182,22 +182,26 @@ export const SliderSmall = ({marginStyle, relativeStyle, title, queryType, query
             {/* Carousel Using React Swiper */}
             <Swiper
               mousewheel={true}
-              slidesPerView={6}
-              spaceBetween={148}
-              grabCursor={true}
-              loop={true}
+              slidesPerView={
+                screenWidth <= 450 ? 2 : 
+                screenWidth <= 600 ? 3 : 
+                screenWidth <= 800 ? 2 : 
+                screenWidth <= 985 ? 3 : 
+                screenWidth <= 1300 ? 4 : 6 
+              }
+              spaceBetween={
+                screenWidth < 640 ? 0 : 20
+              }
               navigation={true}
               modules={[Navigation]}
-              className={`w-full h-[13rem] sm:h-auto ${marginStyle} overflow-visible mySwiper`}
+              className={`w-full h-[9rem] sm:h-[13rem] ${marginStyle} overflow-visible mySwiper`}
               onSliderMove={smallDevClick}
             >
               {
                data?.results?.map((res : ItemType, index : number) => (
                   <SwiperSlide 
-                    className = {`swiperSlideSmall h-[13rem] cursor-pointer ${index >= 10 && "hidden"}
-                    ${index === 0 && "ml-[10rem]"}
-                    `}
                     key={index}
+                    className = {`swiperSlideSmall2 h-[9rem] sm:h-[13rem] cursor-pointer ${index >= 10 && "hidden"}`}
                     onMouseOver={() => deviceType === "Desktop" && handleHover(index, res?.media_type, res?.id)}
                     onMouseLeave={() => deviceType === "Desktop" && handleHoverOut()}
                   >

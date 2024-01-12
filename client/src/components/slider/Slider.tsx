@@ -168,7 +168,7 @@ export const Slider = ({marginStyle, relativeStyle, title, queryType, queryKey, 
 
   return (
     <div className={`mt-3 sm:z-20 ${relativeStyle}`}>
-        <p className={`text-white text-lg sm:text-2xl font-semibold sm:font-bold ${marginStyle}`}>{title}</p>
+        <p className={`text-white text-base sm:text-2xl font-semibold sm:font-bold ${marginStyle}`}>{title}</p>
     
         {/* Slider Container */}
         <div 

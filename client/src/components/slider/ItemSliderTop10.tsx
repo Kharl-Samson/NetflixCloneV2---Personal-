@@ -9,16 +9,8 @@ import { useAppStore } from "../../store/ZustandStore"
 import { YoutubePlayerItem } from "../../widgets/youtubePlayer/YoutubePlayerItem"
 import { useEffect, useState } from "react"
 import rankData from "../../data/rankData"
-
-type ItemSliderProps = {
-    itemHover : number | null
-    index : number | null
-    imageUrl : string
-    trailerData : string
-    isFetchedTrailer : boolean
-    mediaType : string
-    showDetails : any
-}
+import { ItemSliderProps } from "../../types/itemTypes"
+import { toggleVideoSound } from "../../utils/itemsFunction"
 
 const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
     <Tooltip {...props} classes={{ popper: className }} />
@@ -33,7 +25,7 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
     },
   }))
 
-export const ItemSliderSmall = ({
+export const ItemSliderTop10 = ({
         itemHover,
         index,
         imageUrl,
@@ -43,25 +35,15 @@ export const ItemSliderSmall = ({
         showDetails
     }: ItemSliderProps
 ) => {
+    // State from zustand
+    const {screenWidth} = useAppStore()
+
     // Style when hover the item
     const hoverStyle = `swiperSlideHover sm:h-auto relative z-30 cursor-pointer overflow-auto item-shadow mt-[-6.25rem] rounded-lg 
       ${itemHover === 0 ? "mr-[-7rem]": "mr-[-5rem]"}`
 
     // React Youtube State
-    const { showVideoItems, setShowVideoItems, triggerAnimItems, isMutedItems, setIsMutedItems, videoEndedItems, setVideoEndedItems, setPlayAgainItems} = useAppStore()
-
-    // Video Sound Controller
-    const toggleVideoSound = () => {
-        setPlayAgainItems(false)
-        setIsMutedItems(!isMutedItems)
-        
-        if(videoEndedItems) {
-          setVideoEndedItems(false)
-          setShowVideoItems(true)
-          setIsMutedItems(true)
-          setPlayAgainItems(true)
-        }
-    }
+    const { showVideoItems, triggerAnimItems, isMutedItems, videoEndedItems} = useAppStore()
 
     // Random Array - [Match and Age]
     const matchArray : string[] = ["95", "96","97", "98"]
@@ -105,14 +87,14 @@ export const ItemSliderSmall = ({
         alt="Show Image"
         src={`${import.meta.env.VITE_BASE_IMAGE_URL}${imageUrl}`} 
         className={`w-full h-[9rem] sm:h-[13rem] relative custom-transition-duration-10s bg-[#181818]
-            ${itemHover !== index && triggerAnimItems && "rounded"} ${showVideoItems && itemHover === index && triggerAnimItems ? "opacity-0 z-0" : "opacity-100 z-10"}
-            ${itemHover === index && triggerAnimItems && "object-cover"}`}
+          ${itemHover !== index && triggerAnimItems && "rounded"}${itemHover === index && triggerAnimItems && "object-cover"}
+          ${showVideoItems && itemHover === index && triggerAnimItems ? "opacity-0 z-0" : "opacity-100 z-10"}`}  
         onError={handleImageError}
       />
 
       { /* Show Trailer Video */
-      itemHover === index &&
-        <div className={`w-full h-[14.063rem] mt-[-14.063rem] overflow-hidden flex items-center justify-center relative z-0`}>
+      itemHover === index && screenWidth >= 640 &&
+        <div className={`w-full h-[14.063rem] mt-[-14.063rem] overflow-hidden items-center justify-center relative z-0 none sm:flex`}>
           <YoutubePlayerItem
               id = "youtubePlayerItems"
               videoId = {trailerData} 

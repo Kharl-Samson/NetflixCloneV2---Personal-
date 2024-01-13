@@ -3,7 +3,7 @@ import { NavbarMedium } from "../../components/navbar/NavbarMedium"
 import { NavbarNormal } from "../../components/navbar/NavbarNormal"
 import { NavbarSmall } from "../../components/navbar/NavbarSmall"
 import { Slider } from "../../components/slider/Slider"
-import { SliderSmall } from "../../components/slider/SliderSmall"
+import { SliderTop10 } from "../../components/slider/SliderTop10"
 import { useAppStore } from "../../store/ZustandStore"
 import { Hero } from "./sections/Hero"
 
@@ -17,7 +17,7 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
   const {screenWidth} = useAppStore()
   
   return (
-    <div className="bg-custom-color-hero-1  overflow-hidden h-[200dvh]">
+    <div className="bg-custom-color-hero-1  overflow-hidden h-auto pb-[20rem]">
         
       {// My Navigation
         screenWidth < 640 ?
@@ -36,9 +36,9 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
       <Hero/>
 
       {/* Top 10 TV Shows */}
-      <SliderSmall
+      <SliderTop10
         marginStyle = { 
-          screenWidth < 640 ? "ml-2" : 
+          screenWidth < 640 ? "ml-5" : 
           screenWidth <= 800 ? "ml-7" : 
           screenWidth <= 950 ? "ml-7" : "ml-14"
         }
@@ -52,7 +52,7 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
       {/* Trending Section */}
       <Slider
         marginStyle = { 
-          screenWidth < 640 ? "ml-2" : 
+          screenWidth < 640 ? "ml-5" : 
           screenWidth <= 800 ? "ml-7" : 
           screenWidth <= 950 ? "ml-7" : "ml-14"
         }

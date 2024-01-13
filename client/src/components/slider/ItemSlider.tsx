@@ -8,16 +8,8 @@ import down from "../../assets/images/icons/down.png"
 import { useAppStore } from "../../store/ZustandStore"
 import { YoutubePlayerItem } from "../../widgets/youtubePlayer/YoutubePlayerItem"
 import { useEffect, useState } from "react"
-
-type ItemSliderProps = {
-    itemHover : number | null
-    index : number | null
-    imageUrl : string
-    trailerData : string
-    isFetchedTrailer : boolean
-    mediaType : string
-    showDetails : any
-}
+import { ItemSliderProps } from "../../types/itemTypes"
+import { toggleVideoSound } from "../../utils/itemsFunction"
 
 const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
     <Tooltip {...props} classes={{ popper: className }} />
@@ -46,20 +38,7 @@ export const ItemSlider = ({
     const hoverStyle = `swiperSlideHover h-auto relative z-30 cursor-pointer overflow-auto item-shadow mt-[-6.25rem] rounded-lg ${itemHover !== 0 && "ml-[-3.438rem]"}`
 
     // React Youtube State
-    const { showVideoItems, setShowVideoItems, triggerAnimItems, isMutedItems, setIsMutedItems, videoEndedItems, setVideoEndedItems, setPlayAgainItems} = useAppStore()
-
-    // Video Sound Controller
-    const toggleVideoSound = () => {
-        setPlayAgainItems(false)
-        setIsMutedItems(!isMutedItems)
-        
-        if(videoEndedItems) {
-          setVideoEndedItems(false)
-          setShowVideoItems(true)
-          setIsMutedItems(true)
-          setPlayAgainItems(true)
-        }
-    }
+    const { showVideoItems, triggerAnimItems, isMutedItems, videoEndedItems} = useAppStore()
 
     // Random Array - [Match and Age]
     const matchArray : string[] = ["95", "96","97", "98"]

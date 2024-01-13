@@ -3,8 +3,8 @@ import "swiper/css"
 import "swiper/css/pagination"
 import "swiper/css/navigation"
 import { Navigation }  from "swiper/modules"
-import { useMutation, useQuery } from "react-query"
-import { getShowDetails, getShowList, getShowTrailer } from "../../services/apiFetchShowList"
+import { useQuery } from "react-query"
+import { getShowList, getShowTrailer } from "../../services/apiFetchShowList"
 import { useEffect, useMemo, useState } from "react"
 import { ItemType } from "../../types/itemTypes"
 import { LazyLoadImage } from "react-lazy-load-image-component"
@@ -13,6 +13,7 @@ import { useAppStore } from "../../store/ZustandStore"
 import { ItemSlider } from "./ItemSlider"
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight"
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft"
+import { dataInEffect, swipeLeft, swipeRight, useHoverHandlers } from "../../utils/itemsFunction"
 
 type SliderProps = {
   marginStyle : string
@@ -22,9 +23,6 @@ type SliderProps = {
   queryKey : string
   classCount : number
 }
-
-type GetShowDetailsResponse = string
-
 
 export const Slider = ({marginStyle, relativeStyle, title, queryType, queryKey, classCount} : SliderProps) => {
     // State from zustand
@@ -65,64 +63,12 @@ export const Slider = ({marginStyle, relativeStyle, title, queryType, queryKey, 
       userAgent.match(/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i) ? setDeviceType("Phone") : setDeviceType("Desktop")
     },[deviceType])
   
-    // Swiper Controllers
-    const [smallDeviceClick, setSmallDeviceClick] = useState<boolean>(false)
-    const smallDevClick = () => setSmallDeviceClick(true)
-
-    // React Youtube State
-    const { showVideo, setShowVideoItems, setIsMutedItems, setPause, setTriggerAnimItems} = useAppStore()
-
-    // Items functions in larger device
-    const [trailerData, setTrailerData] = useState<string>("")
-    const [category, setCategory] = useState<string>("")
-    const [videoId, setVideoId] = useState<string>("")
+    // Hovers Functions Util
     const [itemHover, setItemHover] = useState<number | null>(null)
-
-    // fetch show details when hover
-    const [showDetails, setShowDetails] = useState<string>("")
-    let cancelToken: ReturnType<typeof getShowDetails> | undefined
-    const mutation = useMutation<GetShowDetailsResponse, Error, { category: string; trailerId: string | number; language?: string }>(
-      ({ category, trailerId, language }) =>
-        getShowDetails(category, trailerId, language),
-      {
-        onSuccess: (res) => {
-          setShowDetails(res)
-        },
-        onError: (error) => {
-          console.log(error)
-        },
-        onMutate: async ({ category, trailerId, language }) => {
-          cancelToken = getShowDetails(category, trailerId, language)
-          return { cancelToken }
-        }
-      }
-    )
-
-    // Hover Show
-    const handleHover = (index : number,  media_type : string, id : string) => {
-      setCategory(media_type)
-      setVideoId(id)
-      setItemHover(index)
-  
-      mutation.mutate({
-        category: media_type,
-        trailerId: id,
-        language: "en-US"
-      })
-    }
-
-    // Remove hover on show
-    const handleHoverOut = () => {
-      setTriggerAnimItems(false)
-
-      setItemHover(null)
-      setShowVideoItems(false)
-      setTrailerData("")
-      setCategory("")
-      setVideoId("")
-      setIsMutedItems(true)
-      showVideo && setPause(false)
-    }
+    const { handleHover, handleHoverOut } = useHoverHandlers()
+    
+    // React Youtube State
+    const { category, videoId, trailerData, showDetails} = useAppStore()
 
     // Fetch trailer data
     const { data : myTrailerData, isFetched: isFetchedTrailer, isError: isTrailerError } = useQuery(
@@ -133,38 +79,14 @@ export const Slider = ({marginStyle, relativeStyle, title, queryType, queryKey, 
     // When done querying put the data in states variable
     useEffect(() => {
       // Trailer Data Query
-      if(isFetchedTrailer && !isTrailerError && myTrailerData?.results.length !== 0){
-          for(var i : number = 0 ; i < myTrailerData?.results.length ; i++){
-            if (myTrailerData?.results[i]?.name?.toUpperCase().indexOf("OFFICIAL TRAILER") > -1){
-              setTrailerData(myTrailerData?.results[i].key)
-              break
-            }
-            else if(myTrailerData?.results[i]?.name?.includes("TRAILER")){
-              setTrailerData(myTrailerData?.results[i].key)
-              break
-            }
-            else{
-              setTrailerData(myTrailerData?.results[0].key)
-            }
-          }
-      }
+      (isFetchedTrailer && !isTrailerError && myTrailerData?.results.length !== 0) && dataInEffect(myTrailerData)
     }, [itemHover, isFetchedTrailer, myTrailerData])
     
     // Swiper Controllers
     const [leftSwiperHover, setLeftSwiperHover] = useState<boolean>(false)
     const [rightSwiperHover, setRightSwiperHover] = useState<boolean>(false)
     const [swiperHover, setSwiperHover] = useState<boolean>(false)
-
     const [showLeftSwipe, setShowLeftSwipe] = useState<boolean>(false)
-    const swipeLeft = () => {
-      // @ts-ignore
-      document.getElementsByClassName("swiper-button-prev")[classCount].click()
-    }
-    const swipeRight = () => {
-      setShowLeftSwipe(true)
-      // @ts-ignore
-      document.getElementsByClassName("swiper-button-next")[classCount].click()
-    }
 
   return (
     <div className={`mt-3 sm:z-20 ${relativeStyle}`}>
@@ -181,7 +103,7 @@ export const Slider = ({marginStyle, relativeStyle, title, queryType, queryKey, 
             <div className="hidden sm:block">
               <div className={`cursor-pointer absolute h-40 w-[3.75rem] bg-[hsla(0,0%,8%,.5)] text-white
                   z-20 items-center justify-center custom-transition-duration-3s rounded-r ${swiperHover && showLeftSwipe ? "flex" : "hidden"}`}
-                onClick={swipeLeft}  
+                onClick={() => swipeLeft(classCount)}  
                 onMouseOver={() => deviceType === "Desktop" && setLeftSwiperHover(true)}
                 onMouseOut={() => deviceType === "Desktop" && setLeftSwiperHover(false)}
               >
@@ -189,7 +111,7 @@ export const Slider = ({marginStyle, relativeStyle, title, queryType, queryKey, 
               </div>
               <div className={`cursor-pointer absolute h-40 w-[3.75rem] bg-[hsla(0,0%,8%,.5)] text-white right-0
                   z-20 items-center justify-center custom-transition-duration-3s rounded-l ${swiperHover ? "flex" : "hidden"}`}
-                onClick={swipeRight} 
+                onClick={()=> { setShowLeftSwipe(true) ; swipeRight(classCount)}} 
                 onMouseOver={() => deviceType === "Desktop" && setRightSwiperHover(true)}
                 onMouseOut={() => deviceType === "Desktop" && setRightSwiperHover(false)}
               >
@@ -208,12 +130,11 @@ export const Slider = ({marginStyle, relativeStyle, title, queryType, queryKey, 
               navigation={true}
               modules={[Navigation]}
               className={`w-full h-[9rem] sm:h-auto ${marginStyle} overflow-visible mySwiper`}
-              onSliderMove={smallDevClick}
             >
               {
                combinedData?.results?.map((res : ItemType, index : number) => (
                 screenWidth < 640 ?
-                  <SwiperSlide className={`h-full swiperSlide ${index === 0 && !smallDeviceClick && "ml-2"}`} key={index}>
+                  <SwiperSlide className="h-full swiperSlide" key={index}>
                       <LazyLoadImage
                         alt="Show Image"
                         src={`${import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
@@ -225,8 +146,8 @@ export const Slider = ({marginStyle, relativeStyle, title, queryType, queryKey, 
                   <SwiperSlide 
                     className = "swiperSlide h-[10rem] cursor-pointer"
                     key={index}
-                    onMouseOver={() => deviceType === "Desktop" && handleHover(index, res?.media_type, res?.id)}
-                    onMouseLeave={() => deviceType === "Desktop" && handleHoverOut()}
+                    onMouseOver={() => { deviceType === "Desktop" && setItemHover(index) ; handleHover(res?.media_type, res?.id) }}
+                    onMouseLeave={() =>{ deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
                   >
                       <ItemSlider
                         itemHover = {itemHover}

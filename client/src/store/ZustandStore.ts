@@ -27,6 +27,16 @@ type appStore = {
   setPlayAgainItems: (value: boolean) => void
   triggerAnimItems: boolean
   setTriggerAnimItems: (value: boolean) => void
+
+  // Items States
+  trailerData: string
+  setTrailerData: (value: string) => void
+  category: string
+  setCategory: (value: string) => void
+  videoId: string
+  setVideoId: (value: string) => void
+  showDetails: any
+  setShowDetails: (value: any ) => void
 }
 
 const useAppStore = create<appStore>()(
@@ -59,6 +69,16 @@ const useAppStore = create<appStore>()(
     setPlayAgainItems: (value: boolean) => set({ playAgainItems: value }),
     triggerAnimItems: false,
     setTriggerAnimItems: (value: boolean) => set({ triggerAnimItems: value }),
+    
+    // Items States
+    trailerData: "",
+    setTrailerData: (value: string) => set({ trailerData: value }),
+    category: "",
+    setCategory: (value: string) => set({ category: value }),
+    videoId: "",
+    setVideoId: (value: string) => set({ videoId: value }),
+    showDetails: "",
+    setShowDetails: (value: any) => set({ showDetails: value }),
   })
 })
 

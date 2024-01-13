@@ -41,7 +41,7 @@ export const ItemSliderTop10 = ({
 
     // Style when hover the item
     const hoverStyle = `swiperSlideHover sm:h-auto relative z-30 cursor-pointer overflow-auto item-shadow mt-[-6.25rem] rounded-lg 
-      ${itemHover === 0 ? "mr-[-7rem]": "mr-[-5rem]"} ${itemHover === 9 && "mr-0"}`
+      ${itemHover === 0 ? "mr-[-7rem]": "mr-[-5rem]"} ${itemHover === 9 && "mr-[1rem]"}`
 
     // React Youtube State
     const { showVideoItems, triggerAnimItems, isMutedItems, videoEndedItems} = useAppStore()

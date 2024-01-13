@@ -8,7 +8,7 @@ export const YoutubePlayer = ({ id, videoId, duration, isFetchedTrailer } : Yout
     const [video, setVideo] = useState<any>(null)
 
     // React Youtube State
-    const { setShowVideo, isMuted, setVideoEnded, playAgain, setPlayAgain, pause } = useAppStore()
+    const { setShowVideo, isMuted, setVideoEnded, playAgain, setPlayAgain, pause, currentSection } = useAppStore()
 
     // Video Valid State
     const [videoValid, setVideoValid] = useState<boolean>(false)
@@ -49,9 +49,9 @@ export const YoutubePlayer = ({ id, videoId, duration, isFetchedTrailer } : Yout
         // Play Again
         playAgain && video.playVideo()
         // Pause
-        pause ? video.pauseVideo() : video.playVideo()
+        pause || currentSection === "categorySection" ? video.pauseVideo() : video.playVideo()
       }
-    },[isMuted, playAgain, pause, video, videoValid])
+    },[isMuted, playAgain, pause, video, videoValid, currentSection])
 
   return (
     <YouTube  

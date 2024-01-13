@@ -37,6 +37,10 @@ type appStore = {
   setVideoId: (value: string) => void
   showDetails: any
   setShowDetails: (value: any ) => void
+
+  // Active Section State
+  currentSection: string | null
+  setCurrentSection: (value: string | null) => void
 }
 
 const useAppStore = create<appStore>()(
@@ -79,6 +83,10 @@ const useAppStore = create<appStore>()(
     setVideoId: (value: string) => set({ videoId: value }),
     showDetails: "",
     setShowDetails: (value: any) => set({ showDetails: value }),
+
+    // Active Section State
+    currentSection: "",
+    setCurrentSection: (value: string | null) => set({ currentSection: value })
   })
 })
 

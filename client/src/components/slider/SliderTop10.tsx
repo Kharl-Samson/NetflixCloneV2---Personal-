@@ -115,7 +115,7 @@ export const SliderTop10 = ({marginStyle, relativeStyle, title, queryType, query
                   <SwiperSlide 
                     key={index}
                     className = {`swiperSlideSmall2 h-[9rem] sm:h-[13rem] ${index >= 10 && "hidden"} 
-                      overflow-hidden ${itemHover === index && triggerAnimItems && "overflow-visible"}
+                      sm:overflow-hidden ${itemHover === index && triggerAnimItems && "sm:overflow-visible"}
                       ${index === 0 && "ml-[-.5rem] sm:ml-0"} ${index === 9 && "ml-[1.5rem] mr-[7.5rem]"}`}
                     onMouseLeave={() =>{ deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
                   >

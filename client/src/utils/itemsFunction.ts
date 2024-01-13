@@ -3,18 +3,28 @@ import { getShowDetails } from "../services/apiFetchShowList"
 import { useAppStore } from "../store/ZustandStore"
 
 
-// Swiper Controllers ----------------------------------------------------------------------------------------
+/*
+ * When the user swipe the slider to left
+ * Used ts-ignore because of predefined element
+*/
 export const swipeLeft = (classCount : number) => {
     // @ts-ignore
     document.getElementsByClassName("swiper-button-prev")[classCount].click()
 }
 
+/*
+ * When the user swipe the slider to right
+ * Used ts-ignore because of predefined element
+*/
 export const swipeRight = (classCount : number) => {
     // @ts-ignore
     document.getElementsByClassName("swiper-button-next")[classCount].click()
 }
 
-// Item UseEffect Function ------------------------------------------------------------------------------------------
+/*
+ * Function inside useEfect
+ * Setting the active trailer data
+*/
 export const dataInEffect = (myTrailerData : {results : {name: string, key: string}[]} ) => {
     const { setTrailerData } = useAppStore.getState()
 
@@ -33,7 +43,9 @@ export const dataInEffect = (myTrailerData : {results : {name: string, key: stri
     }
 }
 
-// Video Sound Controller -------------------------------------------------------------------------------------------
+/*
+ * When the user click the video sound button
+*/
 export const toggleVideoSound = () => {
   const { setPlayAgainItems, setIsMutedItems, isMutedItems, videoEndedItems, setVideoEndedItems, setShowVideoItems } = useAppStore.getState()
 
@@ -48,8 +60,10 @@ export const toggleVideoSound = () => {
   }
 }
 
-
-// Item Hovers Hook ------------------------------------------------------------------------------------------
+/*
+ * Custom hook for item hover
+ * Includes onMouseOver and onMouseOut
+*/
 type GetShowDetailsResponse = string
 export const useHoverHandlers = () => {
     const { 

@@ -8,9 +8,9 @@ import down from "../../assets/images/icons/down.png"
 import { useAppStore } from "../../store/ZustandStore"
 import { YoutubePlayerItem } from "../../widgets/youtubePlayer/YoutubePlayerItem"
 import { useEffect, useState } from "react"
-import rankData from "../../data/rankData"
 import { ItemSliderProps } from "../../types/itemTypes"
 import { toggleVideoSound } from "../../utils/itemsFunction"
+import { Rank } from "../rank/Rank"
 
 const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
     <Tooltip {...props} classes={{ popper: className }} />
@@ -32,7 +32,8 @@ export const ItemSliderTop10 = ({
         trailerData,
         isFetchedTrailer,
         mediaType,
-        showDetails
+        showDetails,
+        onMouseOver
     }: ItemSliderProps
 ) => {
     // State from zustand
@@ -40,7 +41,7 @@ export const ItemSliderTop10 = ({
 
     // Style when hover the item
     const hoverStyle = `swiperSlideHover sm:h-auto relative z-30 cursor-pointer overflow-auto item-shadow mt-[-6.25rem] rounded-lg 
-      ${itemHover === 0 ? "mr-[-7rem]": "mr-[-5rem]"}`
+      ${itemHover === 0 ? "mr-[-7rem]": "mr-[-5rem]"} ${itemHover === 9 && "mr-0"}`
 
     // React Youtube State
     const { showVideoItems, triggerAnimItems, isMutedItems, videoEndedItems} = useAppStore()
@@ -70,26 +71,24 @@ export const ItemSliderTop10 = ({
     const showRuntime = mediaType === "movie" ? convertToHoursAndMinutes(showDetails?.runtime || 0) : null
     const { hours, minutes } = showRuntime || { hours: 0, minutes: 0 }
 
-    
   return (
     <div
       className = {`swiperSlideSmall cursor-pointer eachSwiper float-right rounded overflow-hidden
         custom-transition-duration-3s ${itemHover === index && triggerAnimItems && hoverStyle}`
       } 
     >
-     
-      {// Ranking Number
-      rankData[index || 0]
-      }
-
+      {/* Show Rankings */}
+      <Rank index = {index || 0} onMouseOver = {onMouseOver}/>
+      
       {/* Show Cover */}
       <LazyLoadImage
         alt="Show Image"
         src={`${import.meta.env.VITE_BASE_IMAGE_URL}${imageUrl}`} 
         className={`w-full h-[9rem] sm:h-[13rem] relative custom-transition-duration-10s bg-[#181818]
-          ${itemHover !== index && triggerAnimItems && "rounded"}${itemHover === index && triggerAnimItems && "object-cover"}
+          ${itemHover !== index && triggerAnimItems && "rounded"} ${itemHover === index && triggerAnimItems && "object-cover object-center"}
           ${showVideoItems && itemHover === index && triggerAnimItems ? "opacity-0 z-0" : "opacity-100 z-10"}`}  
         onError={handleImageError}
+        onMouseOver={onMouseOver}
       />
 
       { /* Show Trailer Video */

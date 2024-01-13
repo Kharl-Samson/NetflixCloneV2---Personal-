@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Font Collections */
+/* Netflix Font */
 @font-face { font-family: netflix-regular; src: url("../assets/font/NetflixSans-Regular.otf"); } 
 
 
@@ -67,7 +67,7 @@ button:hover {
       -ms-user-select: none;
     }
 
-    /* Netflix Fonts */
+    /* Font Collections */
     .netflix-font-regular {
         font-family: netflix-regular;
     }
@@ -94,12 +94,10 @@ button:hover {
         -webkit-backdrop-filter: blur( 8.5px );
     }
 
-    /* Custom Image Inline Shadow */
+    /* Custom Shadows */
     .image-inline-shadow {
         border-image: fill 0 linear-gradient(#0003, #000);
     }
-
-    /* Custom Shadows */
     .shadowing {
         background-image: linear-gradient(0, transparent, #333333);
     }
@@ -122,13 +120,7 @@ button:hover {
         background-color: rgba(51,51,51,.6);
     }
 
-    /* Text Stroke */
-    .custom-text-stroke {
-        -webkit-text-stroke: 1px #595959;
-        text-stroke: 1px #595959;
-    }
-
-    /* Skeleton in each show */
+    /* Custom Skeleton */
     .showSkeleton{
         transition: .2s;
         background: 
@@ -147,7 +139,7 @@ button:hover {
         }
     }
 
-    /* Item in Swiper */
+    /* Swiper CSS */
     .eachSwiper{
         min-height: 10rem !important;
         width: 17.5rem !important;
@@ -166,15 +158,12 @@ button:hover {
         .swiperSlide {
             width: 18rem !important;
         }
-
-
         .swiperSlideSmall {
             width: 9.5rem !important;
         }
         .swiperSlideSmall2 {
             width: 17.7rem !important;
         }
-
         .swiperSlideHover {
             width: 25rem !important;
         }

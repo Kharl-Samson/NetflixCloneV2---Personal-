@@ -49,7 +49,7 @@ export const SliderTop10 = ({marginStyle, relativeStyle, title, queryType, query
     const { handleHover, handleHoverOut } = useHoverHandlers()
 
     // React Youtube State
-    const { category, videoId, trailerData, showDetails } = useAppStore()
+    const { category, videoId, trailerData, showDetails, triggerAnimItems } = useAppStore()
 
     // Fetch trailer data
     const { data : myTrailerData, isFetched: isFetchedTrailer, isError: isTrailerError } = useQuery(
@@ -114,9 +114,9 @@ export const SliderTop10 = ({marginStyle, relativeStyle, title, queryType, query
                data?.results?.map((res : ItemType, index : number) => (
                   <SwiperSlide 
                     key={index}
-                    className = {`swiperSlideSmall2 h-[9rem] sm:h-[13rem] cursor-pointer ${index >= 10 && "hidden"} 
+                    className = {`swiperSlideSmall2 h-[9rem] sm:h-[13rem] ${index >= 10 && "hidden"} 
+                      overflow-hidden ${itemHover === index && triggerAnimItems && "overflow-visible"}
                       ${index === 0 && "ml-[-.5rem] sm:ml-0"} ${index === 9 && "ml-[1.5rem] mr-[7.5rem]"}`}
-                    onMouseOver={() => { deviceType === "Desktop" && setItemHover(index) ; handleHover(res?.media_type, res?.id) }}
                     onMouseLeave={() =>{ deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
                   >
                     {index < 10 &&
@@ -128,6 +128,7 @@ export const SliderTop10 = ({marginStyle, relativeStyle, title, queryType, query
                         isFetchedTrailer = {isFetchedTrailer}
                         mediaType = {res?.media_type}
                         showDetails = {showDetails}
+                        onMouseOver={() => { deviceType === "Desktop" && setItemHover(index) ; handleHover(res?.media_type, res?.id) }}
                       />
                     }
                   </SwiperSlide>

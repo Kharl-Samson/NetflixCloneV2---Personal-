@@ -3,28 +3,22 @@ import "../youtubePlayer/YoutubePlayer.css"
 import YouTube, { YouTubeProps } from "react-youtube"
 import { useAppStore } from "../../store/ZustandStore"
 
-type YoutubePlayerProps = {
-    id : string
-    videoId : string
-    duration : number
-    isFetchedTrailer? : boolean
-}
-
-export const YoutubePlayer = ( {
-    id, videoId, duration, isFetchedTrailer
-  } : YoutubePlayerProps) => {
-
-    const [video, setVideo] = useState<any>(undefined)
+export const YoutubePlayer = ({ id, videoId, duration, isFetchedTrailer } : YoutubePlayerTypes) => {
+    // Video Data State
+    const [video, setVideo] = useState<any>(null)
 
     // React Youtube State
     const { setShowVideo, isMuted, setVideoEnded, playAgain, setPlayAgain, pause } = useAppStore()
 
-    // React Youtube Configuration
+    // Video Valid State
     const [videoValid, setVideoValid] = useState<boolean>(false)
+
+    // React Youtube Configuration
     const onReady: YouTubeProps["onReady"] = (event) => {
       event.target.setPlaybackQuality("highres")
       setVideo(() => event.target)
-      if(isFetchedTrailer && videoId && event.target.getVideoData().video_id && event.target.getVideoData().isPlayable) {
+
+      if(isFetchedTrailer && videoId && event.target.getVideoData()?.video_id && event.target.getVideoData()?.isPlayable) {
         setVideoValid(true)
         const timeOut = setTimeout(() => setShowVideo(true), duration)
         return () => clearTimeout(timeOut)
@@ -32,7 +26,6 @@ export const YoutubePlayer = ( {
       else{
         setVideoValid(false)
       }
-
     }
 
     const videoEnded = () => {
@@ -50,13 +43,15 @@ export const YoutubePlayer = ( {
     }
 
     useEffect(() => {
-      // Mute
-      videoValid && isMuted ? video?.mute() : video?.unMute()
-      // Play Again
-      videoValid && playAgain && video?.playVideo()
-      // Pause
-      videoValid && pause ? video?.pauseVideo() : video?.playVideo()
-    },[isMuted, playAgain, pause])
+      if (video && videoValid) {
+        // Mute
+        isMuted ? video.mute() : video.unMute()
+        // Play Again
+        playAgain && video.playVideo()
+        // Pause
+        pause ? video.pauseVideo() : video.playVideo()
+      }
+    },[isMuted, playAgain, pause, video, videoValid])
 
   return (
     <YouTube  

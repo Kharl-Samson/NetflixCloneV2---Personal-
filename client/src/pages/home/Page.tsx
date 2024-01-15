@@ -73,7 +73,7 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
           classCount = {1}
         />
 
-        {/* Trending Section */}
+        {/* US Movies */}
         <Slider
           marginStyle = { 
             screenWidth < 640 ? "ml-5" : 
@@ -81,10 +81,52 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
             screenWidth <= 950 ? "ml-7" : "ml-14"
           }
           sliderStyle = "sm:mt-14 sm:z-[38]"
-          title = "Trending Now"
-          queryType = "Trending Now"
-          queryKey = "trendingNow"
-          classCount = {1}
+          title = "US Movies"
+          queryType = "US Movies"
+          queryKey = "usMovies"
+          classCount = {2}
+        />
+
+        {/* Top 10 Movies */}
+        <SliderTop10
+          marginStyle = { 
+            screenWidth < 640 ? "ml-5" : 
+            screenWidth <= 800 ? "ml-7" : 
+            screenWidth <= 950 ? "ml-7" : "ml-14"
+          }
+          sliderStyle = "sm:mt-14 sm:z-[37]"
+          title = "Top 10 Movies in the Philippines Today"
+          queryType = "Top 10 Movies"
+          queryKey = "top10Movies"
+          classCount = {3}
+        />
+
+        {/* Romantic Movies */}
+        <Slider
+          marginStyle = { 
+            screenWidth < 640 ? "ml-5" : 
+            screenWidth <= 800 ? "ml-7" : 
+            screenWidth <= 950 ? "ml-7" : "ml-14"
+          }
+          sliderStyle = "sm:mt-14 sm:z-[36]"
+          title = "Romantic Movies"
+          queryType = "Romantic Movies"
+          queryKey = "romanticMovies"
+          classCount = {4}
+        />
+
+        {/* Romantic Movies */}
+        <Slider
+          marginStyle = { 
+            screenWidth < 640 ? "ml-5" : 
+            screenWidth <= 800 ? "ml-7" : 
+            screenWidth <= 950 ? "ml-7" : "ml-14"
+          }
+          sliderStyle = "sm:mt-14 sm:z-[35]"
+          title = "TV Action & Adventure"
+          queryType = "TV Action & Adventure"
+          queryKey = "tvActionAdventure"
+          classCount = {5}
         />
       </section>
     </div>

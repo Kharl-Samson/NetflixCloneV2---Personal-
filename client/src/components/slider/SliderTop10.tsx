@@ -31,6 +31,9 @@ export const SliderTop10 = ({marginStyle, sliderStyle, title, queryType, queryKe
     if(queryType === "Top 10 TV Shows"){
       dataCategory = "tv"
     }
+    else if(queryType === "Top 10 Movies"){
+      dataCategory = "movie"
+    }
 
     // Fetch data to be showned in section
     const { data } = useQuery(
@@ -102,40 +105,42 @@ export const SliderTop10 = ({marginStyle, sliderStyle, title, queryType, queryKe
             </div>
             }
 
-            {/* Carousel Using React Swiper */}
-            <Swiper
-              mousewheel={true}
-              slidesPerView="auto"
-              spaceBetween={screenWidth < 640 ? 8 : 20}
-              navigation={true}
-              modules={[Navigation]}
-              className={`w-full h-[9rem] sm:h-[13rem] ${marginStyle} overflow-visible mySwiper`}
-            >
-              {
-               data?.results?.map((res : ItemType, index : number) => (
-                  <SwiperSlide 
-                    key={index}
-                    className = {`swiperSlideSmall2 h-[9rem] sm:h-[13rem] ${index >= 10 && "hidden"} cursor-pointer hover:cursor-pointer
-                      sm:overflow-hidden ${itemHover === index && triggerAnimItems && "sm:overflow-visible"}
-                      ${index === 0 && "ml-[-.5rem] sm:ml-0"} ${index === 9 && "ml-[1.5rem] mr-[7.5rem]"}`}
-                    onMouseLeave={() =>{ deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
-                  >
-                    {index < 10 &&
-                      <ItemSliderTop10
-                        itemHover = {itemHover}
-                        index = {index}
-                        imageUrl = {res?.poster_path}
-                        trailerData = {trailerData}
-                        isFetchedTrailer = {isFetchedTrailer}
-                        mediaType = {res?.media_type}
-                        showDetails = {showDetails}
-                        onMouseOver={() => { deviceType === "Desktop" && setItemHover(index) ; handleHover(res?.media_type, res?.id) }}
-                      />
-                    }
-                  </SwiperSlide>
-                ))
-              }
-            </Swiper>
+            {/* Carousel Using React Swiper */
+            data?.results?.length > 1 && 
+              <Swiper
+                mousewheel={true}
+                slidesPerView="auto"
+                spaceBetween={screenWidth < 640 ? 8 : 20}
+                navigation={true}
+                modules={[Navigation]}
+                className={`w-full h-[9rem] sm:h-[13rem] ${marginStyle} overflow-visible mySwiper`}
+              >
+                {
+                 data?.results?.length > 1 && data?.results?.map((res : ItemType, index : number) => (
+                    <SwiperSlide 
+                      key={index}
+                      className = {`swiperSlideSmall2 h-[9rem] sm:h-[13rem] ${index >= 10 && "hidden"} cursor-pointer hover:cursor-pointer
+                        sm:overflow-hidden ${itemHover === index && triggerAnimItems && "sm:overflow-visible"}
+                        ${index === 0 && "ml-[-.5rem] sm:ml-0"} ${index === 9 && "ml-[1.5rem] mr-[7.5rem]"}`}
+                      onMouseLeave={() =>{ deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
+                    >
+                      {index < 10 &&
+                        <ItemSliderTop10
+                          itemHover = {itemHover}
+                          index = {index}
+                          imageUrl = {res?.poster_path}
+                          trailerData = {trailerData}
+                          isFetchedTrailer = {isFetchedTrailer}
+                          mediaType = {res?.media_type ? res?.media_type : queryType.includes("Movies") && "movie"}
+                          showDetails = {showDetails}
+                          onMouseOver={() => { deviceType === "Desktop" && setItemHover(index) ; handleHover((res?.media_type ? res?.media_type : queryType.includes("Movies") && "movie"), res?.id) }}
+                        />
+                      }
+                    </SwiperSlide>
+                  ))
+                }
+              </Swiper>
+            }
         </div>
     </div>
   )

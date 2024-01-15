@@ -85,14 +85,13 @@ export const useHoverHandlers = () => {
     )
   
     // Hover Show
-    const handleHover = (media_type: string, id: string) => {
+    const handleHover = (media_type: string | boolean, id: string) => {
       const timeOut = setTimeout(() => setShowVideo(false), 100)
-
-      setCategory(media_type)
+      setCategory(media_type.toString())
       setVideoId(id)
   
       mutation.mutate({
-        category: media_type,
+        category: media_type.toString(),
         trailerId: id,
         language: "en-US"
       })

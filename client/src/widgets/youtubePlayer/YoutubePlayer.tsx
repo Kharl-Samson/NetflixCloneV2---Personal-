@@ -52,9 +52,9 @@ export const YoutubePlayer = ({ id, videoId, duration, isFetchedTrailer } : Yout
 
     useEffect(() => {
       // Pause if the user is not on hero section
-      video && videoValid && currentSection === "categorySection" ? video?.pauseVideo() : video?.playVideo()
-
-
+      if (video && videoValid) {
+        currentSection === "categorySection" ? video?.pauseVideo() : video?.playVideo()
+      }
     }, [currentSection])
 
 

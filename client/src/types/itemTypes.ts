@@ -12,7 +12,7 @@ export type ItemSliderProps = {
     imageUrl : string
     trailerData : string
     isFetchedTrailer : boolean
-    mediaType : string
+    mediaType : string | boolean
     showDetails : {
       runtime : number
       number_of_seasons : number

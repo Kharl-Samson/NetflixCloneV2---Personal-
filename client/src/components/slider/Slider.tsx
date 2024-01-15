@@ -33,17 +33,37 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
       dataCategory1 = null
       dataCategory2 = null
     }
+    else if(queryType.includes("Movies")){
+      dataCategory1 = "movie"
+      dataCategory2 = "movie"
+    }
+    else if(queryType.includes("TV")){
+      dataCategory1 = "tv"
+      dataCategory2 = "tv"
+    }
 
     // Fetch data to be showned in section -> First Data
     const { data : data1, isFetched: isFetchedData1, isError: isDataError1 } = useQuery(
       [`${queryKey}1`, dataCategory1, dataCategory2],
-      () => getShowList(queryType, dataCategory1, "en-US", null, 1)
+      () => getShowList(
+        queryType,
+        dataCategory1, 
+        queryType === "Romantic Movies" ? null : "en-US", 
+        queryType === "Romantic Movies" ? 10749 : queryType === "TV Action & Adventure" ? 10759 : null, 
+        1
+      )
     )
 
     // Fetch data to be showned in section -> Second Data
     const { data : data2, isFetched: isFetchedData2, isError: isDataError2 } = useQuery(
       [`${queryKey}2`, dataCategory1, dataCategory2],
-      () => getShowList(queryType, dataCategory1, "en-US", null, 2)
+      () => getShowList(
+        queryType, 
+        dataCategory1, 
+        queryType === "Romantic Movies" ? null : "en-US", 
+        queryType === "Romantic Movies" ? 10749 : queryType === "TV Action & Adventure" ? 10759 : null, 
+        2
+      )
     )
 
     // Combining the results when both requests have been resolved
@@ -91,7 +111,6 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
     // Explore All Hover
     const [sliderTitleHover, setSliderTitleHover] = useState<boolean>(false)
     const [exploreHover, SetExploreHover] = useState<boolean>(false)
-
   return (
     <div className={`mt-3 sm:relative ${sliderStyle}`}
       onMouseOver={() => setSliderTitleHover(true)} 
@@ -139,48 +158,50 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
             </div>
             }
 
-            {/* Carousel Using React Swiper */}
-            <Swiper
-              mousewheel={true}
-              slidesPerView="auto"
-              spaceBetween={8}
-              grabCursor={false}
-              loop={true}
-              navigation={true}
-              modules={[Navigation]}
-              className={`w-full h-[9rem] sm:h-auto ${marginStyle} overflow-visible mySwiper`}
-            >
-              {
-               combinedData?.results?.map((res : ItemType, index : number) => (
-                screenWidth < 640 ?
-                  <SwiperSlide className="h-full swiperSlide" key={index}>
-                      <LazyLoadImage
-                        alt="Show Image"
-                        src={`${import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
-                        className="showSkeleton h-full w-full rounded"
-                        onError={handleImageError}
-                      />
-                  </SwiperSlide>
-                  :
-                  <SwiperSlide 
-                    className = "swiperSlide h-[10rem] cursor-pointer hover:cursor-pointer"
-                    key={index}
-                    onMouseOver={() => { deviceType === "Desktop" && setItemHover(index) ; handleHover(res?.media_type, res?.id) }}
-                    onMouseLeave={() =>{ deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
-                  >
-                      <ItemSlider
-                        itemHover = {itemHover}
-                        index = {index}
-                        imageUrl = {res?.backdrop_path}
-                        trailerData = {trailerData}
-                        isFetchedTrailer = {isFetchedTrailer}
-                        mediaType = {res?.media_type}
-                        showDetails = {showDetails}
-                      />
-                  </SwiperSlide>
-                ))
-              }
-            </Swiper>
+            {/* Carousel Using React Swiper */
+            combinedData?.results?.length > 1 && 
+              <Swiper
+                mousewheel={true}
+                slidesPerView="auto"
+                spaceBetween={8}
+                grabCursor={false}
+                loop={true}
+                navigation={true}
+                modules={[Navigation]}
+                className={`w-full h-[9rem] sm:h-auto ${marginStyle} overflow-visible mySwiper`}
+              >
+                {
+                combinedData?.results?.map((res : ItemType, index : number) => (
+                  screenWidth < 640 ?
+                    <SwiperSlide className="h-full swiperSlide" key={index}>
+                        <LazyLoadImage
+                          alt="Show Image"
+                          src={`${import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
+                          className="showSkeleton h-full w-full rounded"
+                          onError={handleImageError}
+                        />
+                    </SwiperSlide>
+                    :
+                    <SwiperSlide 
+                      className = "swiperSlide h-[10rem] cursor-pointer hover:cursor-pointer"
+                      key={index}
+                      onMouseOver={() => { deviceType === "Desktop" && setItemHover(index) ; handleHover((res?.media_type ? res?.media_type : queryType.includes("Movies") && "movie"), res?.id) }}
+                      onMouseLeave={() =>{ deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
+                    >
+                        <ItemSlider
+                          itemHover = {itemHover}
+                          index = {index}
+                          imageUrl = {res?.backdrop_path}
+                          trailerData = {trailerData}
+                          isFetchedTrailer = {isFetchedTrailer}
+                          mediaType = {res?.media_type ? res?.media_type : queryType.includes("Movies") && "movie"}
+                          showDetails = {showDetails}
+                        />
+                    </SwiperSlide>
+                  ))
+                }
+              </Swiper>
+            }
         </div>
     </div>
   )

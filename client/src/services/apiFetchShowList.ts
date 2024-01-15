@@ -1,18 +1,28 @@
 import axios from "axios"
 
 // Get Data List
-export const getShowList = async (queryType: string, category : string | null, language?: string, genres?: number | null, page?: number) => {
+export const getShowList = async (queryType: string, category : string | null, language?: string | null, genres?: number | null, page?: number) => {
   let url : string = ""
-  switch(queryType){
+  switch (queryType) {
     case "Hero":
+    case "Romantic Movies":
+    case "TV Action & Adventure":
       url = `${import.meta.env.VITE_SERVER_URL}/discover/${category}`
       break
+  
     case "Trending Now":
       url = `${import.meta.env.VITE_SERVER_URL}/trending/all/day`
       break
+  
     case "Top 10 TV Shows":
+    case "Top 10 Movies":
       url = `${import.meta.env.VITE_SERVER_URL}/trending/${category}/day`
       break
+  
+    case "US Movies":
+      url = `${import.meta.env.VITE_SERVER_URL}/${category}/popular`
+      break;
+  
     default:
       url = ""
       break

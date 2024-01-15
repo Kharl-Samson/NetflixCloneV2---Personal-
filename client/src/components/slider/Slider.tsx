@@ -185,7 +185,7 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
                     <SwiperSlide 
                       className = "swiperSlide h-[10rem] cursor-pointer hover:cursor-pointer"
                       key={index}
-                      onMouseOver={() => { deviceType === "Desktop" && setItemHover(index) ; handleHover((res?.media_type ? res?.media_type : queryType.includes("Movies") && "movie"), res?.id) }}
+                      onMouseOver={() => { deviceType === "Desktop" && setItemHover(index) ; handleHover((res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id) }}
                       onMouseLeave={() =>{ deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
                     >
                         <ItemSlider
@@ -194,7 +194,7 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
                           imageUrl = {res?.backdrop_path}
                           trailerData = {trailerData}
                           isFetchedTrailer = {isFetchedTrailer}
-                          mediaType = {res?.media_type ? res?.media_type : queryType.includes("Movies") && "movie"}
+                          mediaType = {res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"}
                           showDetails = {showDetails}
                         />
                     </SwiperSlide>

@@ -2,13 +2,14 @@ import { useEffect, useState } from "react"
 import "../youtubePlayer/YoutubePlayer.css"
 import YouTube, { YouTubeProps } from "react-youtube"
 import { useAppStore } from "../../store/ZustandStore"
+import { videoEnded } from "../../utils/youtubeFunction"
 
 export const YoutubePlayer = ({ id, videoId, duration, isFetchedTrailer } : YoutubePlayerTypes) => {
     // Video Data State
     const [video, setVideo] = useState<any>(null)
 
     // React Youtube State
-    const { setShowVideo, isMuted, setVideoEnded, playAgain, setPlayAgain, pause, currentSection } = useAppStore()
+    const { setShowVideo, isMuted, playAgain, pause, currentSection } = useAppStore()
 
     // Video Valid State
     const [videoValid, setVideoValid] = useState<boolean>(false)
@@ -28,12 +29,6 @@ export const YoutubePlayer = ({ id, videoId, duration, isFetchedTrailer } : Yout
       }
     }
 
-    const videoEnded = () => {
-      setVideoEnded(true)
-      setShowVideo(false)
-      setPlayAgain(false)
-    }
-
     // React Youtube Configuration
     const opts: YouTubeProps["opts"] = {
         playerVars: {
@@ -45,13 +40,23 @@ export const YoutubePlayer = ({ id, videoId, duration, isFetchedTrailer } : Yout
     useEffect(() => {
       if (video && videoValid) {
         // Mute
-        isMuted ? video.mute() : video.unMute()
-        // Play Again
-        playAgain && video.playVideo()
+        isMuted ? video?.mute() : video?.unMute()
+
         // Pause
-        pause || currentSection === "categorySection" ? video.pauseVideo() : video.playVideo()
+        pause ? video?.pauseVideo() : video?.playVideo()
+        
+        // Play Again
+        playAgain && video?.playVideo()
       }
-    },[isMuted, playAgain, pause, video, videoValid, currentSection])
+    },[isMuted, playAgain, pause, video, videoValid])
+
+    useEffect(() => {
+      // Pause if the user is not on hero section
+      video && videoValid && currentSection === "categorySection" ? video?.pauseVideo() : video?.playVideo()
+
+
+    }, [currentSection])
+
 
   return (
     <YouTube  

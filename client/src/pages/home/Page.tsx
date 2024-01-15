@@ -52,7 +52,7 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
             screenWidth <= 800 ? "ml-7" : 
             screenWidth <= 950 ? "ml-7" : "ml-14"
           }
-          relativeStyle = "sm:mt-[-14rem] sm:relative"
+          sliderStyle = "sm:mt-[-14rem] sm:z-[40]"
           title = "Top 10 TV Shows in the Philippines Today"
           queryType = "Top 10 TV Shows"
           queryKey = "top10TVshow"
@@ -66,7 +66,7 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
             screenWidth <= 800 ? "ml-7" : 
             screenWidth <= 950 ? "ml-7" : "ml-14"
           }
-          relativeStyle = "sm:mt-14 sm:relative"
+          sliderStyle = "sm:mt-14 sm:z-[39]"
           title = "Trending Now"
           queryType = "Trending Now"
           queryKey = "trendingNow"
@@ -80,7 +80,7 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
             screenWidth <= 800 ? "ml-7" : 
             screenWidth <= 950 ? "ml-7" : "ml-14"
           }
-          relativeStyle = "sm:mt-14 sm:relative"
+          sliderStyle = "sm:mt-14 sm:z-[38]"
           title = "Trending Now"
           queryType = "Trending Now"
           queryKey = "trendingNow"

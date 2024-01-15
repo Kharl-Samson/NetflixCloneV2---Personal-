@@ -13,16 +13,17 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft"
 import { ItemSliderTop10 } from "./ItemSliderTop10"
 import { dataInEffect, swipeLeft, swipeRight, useHoverHandlers } from "../../utils/itemsFunction"
 
+
 type SliderProps = {
   marginStyle : string
-  relativeStyle? : string
+  sliderStyle? : string
   title : string
   queryType : string
   queryKey : string
   classCount : number
 }
 
-export const SliderTop10 = ({marginStyle, relativeStyle, title, queryType, queryKey, classCount} : SliderProps) => {
+export const SliderTop10 = ({marginStyle, sliderStyle, title, queryType, queryKey, classCount} : SliderProps) => {
     // State from zustand
     const {screenWidth} = useAppStore()
 
@@ -70,7 +71,7 @@ export const SliderTop10 = ({marginStyle, relativeStyle, title, queryType, query
     const [showLeftSwipe, setShowLeftSwipe] = useState<boolean>(false)
 
   return (
-    <div className={`mt-3 sm:z-40 ${relativeStyle}`}>
+    <div className={`mt-3 sm:relative ${sliderStyle}`}>
         <p className={`text-white text-base sm:text-2xl font-semibold sm:font-bold mr-2 ${marginStyle}`}>{title}</p>
     
         {/* Slider Container */}
@@ -114,7 +115,7 @@ export const SliderTop10 = ({marginStyle, relativeStyle, title, queryType, query
                data?.results?.map((res : ItemType, index : number) => (
                   <SwiperSlide 
                     key={index}
-                    className = {`swiperSlideSmall2 h-[9rem] sm:h-[13rem] ${index >= 10 && "hidden"} 
+                    className = {`swiperSlideSmall2 h-[9rem] sm:h-[13rem] ${index >= 10 && "hidden"} cursor-pointer hover:cursor-pointer
                       sm:overflow-hidden ${itemHover === index && triggerAnimItems && "sm:overflow-visible"}
                       ${index === 0 && "ml-[-.5rem] sm:ml-0"} ${index === 9 && "ml-[1.5rem] mr-[7.5rem]"}`}
                     onMouseLeave={() =>{ deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}

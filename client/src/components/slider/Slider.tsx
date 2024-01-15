@@ -17,14 +17,14 @@ import { dataInEffect, swipeLeft, swipeRight, useHoverHandlers } from "../../uti
 
 type SliderProps = {
   marginStyle : string
-  relativeStyle? : string
+  sliderStyle? : string
   title : string
   queryType : string
   queryKey : string
   classCount : number
 }
 
-export const Slider = ({marginStyle, relativeStyle, title, queryType, queryKey, classCount} : SliderProps) => {
+export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, classCount} : SliderProps) => {
     // State from zustand
     const {screenWidth} = useAppStore()
 
@@ -88,9 +88,28 @@ export const Slider = ({marginStyle, relativeStyle, title, queryType, queryKey, 
     const [swiperHover, setSwiperHover] = useState<boolean>(false)
     const [showLeftSwipe, setShowLeftSwipe] = useState<boolean>(false)
 
+    // Explore All Hover
+    const [sliderTitleHover, setSliderTitleHover] = useState<boolean>(false)
+    const [exploreHover, SetExploreHover] = useState<boolean>(false)
+
   return (
-    <div className={`mt-3 sm:z-20 ${relativeStyle}`}>
-        <p className={`text-white text-base sm:text-2xl font-semibold sm:font-bold ${marginStyle}`}>{title}</p>
+    <div className={`mt-3 sm:relative ${sliderStyle}`}
+      onMouseOver={() => setSliderTitleHover(true)} 
+      onMouseLeave={() => setSliderTitleHover(false)}
+    >
+        <div className="w-full flex items-center gap-x-1">
+          <p className={`text-white text-base sm:text-2xl font-semibold sm:font-bold ${marginStyle}`}>{title}</p>
+          <div 
+            className={`custom-transition-duration-10s hidden items-center text-[#54b9c5] text-base font-extrabold 
+              mt-[.4rem] cursor-pointer ${deviceType === "Desktop" && sliderTitleHover && "sm:flex"} ${exploreHover && "pl-3"}`}
+            onMouseOver={() => SetExploreHover(true)} 
+            onMouseLeave={() => SetExploreHover(false)}
+          > 
+            <p className={`custom-transition-duration-3s whitespace-nowrap overflow-hidden ${exploreHover ? "w-[5rem]" : "w-0"}`}>Explore All</p>
+            <div className={`custom-transition-duration-3s mt-[0rem] border-t-4 border-r-4 border-[#54b9c5] rotate-45 ${exploreHover ? "h-[10px] w-[10px]" : "h-[13px] w-[13px]"}`}></div>
+          </div>
+        </div>
+        
     
         {/* Slider Container */}
         <div 
@@ -123,7 +142,7 @@ export const Slider = ({marginStyle, relativeStyle, title, queryType, queryKey, 
             {/* Carousel Using React Swiper */}
             <Swiper
               mousewheel={true}
-              slidesPerView={7}
+              slidesPerView="auto"
               spaceBetween={8}
               grabCursor={false}
               loop={true}
@@ -144,7 +163,7 @@ export const Slider = ({marginStyle, relativeStyle, title, queryType, queryKey, 
                   </SwiperSlide>
                   :
                   <SwiperSlide 
-                    className = "swiperSlide h-[10rem] cursor-pointer"
+                    className = "swiperSlide h-[10rem] cursor-pointer hover:cursor-pointer"
                     key={index}
                     onMouseOver={() => { deviceType === "Desktop" && setItemHover(index) ; handleHover(res?.media_type, res?.id) }}
                     onMouseLeave={() =>{ deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}

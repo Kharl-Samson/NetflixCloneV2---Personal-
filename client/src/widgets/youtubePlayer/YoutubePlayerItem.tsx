@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import "../youtubePlayer/YoutubePlayer.css"
 import YouTube, { YouTubeProps } from "react-youtube"
 import { useAppStore } from "../../store/ZustandStore"
+import { videoEndedItems } from "../../utils/youtubeFunction"
 
 type YoutubePlayerProps = {
     id : string
@@ -17,7 +18,7 @@ export const YoutubePlayerItem = ( {
     const [video, setVideo] = useState<any>(undefined)
 
     // React Youtube State
-    const { setShowVideoItems, setTriggerAnimItems, isMutedItems, setVideoEndedItems, playAgainItems, setPlayAgainItems, setPause } = useAppStore()
+    const { setShowVideoItems, setTriggerAnimItems, isMutedItems, playAgainItems, setPause } = useAppStore()
 
     // React Youtube Configuration
     const [videoValid, setVideoValid] = useState<boolean>(false)
@@ -46,12 +47,6 @@ export const YoutubePlayerItem = ( {
       }
     }
 
-    const videoEnded = () => {
-      setVideoEndedItems(true)
-      setShowVideoItems(false)
-      setPlayAgainItems(false)
-    }
-
     // React Youtube Configuration
     const opts: YouTubeProps["opts"] = {
         playerVars: {
@@ -73,7 +68,7 @@ export const YoutubePlayerItem = ( {
       videoId = {videoId}
       opts = {opts}
       onReady = {onReady}
-      onEnd = {videoEnded}
+      onEnd = {videoEndedItems}
     />
   )
 }

@@ -21,14 +21,14 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer} : H
     // React Youtube State
     const { 
         showVideo, setShowVideo, isMuted, setIsMuted,
-        videoEnded, setVideoEnded, setPlayAgain
+        videoEnded, setVideoEnded, setPlayAgain, setPause
     } = useAppStore()
   
-    // const [playAgain, setPlayAgain] = useState<boolean>(false)
     const toggleVideoSound = () => {
         setPlayAgain(false)
         setIsMuted(!isMuted)
         if(videoEnded) {
+            setPause(false)
             setVideoEnded(false)
             setShowVideo(true)
             setIsMuted(true)

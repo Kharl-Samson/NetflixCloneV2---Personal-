@@ -35,7 +35,7 @@ export const ItemSlider = ({
     }: ItemSliderProps
 ) => {
     // Style when hover the item
-    const hoverStyle = `swiperSlideHover h-auto relative z-30 cursor-pointer overflow-auto item-shadow mt-[-6.25rem] rounded-lg ${itemHover !== 0 && "ml-[-3.438rem]"}`
+    const hoverStyle = `swiperSlideHover h-auto relative z-30 cursor-pointer hover:cursor-pointer overflow-auto item-shadow mt-[-6rem] rounded-lg ${itemHover !== 0 && "ml-[-3.438rem]"}`
 
     // React Youtube State
     const { showVideoItems, triggerAnimItems, isMutedItems, videoEndedItems} = useAppStore()
@@ -67,7 +67,7 @@ export const ItemSlider = ({
 
   return (
     <div
-      className = {`swiperSlide cursor-pointer bg-[#181818] h-[10rem] eachSwiper
+      className = {`swiperSlide cursor-pointer hover:cursor-pointer bg-[#181818] h-[10rem] eachSwiper
         rounded-md overflow-hidden custom-transition-duration-3s ${itemHover === index && triggerAnimItems && hoverStyle}`
       } 
     >
@@ -75,14 +75,14 @@ export const ItemSlider = ({
       <LazyLoadImage
         alt="Show Image"
         src={`${import.meta.env.VITE_BASE_IMAGE_URL}${imageUrl}`} 
-        className={`w-full showSkeleton relative ${itemHover !== index && triggerAnimItems && "rounded"}
+        className={`w-full showSkeleton relative cursor-pointer hover:cursor-pointer ${itemHover !== index && triggerAnimItems && "rounded"}
           custom-transition-duration-10s ${showVideoItems && itemHover === index && triggerAnimItems ? "opacity-0 z-0" : "opacity-100 z-10"}`}
         onError={handleImageError}
       />
 
       { /* Show Trailer Video */
       itemHover === index &&
-        <div className={`w-full h-[14.063rem] mt-[-14.063rem] overflow-hidden flex items-center justify-center relative z-0`}>
+        <div className={`w-full h-[14.063rem] mt-[-14.063rem] overflow-hidden flex items-center justify-center relative z-0 cursor-pointer hover:cursor-pointer`}>
           <YoutubePlayerItem
               id = "youtubePlayerItems"
               videoId = {trailerData} 
@@ -104,7 +104,7 @@ export const ItemSlider = ({
 
       {/* Show when hover */
       itemHover === index && triggerAnimItems && 
-        <div className="p-4">
+        <div className="p-4 cursor-pointer hover:cursor-pointer">
           {/* Buttons */}
           <div className="flex items-center gap-x-2">
             {/* Play */}

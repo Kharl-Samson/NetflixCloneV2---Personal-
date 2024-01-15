@@ -68,7 +68,7 @@ type GetShowDetailsResponse = string
 export const useHoverHandlers = () => {
     const { 
         showVideo, setShowVideoItems, setIsMutedItems, setPause, setTriggerAnimItems,
-        setTrailerData, setCategory, setVideoId, setShowDetails
+        setTrailerData, setCategory, setVideoId, setShowDetails, setShowVideo, currentSection
     } = useAppStore.getState()
 
     // fetch show details when hover
@@ -86,6 +86,8 @@ export const useHoverHandlers = () => {
   
     // Hover Show
     const handleHover = (media_type: string, id: string) => {
+      const timeOut = setTimeout(() => setShowVideo(false), 100)
+
       setCategory(media_type)
       setVideoId(id)
   
@@ -94,10 +96,17 @@ export const useHoverHandlers = () => {
         trailerId: id,
         language: "en-US"
       })
+
+      return () => clearTimeout(timeOut)
     }
   
     // Remove hover on show
     const handleHoverOut = () => {
+      const timeOut = setTimeout(() => {
+        setShowVideo(true)
+        currentSection !== "categorySection" && setPause(false)
+      }, 100)
+
       setTriggerAnimItems(false)
 
       setShowVideoItems(false)
@@ -106,6 +115,8 @@ export const useHoverHandlers = () => {
       setVideoId("")
       setIsMutedItems(true)
       showVideo && setPause(false)
+
+      return () => clearTimeout(timeOut)
     }
   
     return { handleHover, handleHoverOut }

@@ -83,7 +83,7 @@ export const ItemSliderTop10 = ({
       {/* Show Cover */}
       <LazyLoadImage
         alt="Show Image"
-        src={`${imageUrl &&import.meta.env.VITE_BASE_IMAGE_URL}${imageUrl}`} 
+        src={`${imageUrl && import.meta.env.VITE_BASE_IMAGE_URL}${imageUrl}`} 
         className={`w-full h-[9rem] sm:h-[13rem] relative custom-transition-duration-10s bg-[#181818] rounded cursor-pointer hover:cursor-pointer
           ${itemHover !== index && triggerAnimItems && "sm:rounded"} ${itemHover === index && triggerAnimItems && "object-cover object-center"}
           ${showVideoItems && itemHover === index && triggerAnimItems ? "opacity-0 z-0" : "opacity-100 z-10"}`}  

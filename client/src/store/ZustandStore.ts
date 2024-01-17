@@ -28,6 +28,16 @@ type appStore = {
   triggerAnimItems: boolean
   setTriggerAnimItems: (value: boolean) => void
 
+  // React Youtube States -> Modal
+  showVideoModal: boolean
+  setShowVideoModal: (value: boolean) => void
+  isMutedModal: boolean
+  setIsMutedModal: (value: boolean) => void
+  videoEndedModal: boolean
+  setVideoEndedModal: (value: boolean) => void
+  playAgainModal: boolean
+  setPlayAgainModal: (value: boolean) => void
+
   // Items States
   trailerData: string
   setTrailerData: (value: string) => void
@@ -41,6 +51,12 @@ type appStore = {
   // Active Section State
   currentSection: string | null
   setCurrentSection: (value: string | null) => void
+
+  // Modal States
+  validModal: boolean,
+  setValidModal: (value: boolean) => void
+  showDetailsModal: boolean
+  setShowDetailsModal: (value: boolean) => void
 }
 
 const useAppStore = create<appStore>()(
@@ -73,6 +89,16 @@ const useAppStore = create<appStore>()(
     setPlayAgainItems: (value: boolean) => set({ playAgainItems: value }),
     triggerAnimItems: false,
     setTriggerAnimItems: (value: boolean) => set({ triggerAnimItems: value }),
+
+    // React Youtube States -> Modal
+    showVideoModal: false,
+    setShowVideoModal: (value: boolean) => set({ showVideoModal: value }),
+    isMutedModal: true,
+    setIsMutedModal: (value: boolean) => set({ isMutedModal: value }),
+    videoEndedModal: false,
+    setVideoEndedModal: (value: boolean) => set({ videoEndedModal: value }),
+    playAgainModal: false,
+    setPlayAgainModal: (value: boolean) => set({ playAgainModal: value }),
     
     // Items States
     trailerData: "",
@@ -86,7 +112,13 @@ const useAppStore = create<appStore>()(
 
     // Active Section State
     currentSection: "",
-    setCurrentSection: (value: string | null) => set({ currentSection: value })
+    setCurrentSection: (value: string | null) => set({ currentSection: value }),
+
+    // Modal States
+    validModal: true,
+    setValidModal: (value: boolean) => set({ validModal: value }),
+    showDetailsModal: false,
+    setShowDetailsModal: (value: boolean) => set({ showDetailsModal: value }),
   })
 })
 

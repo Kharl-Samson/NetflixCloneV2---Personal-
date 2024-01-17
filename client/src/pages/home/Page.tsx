@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { NavbarLarge } from "../../components/navbar/NavbarLarge"
 import { NavbarMedium } from "../../components/navbar/NavbarMedium"
 import { NavbarNormal } from "../../components/navbar/NavbarNormal"
@@ -8,6 +8,8 @@ import { SliderTop10 } from "../../components/slider/SliderTop10"
 import { useAppStore } from "../../store/ZustandStore"
 import { getCurrentSection } from "../../utils/getCurrentSection"
 import { Hero } from "./sections/Hero"
+import { ShowsDetails } from "../../components/modals/ShowsDetails"
+import { useClickHandlers } from "../../utils/itemsFunction"
 
 type NavbarProps = {
   scrollDirection : string
@@ -20,13 +22,27 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
 
   // Getting Active Section
   const activeSections = getCurrentSection()
-  const { setCurrentSection } = useAppStore()
+  const { setCurrentSection, showDetailsModal } = useAppStore()
   useEffect(() => {
     setCurrentSection(activeSections)
   }, [activeSections])
 
+
+  // Closing Modal
+  const modalRef = useRef<HTMLDivElement>(null)
+  const { handleCloseModalOut } = useClickHandlers()
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const parentDiv = modalRef.current;
+      const clickedElement = event.target as Node;
+      parentDiv && parentDiv === clickedElement && handleCloseModalOut()  
+    }
+    document.body.addEventListener('click', handleClickOutside)
+    return () => document.body.removeEventListener('click', handleClickOutside)
+  }, [])
+
   return (
-    <div className="bg-custom-color-hero-1  overflow-hidden h-auto pb-[20rem]">
+    <div className="bg-custom-color-hero-1 overflow-hidden h-auto pb-[20rem]">
         
       {// My Navigation
         screenWidth < 640 ?
@@ -129,6 +145,13 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
           classCount = {5}
         />
       </section>
+
+      {/* Modals */
+      (screenWidth >= 640 && showDetailsModal) &&
+        <div className="min-h-screen w-full fixed z-[1000] modal-background inset-0 overflow-y-scroll" ref={modalRef}>
+          <ShowsDetails/>
+        </div>
+      }
     </div>
   )
 }

@@ -56,10 +56,12 @@ export const YoutubePlayerItem = ( {
     }
 
     useEffect(() => {
-      // Mute
-      videoValid && isMutedItems ? video?.mute() : video?.unMute()
-      // Play Again
-      videoValid && playAgainItems && video?.playVideo()
+      if(videoValid && video.g && video.g.src) {
+        // Mute
+        isMutedItems ? video?.mute() : video?.unMute()
+        // Play Again
+        playAgainItems && video?.playVideo()
+      }
     },[isMutedItems, playAgainItems])
   
   return (

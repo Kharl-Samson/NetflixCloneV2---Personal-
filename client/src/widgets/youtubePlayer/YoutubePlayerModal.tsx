@@ -4,12 +4,12 @@ import YouTube, { YouTubeProps } from "react-youtube"
 import { useAppStore } from "../../store/ZustandStore"
 import { videoEnded } from "../../utils/youtubeFunction"
 
-export const YoutubePlayer = ({ id, videoId, duration, isFetchedTrailer } : YoutubePlayerTypes) => {
+export const YoutubePlayerModal = ({ id, videoId, duration, isFetchedTrailer } : YoutubePlayerTypes) => {
     // Video Data State
     const [video, setVideo] = useState<any>(null)
 
     // React Youtube State
-    const { setShowVideo, isMuted, playAgain, pause, currentSection } = useAppStore()
+    const { setShowVideo, setShowVideoModal, showVideoModal, isMutedModal, playAgainModal, setPause } = useAppStore()
 
     // Video Valid State
     const [videoValid, setVideoValid] = useState<boolean>(false)
@@ -21,8 +21,15 @@ export const YoutubePlayer = ({ id, videoId, duration, isFetchedTrailer } : Yout
 
       if(isFetchedTrailer && videoId && event.target.getVideoData()?.video_id && event.target.getVideoData()?.isPlayable) {
         setVideoValid(true)
-        const timeOut = setTimeout(() => setShowVideo(true), duration)
-        return () => clearTimeout(timeOut)
+        const timeOut1 = setTimeout(() => {
+          setShowVideo(false)
+          setPause(true)
+        }, duration)
+        const timeOut2 = setTimeout(() => setShowVideoModal(true), duration)
+        return () => {
+          clearTimeout(timeOut1)
+          clearTimeout(timeOut2)
+        }
       }
       else{
         setVideoValid(false)
@@ -38,26 +45,16 @@ export const YoutubePlayer = ({ id, videoId, duration, isFetchedTrailer } : Yout
     }
 
     useEffect(() => {
-      if (video && videoValid && video.g && video.g.src) {
+      if (video && videoValid && showVideoModal && video.g && video.g.src) {
         // Mute
-        isMuted ? video?.mute() : video?.unMute()
+        isMutedModal ? video?.mute() : video?.unMute()
 
-        // // Pause
-        pause ? video?.pauseVideo() : video?.playVideo()
-        
-        // Play Again
-        playAgain && video?.playVideo()
+        // // Play Again
+        playAgainModal && video?.playVideo()
       }
-    },[isMuted, playAgain, pause, video, videoValid])
+    },[isMutedModal, playAgainModal, video, videoValid, showVideoModal])
 
-    useEffect(() => {
-      // Pause if the user is not on hero section
-      if (video && videoValid && video.g && video.g.src) {
-        currentSection === "categorySection" ? video?.pauseVideo() : video?.playVideo()
-      }
-    }, [currentSection])
-
-
+    
   return (
     <YouTube  
       id = {id}

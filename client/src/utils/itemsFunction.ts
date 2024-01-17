@@ -1,6 +1,7 @@
 import { useMutation } from "react-query"
 import { getShowDetails } from "../services/apiFetchShowList"
 import { useAppStore } from "../store/ZustandStore"
+import { useLocation, useNavigate } from "react-router-dom"
 
 
 /*
@@ -44,7 +45,7 @@ export const dataInEffect = (myTrailerData : {results : {name: string, key: stri
 }
 
 /*
- * When the user click the video sound button
+ * When the user click the video sound button - Items
 */
 export const toggleVideoSound = () => {
   const { setPlayAgainItems, setIsMutedItems, isMutedItems, videoEndedItems, setVideoEndedItems, setShowVideoItems } = useAppStore.getState()
@@ -61,13 +62,30 @@ export const toggleVideoSound = () => {
 }
 
 /*
+ * When the user click the video sound button - Modal
+*/
+export const toggleVideoSoundModal = () => {
+  const { setPlayAgainModal, setIsMutedModal, isMutedModal, videoEndedModal, setVideoEndedModal, setShowVideoModal } = useAppStore.getState()
+
+  setPlayAgainModal(false)
+  setIsMutedModal(!isMutedModal)
+  
+  if(videoEndedModal) {
+    setVideoEndedModal(false)
+    setShowVideoModal(true)
+    setIsMutedModal(true)
+    setPlayAgainModal(true)
+  }
+}
+
+/*
  * Custom hook for item hover
  * Includes onMouseOver and onMouseOut
 */
 type GetShowDetailsResponse = string
 export const useHoverHandlers = () => {
     const { 
-        showVideo, setShowVideoItems, setIsMutedItems, setPause, setTriggerAnimItems,
+        showVideo, setShowVideoItems, setIsMutedItems, setPause, setTriggerAnimItems, showVideoModal,
         setTrailerData, setCategory, setVideoId, setShowDetails, setShowVideo, currentSection
     } = useAppStore.getState()
 
@@ -109,7 +127,7 @@ export const useHoverHandlers = () => {
       setTriggerAnimItems(false)
 
       setShowVideoItems(false)
-      setTrailerData("")
+      showVideoModal && setTrailerData("")
       setCategory("")
       setVideoId("")
       setIsMutedItems(true)
@@ -119,4 +137,82 @@ export const useHoverHandlers = () => {
     }
   
     return { handleHover, handleHoverOut }
+  }
+
+/*
+ * Custom hook for item click
+ * Includes onClick and onClose
+*/
+export const useClickHandlers = () => {
+    // Navigate
+    const navigate = useNavigate()
+    const location = useLocation()
+    const currentRoute = location.pathname
+      
+    const { 
+        setShowVideoItems, setIsMutedItems, setPause, setTriggerAnimItems, setShowVideoModal,
+        setTrailerData, setCategory, setVideoId, setShowDetails, setShowDetailsModal, setShowVideo
+    } = useAppStore.getState()
+
+    // fetch show details when hover
+    const mutation = useMutation<GetShowDetailsResponse, Error, { category: string, trailerId: string | number, language?: string }>(
+      ({ category, trailerId, language }) => getShowDetails(category, trailerId, language),
+      {
+        onSuccess: (res) => {
+          setShowDetails(res)
+        },
+        onError: (error) => {
+          console.log(error)
+        }
+      }
+    )
+
+    // Click Show
+    const handleClickModal = (event: React.MouseEvent, media_type: string | boolean, id: string) => {
+
+      const clickedElement = event.target as HTMLElement
+      // Check if the clicked element is the desired element or a descendant of it
+      const isClickedWithinElement1 = clickedElement.id === 'notValidModal1' || clickedElement.closest('#notValidModal1') !== null
+      const isClickedWithinElement2 = clickedElement.id === 'notValidModal5' || clickedElement.closest('#notValidModal5') !== null
+      
+      if((!isClickedWithinElement1) && (!isClickedWithinElement2)){
+        navigate(`${currentRoute}?q=${id}`)
+        setShowDetailsModal(true)
+
+        const body = document.body;
+        body.style.overflowY = "hidden"
+
+        setPause(true)
+        setCategory(media_type.toString())
+        setVideoId(id)
+        
+        mutation.mutate({
+          category: media_type.toString(),
+          trailerId: id,
+          language: "en-US"
+        })
+      }
+    }
+  
+    // Close Show
+    const handleCloseModalOut = () => {
+      navigate(currentRoute)
+
+      const body = document.body
+      body.style.overflowY = "scroll"
+
+      setShowVideoModal(false)
+      setShowVideo(true)
+      setShowDetailsModal(false)
+      setTriggerAnimItems(false)
+
+      setShowVideoItems(false)
+      setTrailerData("")
+      setCategory("")
+      setVideoId("")
+      setIsMutedItems(true)
+      setPause(false)
+    }
+  
+    return { handleClickModal, handleCloseModalOut }
   }

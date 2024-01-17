@@ -13,7 +13,7 @@ import { useAppStore } from "../../store/ZustandStore"
 import { ItemSlider } from "./ItemSlider"
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight"
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft"
-import { dataInEffect, swipeLeft, swipeRight, useHoverHandlers } from "../../utils/itemsFunction"
+import { dataInEffect, swipeLeft, swipeRight, useClickHandlers, useHoverHandlers } from "../../utils/itemsFunction"
 
 type SliderProps = {
   marginStyle : string
@@ -25,6 +25,7 @@ type SliderProps = {
 }
 
 export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, classCount} : SliderProps) => {
+
     // State from zustand
     const {screenWidth} = useAppStore()
 
@@ -86,7 +87,8 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
     // Hovers Functions Util
     const [itemHover, setItemHover] = useState<number | null>(null)
     const { handleHover, handleHoverOut } = useHoverHandlers()
-    
+    const { handleClickModal } = useClickHandlers()
+
     // React Youtube State
     const { category, videoId, trailerData, showDetails} = useAppStore()
 
@@ -111,6 +113,7 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
     // Explore All Hover
     const [sliderTitleHover, setSliderTitleHover] = useState<boolean>(false)
     const [exploreHover, SetExploreHover] = useState<boolean>(false)
+
   return (
     <div className={`mt-3 sm:relative ${sliderStyle}`}
       onMouseOver={() => setSliderTitleHover(true)} 
@@ -119,7 +122,7 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
         <div className="w-full flex items-center gap-x-1">
           <p className={`text-white text-base sm:text-2xl font-semibold sm:font-bold ${marginStyle}`}>{title}</p>
           <div 
-            className={`custom-transition-duration-10s hidden items-center text-[#54b9c5] text-base font-extrabold 
+            className={`custom-transition-duration-10s hidden items-center disable-highlight text-[#54b9c5] text-base font-extrabold 
               mt-[.4rem] cursor-pointer ${deviceType === "Desktop" && sliderTitleHover && "sm:flex"} ${exploreHover && "pl-3"}`}
             onMouseOver={() => SetExploreHover(true)} 
             onMouseLeave={() => SetExploreHover(false)}
@@ -187,6 +190,9 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
                       key={index}
                       onMouseOver={() => { deviceType === "Desktop" && setItemHover(index) ; handleHover((res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id) }}
                       onMouseLeave={() =>{ deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
+                      onClick={(event) =>  
+                        deviceType === "Desktop" && handleClickModal(event,(res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id)
+                      }
                     >
                         <ItemSlider
                           itemHover = {itemHover}

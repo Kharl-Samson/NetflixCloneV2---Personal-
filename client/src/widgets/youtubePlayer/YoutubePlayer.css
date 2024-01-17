@@ -10,14 +10,23 @@
         height: 100rem;
         margin-top: -20rem;
         margin-left: -40rem;
-        pointer-events: none;
-        cursor: pointer;
-    }
-    #youtubePlayerItems {
-        pointer-events: none;
+        pointer-events: none !important;
         cursor: pointer !important;
     }
-    #youtubePlayer:hover, #youtubePlayerItems:hover {
+    #youtubePlayerItems {
+        pointer-events: none !important;
+        cursor: pointer !important;
+    }
+    #youtubePlayerModal{
+        pointer-events: none !important;
+        cursor: pointer !important;
+        width: 150%;
+        margin-top: -20rem;
+        margin-left: -10rem;
+        height: 70rem;
+
+    }
+    #youtubePlayer:hover, #youtubePlayerItems:hover, #youtubePlayerModal:hover {
         cursor: pointer !important;
     }
 
@@ -36,6 +45,13 @@
             height: 170rem;
             margin-top: -55rem;
             margin-left: -60rem;
+        }
+
+        #youtubePlayerModal {
+            height: 60rem;
+            width: 200%;
+            margin-top: -10rem;
+            margin-left: -30rem;
         }
     }
 

@@ -11,8 +11,7 @@ import { useAppStore } from "../../store/ZustandStore"
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight"
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft"
 import { ItemSliderTop10 } from "./ItemSliderTop10"
-import { dataInEffect, swipeLeft, swipeRight, useHoverHandlers } from "../../utils/itemsFunction"
-
+import { dataInEffect, swipeLeft, swipeRight, useHoverHandlers, useClickHandlers } from "../../utils/itemsFunction"
 
 type SliderProps = {
   marginStyle : string
@@ -24,6 +23,7 @@ type SliderProps = {
 }
 
 export const SliderTop10 = ({marginStyle, sliderStyle, title, queryType, queryKey, classCount} : SliderProps) => {
+
     // State from zustand
     const {screenWidth} = useAppStore()
 
@@ -51,6 +51,7 @@ export const SliderTop10 = ({marginStyle, sliderStyle, title, queryType, queryKe
     // Hovers Functions Util
     const [itemHover, setItemHover] = useState<number | null>(null)
     const { handleHover, handleHoverOut } = useHoverHandlers()
+    const { handleClickModal } = useClickHandlers()
 
     // React Youtube State
     const { category, videoId, trailerData, showDetails, triggerAnimItems } = useAppStore()
@@ -122,7 +123,10 @@ export const SliderTop10 = ({marginStyle, sliderStyle, title, queryType, queryKe
                       className = {`swiperSlideSmall2 h-[9rem] sm:h-[13rem] ${index >= 10 && "hidden"} cursor-pointer hover:cursor-pointer
                         sm:overflow-hidden ${itemHover === index && triggerAnimItems && "sm:overflow-visible"}
                         ${index === 0 && "ml-[-.5rem] sm:ml-0"} ${index === 9 && "ml-[1.5rem] mr-[7.5rem]"}`}
-                      onMouseLeave={() =>{ deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
+                      onMouseLeave={() => { deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
+                      onClick={(event) => 
+                        deviceType === "Desktop" && handleClickModal(event, (res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id) 
+                      }
                     >
                       {index < 10 &&
                         <ItemSliderTop10
@@ -133,7 +137,10 @@ export const SliderTop10 = ({marginStyle, sliderStyle, title, queryType, queryKe
                           isFetchedTrailer = {isFetchedTrailer}
                           mediaType = {res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"}
                           showDetails = {showDetails}
-                          onMouseOver={() => { deviceType === "Desktop" && setItemHover(index) ; handleHover((res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id) }}
+                          onMouseOver={() => { 
+                            deviceType === "Desktop" && setItemHover(index) ; 
+                            handleHover((res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id) }
+                          }
                         />
                       }
                     </SwiperSlide>

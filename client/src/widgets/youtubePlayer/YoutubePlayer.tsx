@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useLayoutEffect, useState } from "react"
 import "../youtubePlayer/YoutubePlayer.css"
 import YouTube, { YouTubeProps } from "react-youtube"
 import { useAppStore } from "../../store/ZustandStore"
@@ -25,6 +25,7 @@ export const YoutubePlayer = ({ id, videoId, duration, isFetchedTrailer } : Yout
         return () => clearTimeout(timeOut)
       }
       else{
+        setShowVideo(false)
         setVideoValid(false)
       }
     }
@@ -37,7 +38,7 @@ export const YoutubePlayer = ({ id, videoId, duration, isFetchedTrailer } : Yout
       }
     }
 
-    useEffect(() => {
+    useLayoutEffect(() => {
       if (video && videoValid && video.g && video.g.src) {
         // Mute
         isMuted ? video.mute() : video.unMute()
@@ -50,7 +51,7 @@ export const YoutubePlayer = ({ id, videoId, duration, isFetchedTrailer } : Yout
       }
     },[isMuted, playAgain, pause, video, videoValid])
 
-    useEffect(() => {
+    useLayoutEffect(() => {
       // Pause if the user is not on hero section
       if (video && videoValid && video.g && video.g.src) {
         currentSection === "categorySection" ? video.pauseVideo() : video.playVideo()

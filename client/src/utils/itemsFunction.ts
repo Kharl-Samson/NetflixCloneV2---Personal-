@@ -86,7 +86,7 @@ type GetShowDetailsResponse = string
 export const useHoverHandlers = () => {
     const { 
         showVideo, setShowVideoItems, setIsMutedItems, setPause, setTriggerAnimItems, showVideoModal,
-        setTrailerData, setCategory, setVideoId, setShowDetails, setShowVideo, currentSection
+        setTrailerData, setCategory, setVideoId, setShowDetails, setShowVideo, currentSection, showDetailsModal
     } = useAppStore.getState()
 
     // fetch show details when hover
@@ -104,7 +104,11 @@ export const useHoverHandlers = () => {
   
     // Hover Show
     const handleHover = (media_type: string | boolean, id: string) => {
-      const timeOut = setTimeout(() => setShowVideo(false), 100)
+      setShowVideoItems(false)
+      const timeOut = setTimeout(() => {
+        setPause(true)
+        setShowVideo(false)
+      }, 100)
       setCategory(media_type.toString())
       setVideoId(id)
   
@@ -120,8 +124,8 @@ export const useHoverHandlers = () => {
     // Remove hover on show
     const handleHoverOut = () => {
       const timeOut = setTimeout(() => {
-        setShowVideo(true)
-        currentSection !== "categorySection" && setPause(false)
+        !showDetailsModal && setShowVideo(true) ;
+        (!showDetailsModal && currentSection !== "categorySection") && setPause(false)
       }, 100)
 
       setTriggerAnimItems(false)
@@ -130,9 +134,8 @@ export const useHoverHandlers = () => {
       showVideoModal && setTrailerData("")
       setCategory("")
       setVideoId("")
-      setIsMutedItems(true)
-      showVideo && setPause(false)
-
+      setIsMutedItems(true);
+      (!showDetailsModal && showVideo) && setPause(false)
       return () => clearTimeout(timeOut)
     }
   
@@ -150,8 +153,8 @@ export const useClickHandlers = () => {
     const currentRoute = location.pathname
       
     const { 
-        setShowVideoItems, setIsMutedItems, setPause, setTriggerAnimItems, setShowVideoModal,
-        setTrailerData, setCategory, setVideoId, setShowDetails, setShowDetailsModal, setShowVideo
+        setShowVideoItems, setIsMutedItems, setPause, setTriggerAnimItems, setShowVideoModal, currentSection,
+        setTrailerData, setCategory, setVideoId, setShowDetails, setShowDetailsModal, setShowVideo, showDetailsModal
     } = useAppStore.getState()
 
     // fetch show details when hover
@@ -168,22 +171,26 @@ export const useClickHandlers = () => {
     )
 
     // Click Show
-    const handleClickModal = (media_type: string | boolean, id: string) => {
-      navigate(`${currentRoute}?q=${id}`)
+    const handleClickModal = (event: React.MouseEvent<HTMLElement, MouseEvent> , media_type: string | boolean, id: string) => {
+      if (!((event.target as HTMLElement).id.includes("notValidModal"))) {
         setShowDetailsModal(true)
+        setShowVideo(false)
+        setPause(true)
 
-      const body = document.body;
-      body.style.overflowY = "hidden"
+        navigate(`${currentRoute}?q=${id}`)
+        
+        const body = document.body
+        body.style.overflowY = "hidden"
 
-      setPause(true)
-      setCategory(media_type.toString())
-      setVideoId(id)
-      
-      mutation.mutate({
-        category: media_type.toString(),
-        trailerId: id,
-        language: "en-US"
-      })
+        setCategory(media_type.toString())
+        setVideoId(id)
+
+        mutation.mutate({
+          category: media_type.toString(),
+          trailerId: id,
+          language: "en-US"
+        })
+      }
     }
   
     // Close Show
@@ -202,8 +209,8 @@ export const useClickHandlers = () => {
       setTrailerData("")
       setCategory("")
       setVideoId("")
-      setIsMutedItems(true)
-      setPause(false)
+      setIsMutedItems(true);
+      (!showDetailsModal && currentSection !== "categorySection") && setPause(false)
     }
   
     return { handleClickModal, handleCloseModalOut }

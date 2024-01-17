@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useLayoutEffect, useState } from "react"
 import "../youtubePlayer/YoutubePlayer.css"
 import YouTube, { YouTubeProps } from "react-youtube"
 import { useAppStore } from "../../store/ZustandStore"
@@ -32,6 +32,7 @@ export const YoutubePlayerModal = ({ id, videoId, duration, isFetchedTrailer } :
         }
       }
       else{
+        setShowVideoModal(false)
         setVideoValid(false)
       }
     }
@@ -44,7 +45,7 @@ export const YoutubePlayerModal = ({ id, videoId, duration, isFetchedTrailer } :
       }
     }
 
-    useEffect(() => {
+    useLayoutEffect(() => {
       if (video && videoValid && showVideoModal && video.g && video.g.src) {
         // Mute
         isMutedModal ? video.mute() : video.unMute()

@@ -179,7 +179,7 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
                     <SwiperSlide className="h-full swiperSlide" key={index}>
                         <LazyLoadImage
                           alt="Show Image"
-                          src={`${showDetails?.poster_path && import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
+                          src={`${res?.poster_path && import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
                           className="showSkeleton h-full w-full rounded"
                           onError={handleImageError}
                         />
@@ -190,8 +190,8 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
                       key={index}
                       onMouseOver={() => { deviceType === "Desktop" && setItemHover(index) ; handleHover((res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id) }}
                       onMouseLeave={() =>{ deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
-                      onClick={() =>  
-                        deviceType === "Desktop" && handleClickModal((res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id)
+                      onClick={(event) =>  
+                        deviceType === "Desktop" && handleClickModal(event, (res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id)
                       }
                     >
                         <ItemSlider

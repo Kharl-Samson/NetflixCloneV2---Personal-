@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useLayoutEffect, useState } from "react"
 import "../youtubePlayer/YoutubePlayer.css"
 import YouTube, { YouTubeProps } from "react-youtube"
 import { useAppStore } from "../../store/ZustandStore"
@@ -19,6 +19,7 @@ export const YoutubePlayerItem = ( {
     const onReady: YouTubeProps["onReady"] = (event) => {
       event.target.setPlaybackQuality("highres")
       setVideo(() => event.target)
+      
       if(isFetchedTrailer && videoId && event.target.getVideoData().video_id && event.target.getVideoData().isPlayable) {
         setVideoValid(true)
         const timeOut1 = setTimeout(() => setShowVideoItems(true), duration)
@@ -32,6 +33,7 @@ export const YoutubePlayerItem = ( {
         }
       }
       else{
+        setShowVideoItems(false)
         setVideoValid(false)
         const timeOut = setTimeout(() => {
           setTriggerAnimItems(true)
@@ -49,7 +51,7 @@ export const YoutubePlayerItem = ( {
       }
     }
 
-    useEffect(() => {
+    useLayoutEffect(() => {
       if(videoValid && video.g && video.g.src) {
         // Mute
         isMutedItems ? video.mute() : video.unMute()

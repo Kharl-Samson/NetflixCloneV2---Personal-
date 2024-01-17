@@ -9,7 +9,6 @@ import { useQuery } from "react-query"
 import { getShowTrailer } from "../../services/apiFetchShowList"
 import { useEffect } from "react"
 import { dataInEffect, toggleVideoSoundModal, useClickHandlers } from "../../utils/itemsFunction"
-import { useLocation, useNavigate } from "react-router-dom"
 
 
 const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
@@ -27,11 +26,6 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
 
 
 export const ShowsDetails = () => {
-    // Navigate
-    const navigate = useNavigate()
-    const location = useLocation()
-    const currentRoute = location.pathname
-
     // React Youtube State
     const { 
         showVideoModal, isMutedModal, videoEndedModal, trailerData, videoId, category, showDetails

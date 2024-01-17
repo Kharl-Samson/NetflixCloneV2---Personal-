@@ -36,12 +36,7 @@ function App() {
     <>
       <Routes>
         {/* Main Pages */}
-        <Route 
-          path="/" 
-          element={
-            <Page scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>
-          }
-        />
+        <Route path="/" element={<Page scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>}/>
       </Routes>
     </>
   )

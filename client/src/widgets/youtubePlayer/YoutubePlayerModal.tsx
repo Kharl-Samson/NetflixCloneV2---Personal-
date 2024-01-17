@@ -19,7 +19,7 @@ export const YoutubePlayerModal = ({ id, videoId, duration, isFetchedTrailer } :
       event.target.setPlaybackQuality("highres")
       setVideo(() => event.target)
 
-      if(isFetchedTrailer && videoId && event.target.getVideoData()?.video_id && event.target.getVideoData()?.isPlayable) {
+      if(isFetchedTrailer && videoId && event.target.getVideoData().video_id && event.target.getVideoData().isPlayable) {
         setVideoValid(true)
         const timeOut1 = setTimeout(() => {
           setShowVideo(false)
@@ -47,10 +47,10 @@ export const YoutubePlayerModal = ({ id, videoId, duration, isFetchedTrailer } :
     useEffect(() => {
       if (video && videoValid && showVideoModal && video.g && video.g.src) {
         // Mute
-        isMutedModal ? video?.mute() : video?.unMute()
+        isMutedModal ? video.mute() : video.unMute()
 
         // // Play Again
-        playAgainModal && video?.playVideo()
+        playAgainModal && video.playVideo()
       }
     },[isMutedModal, playAgainModal, video, videoValid, showVideoModal])
 

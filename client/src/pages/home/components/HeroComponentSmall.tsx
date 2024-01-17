@@ -51,7 +51,7 @@ export const HeroComponentSmall = ( {myData} : HeroProps ) => {
         <div className="sm:hidden pt-[12rem] 211size:pt-[9rem] 329size:pt-[6.5rem] sm:mt-4 w-full h-auto px-5" style={{ background : `linear-gradient(173deg, ${color} -40.63%, #181414 75.27%)`}}>
             <div 
                 style = {{
-                    backgroundImage: `linear-gradient(176deg, rgba(0, 0, 0, 0.20) 60%, ${color} 140%), url(${import.meta.env.VITE_BASE_IMAGE_URL}${myData?.backdrop_path})`
+                    backgroundImage: `linear-gradient(176deg, rgba(0, 0, 0, 0.20) 60%, ${color} 140%), url(${myData?.backdrop_path && import.meta.env.VITE_BASE_IMAGE_URL}${myData?.backdrop_path})`
                 }}
                 className="bg-custom-color-hero-1 w-full px-4 h-[30rem] rounded-xl bg-cover bg-top flex flex-col justify-end"
             >

@@ -49,7 +49,7 @@ export const ShowsDetails = () => {
     <div className="min-h-screen w-[95%] 801size:w-[80%] max-w-[55rem] bg-[#181818] mx-auto mt-9 rounded-lg overflow-hidden">
         {/* Image Banner */}
         <img 
-            src={`${import.meta.env.VITE_BASE_IMAGE_URL}${showDetails?.backdrop_path}`}
+            src={`${showDetails?.backdrop_path && import.meta.env.VITE_BASE_IMAGE_URL}${showDetails?.backdrop_path}`}
             alt="Movie Image"
             className={`w-full h-[31rem] z-[1] relative object-cover ${showVideoModal ? "opacity-0" : "opacity-100"}`}
             onError={handleImageError}

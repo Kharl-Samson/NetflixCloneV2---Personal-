@@ -179,7 +179,7 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
                     <SwiperSlide className="h-full swiperSlide" key={index}>
                         <LazyLoadImage
                           alt="Show Image"
-                          src={`${import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
+                          src={`${showDetails?.poster_path && import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
                           className="showSkeleton h-full w-full rounded"
                           onError={handleImageError}
                         />

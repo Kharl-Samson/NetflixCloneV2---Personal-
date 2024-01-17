@@ -4,16 +4,10 @@ import YouTube, { YouTubeProps } from "react-youtube"
 import { useAppStore } from "../../store/ZustandStore"
 import { videoEndedItems } from "../../utils/youtubeFunction"
 
-type YoutubePlayerProps = {
-    id : string
-    videoId : string
-    duration : number
-    isFetchedTrailer? : boolean
-}
 
 export const YoutubePlayerItem = ( {
     id, videoId, duration, isFetchedTrailer
-  } : YoutubePlayerProps) => {
+  } : YoutubePlayerTypes) => {
 
     const [video, setVideo] = useState<any>(undefined)
 
@@ -58,9 +52,9 @@ export const YoutubePlayerItem = ( {
     useEffect(() => {
       if(videoValid && video.g && video.g.src) {
         // Mute
-        isMutedItems ? video?.mute() : video?.unMute()
+        isMutedItems ? video.mute() : video.unMute()
         // Play Again
-        playAgainItems && video?.playVideo()
+        playAgainItems && video.playVideo()
       }
     },[isMutedItems, playAgainItems])
   

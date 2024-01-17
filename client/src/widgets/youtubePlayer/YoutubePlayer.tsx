@@ -19,7 +19,7 @@ export const YoutubePlayer = ({ id, videoId, duration, isFetchedTrailer } : Yout
       event.target.setPlaybackQuality("highres")
       setVideo(() => event.target)
 
-      if(isFetchedTrailer && videoId && event.target.getVideoData()?.video_id && event.target.getVideoData()?.isPlayable) {
+      if(isFetchedTrailer && videoId && event.target.getVideoData().video_id && event.target.getVideoData().isPlayable) {
         setVideoValid(true)
         const timeOut = setTimeout(() => setShowVideo(true), duration)
         return () => clearTimeout(timeOut)
@@ -40,20 +40,20 @@ export const YoutubePlayer = ({ id, videoId, duration, isFetchedTrailer } : Yout
     useEffect(() => {
       if (video && videoValid && video.g && video.g.src) {
         // Mute
-        isMuted ? video?.mute() : video?.unMute()
+        isMuted ? video.mute() : video.unMute()
 
         // // Pause
-        pause ? video?.pauseVideo() : video?.playVideo()
+        pause ? video.pauseVideo() : video.playVideo()
         
         // Play Again
-        playAgain && video?.playVideo()
+        playAgain && video.playVideo()
       }
     },[isMuted, playAgain, pause, video, videoValid])
 
     useEffect(() => {
       // Pause if the user is not on hero section
       if (video && videoValid && video.g && video.g.src) {
-        currentSection === "categorySection" ? video?.pauseVideo() : video?.playVideo()
+        currentSection === "categorySection" ? video.pauseVideo() : video.playVideo()
       }
     }, [currentSection])
 

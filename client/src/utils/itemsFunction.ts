@@ -168,30 +168,22 @@ export const useClickHandlers = () => {
     )
 
     // Click Show
-    const handleClickModal = (event: React.MouseEvent, media_type: string | boolean, id: string) => {
-
-      const clickedElement = event.target as HTMLElement
-      // Check if the clicked element is the desired element or a descendant of it
-      const isClickedWithinElement1 = clickedElement.id === 'notValidModal1' || clickedElement.closest('#notValidModal1') !== null
-      const isClickedWithinElement2 = clickedElement.id === 'notValidModal5' || clickedElement.closest('#notValidModal5') !== null
-      
-      if((!isClickedWithinElement1) && (!isClickedWithinElement2)){
-        navigate(`${currentRoute}?q=${id}`)
+    const handleClickModal = (media_type: string | boolean, id: string) => {
+      navigate(`${currentRoute}?q=${id}`)
         setShowDetailsModal(true)
 
-        const body = document.body;
-        body.style.overflowY = "hidden"
+      const body = document.body;
+      body.style.overflowY = "hidden"
 
-        setPause(true)
-        setCategory(media_type.toString())
-        setVideoId(id)
-        
-        mutation.mutate({
-          category: media_type.toString(),
-          trailerId: id,
-          language: "en-US"
-        })
-      }
+      setPause(true)
+      setCategory(media_type.toString())
+      setVideoId(id)
+      
+      mutation.mutate({
+        category: media_type.toString(),
+        trailerId: id,
+        language: "en-US"
+      })
     }
   
     // Close Show

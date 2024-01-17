@@ -124,8 +124,8 @@ export const SliderTop10 = ({marginStyle, sliderStyle, title, queryType, queryKe
                         sm:overflow-hidden ${itemHover === index && triggerAnimItems && "sm:overflow-visible"}
                         ${index === 0 && "ml-[-.5rem] sm:ml-0"} ${index === 9 && "ml-[1.5rem] mr-[7.5rem]"}`}
                       onMouseLeave={() => { deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
-                      onClick={(event) => 
-                        deviceType === "Desktop" && handleClickModal(event, (res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id) 
+                      onClick={() => 
+                        deviceType === "Desktop" && handleClickModal((res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id) 
                       }
                     >
                       {index < 10 &&

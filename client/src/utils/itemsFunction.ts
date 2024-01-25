@@ -205,6 +205,7 @@ export const useClickHandlers = () => {
     const handleCloseModalOut = () => {
       navigate(currentRoute)
 
+      document.title = "Netflix Clone by Kharl"
       const body = document.body
       body.style.overflowY = "scroll"
 

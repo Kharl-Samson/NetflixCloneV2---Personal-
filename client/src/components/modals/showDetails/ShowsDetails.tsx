@@ -17,6 +17,9 @@ export const ShowsDetails = ({params} : ShowDetailsProps) => {
     // React Youtube State
     const { showVideoModal, trailerData, category, showDetails } = useAppStore()
 
+    // Setting Web Title
+    document.title = `${showDetails?.name || showDetails?.original_title} - Netflix Clone by Kharl`
+
     // Fetch trailer data
     const { data : myTrailerData, isFetched: isFetchedTrailer, isError: isTrailerError , isLoading: isTrailerLoading } = useQuery(
       ["trailerModalKey"],

@@ -29,6 +29,7 @@ export const swipeRight = (classCount : number) => {
 export const dataInEffect = (myTrailerData : {results : {name: string, key: string}[]} ) => {
     const { setTrailerData } = useAppStore.getState()
     setTrailerData("")
+    
     if(myTrailerData?.results){
       for(var i : number = 0 ; i < myTrailerData?.results.length ; i++){
         if (myTrailerData?.results[i]?.name?.toUpperCase().indexOf("OFFICIAL TRAILER") > -1){
@@ -91,7 +92,7 @@ type GetShowDetailsResponse = string
 export const useHoverHandlers = () => {
     const { 
         showVideo, setShowVideoItems, setIsMutedItems, setPause, setTriggerAnimItems, setTrailerData,
-        setCategory, setVideoId, setShowDetails, setShowVideo, currentSection, showDetailsModal
+        setCategory, setVideoId, setShowDetails, setShowVideo, currentSection, showDetailsModal, setVideoEndedItems
     } = useAppStore.getState()
 
     // fetch show details when hover
@@ -138,6 +139,7 @@ export const useHoverHandlers = () => {
       setCategory("")
       setVideoId("")
 
+      setVideoEndedItems(false)
       setIsMutedItems(true);
       (!showDetailsModal && showVideo) && setPause(false);
       
@@ -178,6 +180,7 @@ export const useClickHandlers = () => {
     // Click Show
     const handleClickModal = (event: React.MouseEvent<HTMLElement, MouseEvent> , media_type: string | boolean, id: string) => {
       if (!((event.target as HTMLElement).id.includes("notValidModal"))) {
+        setShowVideoModal(false)
         setShowDetailsModal(true)
         setShowVideo(false)
         setPause(true)
@@ -205,6 +208,7 @@ export const useClickHandlers = () => {
       const body = document.body
       body.style.overflowY = "scroll"
 
+      setShowDetails("")
       setShowVideoModal(false)
       setShowVideo(true)
       setShowDetailsModal(false)
@@ -215,7 +219,7 @@ export const useClickHandlers = () => {
       setCategory("")
       setVideoId("")
       setIsMutedItems(true);
-      (!showDetailsModal && currentSection !== "categorySection") && setPause(false)
+      (!showDetailsModal && currentSection !== "categorySection") && setPause(false);
     }
   
     return { handleClickModal, handleCloseModalOut }

@@ -2,7 +2,7 @@ import { useLayoutEffect, useState } from "react"
 import "../youtubePlayer/YoutubePlayer.css"
 import YouTube, { YouTubeProps } from "react-youtube"
 import { useAppStore } from "../../store/ZustandStore"
-import { videoEnded } from "../../utils/youtubeFunction"
+import { videoEndedModal } from "../../utils/youtubeFunction"
 
 export const YoutubePlayerModal = ({ id, videoId, duration, isFetchedTrailer } : YoutubePlayerTypes) => {
     // Video Data State
@@ -18,22 +18,24 @@ export const YoutubePlayerModal = ({ id, videoId, duration, isFetchedTrailer } :
     const onReady: YouTubeProps["onReady"] = (event) => {
       event.target.setPlaybackQuality("highres")
       setVideo(() => event.target)
-
       if(isFetchedTrailer && videoId && event.target.getVideoData().video_id && event.target.getVideoData().isPlayable) {
         setVideoValid(true)
-        const timeOut1 = setTimeout(() => {
+        const timeOut = setTimeout(() => {
+          setShowVideoModal(true)
           setShowVideo(false)
           setPause(true)
         }, duration)
-        const timeOut2 = setTimeout(() => setShowVideoModal(true), duration)
         return () => {
-          clearTimeout(timeOut1)
-          clearTimeout(timeOut2)
+          clearTimeout(timeOut)
         }
       }
       else{
-        setShowVideoModal(false)
         setVideoValid(false)
+        setShowVideoModal(false)
+        const timeOut = setTimeout(() => setShowVideoModal(false), (duration + 100))
+        return () => {
+          clearTimeout(timeOut)
+        }
       }
     }
 
@@ -62,7 +64,7 @@ export const YoutubePlayerModal = ({ id, videoId, duration, isFetchedTrailer } :
       videoId = {videoId}
       opts = {opts}
       onReady = {onReady}
-      onEnd = {videoEnded}
+      onEnd = {videoEndedModal}
     />
   )
 }

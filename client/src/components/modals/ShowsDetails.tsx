@@ -7,7 +7,7 @@ import { styled } from "@mui/material/styles"
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip"
 import { useQuery } from "react-query"
 import { getShowTrailer } from "../../services/apiFetchShowList"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { dataInEffect, toggleVideoSoundModal, useClickHandlers } from "../../utils/itemsFunction"
 
 const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
@@ -23,16 +23,22 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
     },
 }))
 
-export const ShowsDetails = () => {
+type ShowDetailsProps = {
+  params : string
+}
+
+export const ShowsDetails = ({params} : ShowDetailsProps) => {
     // React Youtube State
     const { 
-        showVideoModal, isMutedModal, videoEndedModal, trailerData, videoId, category, showDetails
+        showVideoModal, isMutedModal, videoEndedModal, trailerData, category, showDetails
     } = useAppStore()
+
 
     // Fetch trailer data
     const { data : myTrailerData, isFetched: isFetchedTrailer, isError: isTrailerError } = useQuery(
-        ["trailerModalKey", new URLSearchParams(window.location.search)],
-        () => getShowTrailer(category, videoId)
+      ["trailerModalKey"],
+      () => getShowTrailer(category, params),
+      { cacheTime: 0 } // Remove caching to trigger every click
     )
 
     // When done querying put the data in states variable
@@ -41,6 +47,7 @@ export const ShowsDetails = () => {
       (isFetchedTrailer && !isTrailerError && myTrailerData?.results.length !== 0) && dataInEffect(myTrailerData)
     }, [isFetchedTrailer, myTrailerData])
 
+    // Closing Modal
     const { handleCloseModalOut } = useClickHandlers()
 
   return (
@@ -49,13 +56,14 @@ export const ShowsDetails = () => {
         <img 
             src={`${showDetails?.backdrop_path && import.meta.env.VITE_BASE_IMAGE_URL}${showDetails?.backdrop_path}`}
             alt="Movie Image"
-            className={`w-full h-[31rem] z-[1] relative object-cover ${showVideoModal ? "opacity-0" : "opacity-100"}`}
+            className={`custom-transition-duration-10s w-full h-[31rem] z-[1] relative object-cover ${showVideoModal ? "opacity-0" : "opacity-100"}`}
             onError={handleImageError}
         />
 
         {/* Video Player */}
-        <div className={`hidden max-w-[3000px] mx-auto top-0 w-full h-[31rem] overflow-hidden mt-[-31rem] z-[2] relative ${showVideoModal && "sm:block"}`}>
+        <div className={`custom-transition-duration-10s max-w-[3000px] mx-auto top-0 w-full h-[31rem] overflow-hidden mt-[-31rem] z-[2] relative ${showVideoModal ? "opacity-100" : "opacity-0"}`} key={trailerData}>
             <YoutubePlayerModal
+                key={trailerData}
                 id = "youtubePlayerModal"
                 videoId = {trailerData} 
                 duration = {2000}
@@ -106,8 +114,9 @@ export const ShowsDetails = () => {
 
                 {/* Video Sound Controller */}
                 <div 
-                  className={`h-[42px] w-[42px] border-[2px] border-solid border-[#767576] text-[#767576] rounded-full items-center cursor-pointer 
-                    justify-center transition duration-400 hover:bg-gray-600 hover:bg-opacity-35 flex hover:cursor-pointer ${!showVideoModal && "hidden"}`} 
+                  className={`h-[42px] w-[42px] border-[2px] border-solid border-[#767576] text-[#767576] rounded-full 
+                    items-center cursor-pointer justify-center transition duration-400 hover:bg-gray-600 hover:bg-opacity-35 flex 
+                    hover:cursor-pointer ${(showVideoModal || videoEndedModal) ? "flex" : "hidden"}`} 
                     onClick={toggleVideoSoundModal}
                 >
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={`Hawkins-Icon Hawkins-Icon-Standard ${showVideoModal && isMutedModal && !videoEndedModal ? "block" : "hidden"}`}><path d="M11 4.00003C11 3.59557 10.7564 3.23093 10.3827 3.07615C10.009 2.92137 9.57889 3.00692 9.29289 3.29292L4.58579 8.00003H1C0.447715 8.00003 0 8.44774 0 9.00003V15C0 15.5523 0.447715 16 1 16H4.58579L9.29289 20.7071C9.57889 20.9931 10.009 21.0787 10.3827 20.9239C10.7564 20.7691 11 20.4045 11 20V4.00003ZM5.70711 9.70714L9 6.41424V17.5858L5.70711 14.2929L5.41421 14H5H2V10H5H5.41421L5.70711 9.70714ZM15.2929 9.70714L17.5858 12L15.2929 14.2929L16.7071 15.7071L19 13.4142L21.2929 15.7071L22.7071 14.2929L20.4142 12L22.7071 9.70714L21.2929 8.29292L19 10.5858L16.7071 8.29292L15.2929 9.70714Z" fill="currentColor"></path></svg>

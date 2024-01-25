@@ -3,3 +3,5 @@ Done : Add random function in age and match in items
 Done : When hovering items, fetch the specific details
 Done : Skeleton Loading
 Done : Fix Bug in hovering - Video is playing even it is not available
+
+Fix bug when video is ended

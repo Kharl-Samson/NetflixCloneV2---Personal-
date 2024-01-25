@@ -10,6 +10,7 @@ import { getCurrentSection } from "../../utils/getCurrentSection"
 import { Hero } from "./sections/Hero"
 import { ShowsDetails } from "../../components/modals/ShowsDetails"
 import { useClickHandlers } from "../../utils/itemsFunction"
+import { useLocation } from "react-router-dom"
 
 type NavbarProps = {
   scrollDirection : string
@@ -40,6 +41,11 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
     document.body.addEventListener('click', handleClickOutside)
     return () => document.body.removeEventListener('click', handleClickOutside)
   }, [])
+
+  // Params key when clickin a movie or tv show
+  const location = useLocation()
+  const queryParams = new URLSearchParams(location.search)
+  const params = queryParams.get('q') || "Default"
 
   return (
     <div className="bg-custom-color-hero-1 overflow-hidden h-auto pb-[20rem]">
@@ -149,7 +155,7 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
       {/* Modals */
       (screenWidth >= 640 && showDetailsModal) &&
         <div className="min-h-screen w-full fixed z-[1000] modal-background inset-0 overflow-y-scroll" ref={modalRef}>
-          <ShowsDetails/>
+          <ShowsDetails params = {params}/>
         </div>
       }
     </div>

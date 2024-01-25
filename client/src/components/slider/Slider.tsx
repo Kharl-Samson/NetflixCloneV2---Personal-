@@ -47,11 +47,11 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
     const { data : data1, isFetched: isFetchedData1, isError: isDataError1 } = useQuery(
       [`${queryKey}1`, dataCategory1, dataCategory2],
       () => getShowList(
-        queryType,
-        dataCategory1, 
-        queryType === "Romantic Movies" ? null : "en-US", 
-        queryType === "Romantic Movies" ? 10749 : queryType === "TV Action & Adventure" ? 10759 : null, 
-        1
+        queryType, // Query Type (ex. Hero, Romantic Movies, TV Action & Adventure, etc)
+        dataCategory1, // Category (ex. tv or movie)
+        queryType === "Romantic Movies" ? null : "en-US", // Language
+        queryType === "Romantic Movies" ? 10749 : queryType === "TV Action & Adventure" ? 10759 : null, // Genre
+        1 // Page Number
       )
     )
 
@@ -59,11 +59,11 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
     const { data : data2, isFetched: isFetchedData2, isError: isDataError2 } = useQuery(
       [`${queryKey}2`, dataCategory1, dataCategory2],
       () => getShowList(
-        queryType, 
-        dataCategory1, 
-        queryType === "Romantic Movies" ? null : "en-US", 
-        queryType === "Romantic Movies" ? 10749 : queryType === "TV Action & Adventure" ? 10759 : null, 
-        2
+        queryType, // Query Type (ex. Hero, Romantic Movies, TV Action & Adventure, etc)
+        dataCategory1, // Category (ex. tv or movie)
+        queryType === "Romantic Movies" ? null : "en-US", // Language
+        queryType === "Romantic Movies" ? 10749 : queryType === "TV Action & Adventure" ? 10759 : null, // Genre
+        2 // Page Number
       )
     )
 
@@ -90,7 +90,7 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
     const { handleClickModal } = useClickHandlers()
 
     // React Youtube State
-    const { category, videoId, trailerData, showDetails} = useAppStore()
+    const { category, videoId, trailerData, showDetails } = useAppStore()
 
     // Fetch trailer data
     const { data : myTrailerData, isFetched: isFetchedTrailer, isError: isTrailerError } = useQuery(
@@ -176,7 +176,7 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
                 {
                 combinedData?.results?.map((res : ItemType, index : number) => (
                   screenWidth < 640 ?
-                    <SwiperSlide className="h-full swiperSlide" key={index}>
+                    <SwiperSlide className="h-full swiperSlide" key={res?.id}>
                         <LazyLoadImage
                           alt="Show Image"
                           src={`${res?.poster_path && import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
@@ -187,7 +187,7 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
                     :
                     <SwiperSlide 
                       className = "swiperSlide h-[10rem] cursor-pointer hover:cursor-pointer"
-                      key={index}
+                      key={res?.id}
                       onMouseOver={() => { deviceType === "Desktop" && setItemHover(index) ; handleHover((res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id) }}
                       onMouseLeave={() =>{ deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
                       onClick={(event) =>  

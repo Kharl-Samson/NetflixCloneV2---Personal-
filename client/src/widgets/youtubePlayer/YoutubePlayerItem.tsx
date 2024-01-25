@@ -5,10 +5,7 @@ import { useAppStore } from "../../store/ZustandStore"
 import { videoEndedItems } from "../../utils/youtubeFunction"
 
 
-export const YoutubePlayerItem = ( {
-    id, videoId, duration, isFetchedTrailer
-  } : YoutubePlayerTypes) => {
-
+export const YoutubePlayerItem = ( {id, videoId, duration, isFetchedTrailer} : YoutubePlayerTypes) => {
     const [video, setVideo] = useState<any>(undefined)
 
     // React Youtube State
@@ -19,7 +16,7 @@ export const YoutubePlayerItem = ( {
     const onReady: YouTubeProps["onReady"] = (event) => {
       event.target.setPlaybackQuality("highres")
       setVideo(() => event.target)
-      
+      setShowVideoItems(false)
       if(isFetchedTrailer && videoId && event.target.getVideoData().video_id && event.target.getVideoData().isPlayable) {
         setVideoValid(true)
         const timeOut1 = setTimeout(() => setShowVideoItems(true), duration)
@@ -33,13 +30,17 @@ export const YoutubePlayerItem = ( {
         }
       }
       else{
-        setShowVideoItems(false)
         setVideoValid(false)
-        const timeOut = setTimeout(() => {
+        setShowVideoItems(false)
+        const timeOut1 = setTimeout(() => setShowVideoItems(false), (duration + 100))
+        const timeOut2 = setTimeout(() => {
           setTriggerAnimItems(true)
           setPause(true)
-        }, 500)
-        return () => timeOut
+        }, 100)
+        return () => {
+          clearTimeout(timeOut1)
+          clearTimeout(timeOut2)
+        }
       }
     }
 
@@ -62,6 +63,7 @@ export const YoutubePlayerItem = ( {
   
   return (
     <YouTube  
+      key={videoId}
       id = {id}
       videoId = {videoId}
       opts = {opts}

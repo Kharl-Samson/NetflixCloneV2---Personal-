@@ -20,7 +20,7 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer} : H
 
     // React Youtube State
     const { 
-        showVideo, setShowVideo, isMuted, setIsMuted,
+        showVideo, setShowVideo, isMuted, setIsMuted, currentSection,
         videoEnded, setVideoEnded, setPlayAgain, setPause
     } = useAppStore()
   
@@ -46,6 +46,16 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer} : H
         const timeOut = setTimeout(() => setTextAnim(true),5000)
         return () => clearTimeout(timeOut)
     },[])
+
+    // Render Hero Video Component if the user is in hero section
+    const [firstLoadStatus, setFirstLoadStatus] = useState<boolean>(true)
+    useEffect(() => {
+        if(currentSection === "categorySection") {
+            setShowVideo(false)
+            setFirstLoadStatus(false)
+        }
+        currentSection !== "categorySection" && !firstLoadStatus && setShowVideo(true)
+    }, [currentSection])
 
   return (
     <>

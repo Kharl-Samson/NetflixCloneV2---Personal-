@@ -30,17 +30,17 @@ export const NavbarLarge = ( {scrollDirection, isAtTop, active} : NavbarProps ) 
 
             {/* Menu */}
             <ul className="flex gap-x-5 text-custom-light-2 disable-highlight">
-                {// Links Mapping
+              {// Links Mapping
                 arrayLink?.map((res: string) => (
-                    <li 
-                      key={res} 
-                      className={`text-sm cursor-pointer hover:opacity-80 custom-transition-duration-3s font-light
-                      ${active === res ? "text-white " : ""}`}
-                    >
-                      {res}
-                    </li>
+                  <li 
+                    key={res} 
+                    className={`text-sm cursor-pointer hover:opacity-80 custom-transition-duration-3s font-light
+                    ${active === res ? "text-white " : ""}`}
+                  >
+                    {res}
+                  </li>
                 ))
-                }
+              }
             </ul>
         </div>
             

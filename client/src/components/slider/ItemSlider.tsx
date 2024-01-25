@@ -38,10 +38,12 @@ export const ItemSlider = ({
     const {screenWidth} = useAppStore()
 
     // Style when hover the item
-    const hoverStyle = `swiperSlideHover h-auto relative z-30 cursor-pointer hover:cursor-pointer overflow-auto item-shadow mt-[-6rem] rounded-lg ${itemHover !== 0 && "ml-[-3.438rem]"}`
+    const hoverStyle = `swiperSlideHover h-auto relative z-30 cursor-pointer hover:cursor-pointer overflow-auto 
+      item-shadow mt-[-6rem] rounded-lg ${itemHover !== 0 && "ml-[-3.438rem]"}`
 
+    
     // React Youtube State
-    const { showVideoItems, triggerAnimItems, isMutedItems, videoEndedItems} = useAppStore()
+    const { showVideoItems, triggerAnimItems, isMutedItems, videoEndedItems } = useAppStore()
 
     // Random Array - [Match and Age]
     const matchArray : string[] = ["95", "96","97", "98"]
@@ -79,15 +81,16 @@ export const ItemSlider = ({
         alt="Show Image"
         src={`${imageUrl && import.meta.env.VITE_BASE_IMAGE_URL}${imageUrl}`} 
         className={`w-full showSkeleton relative cursor-pointer hover:cursor-pointer ${itemHover !== index && triggerAnimItems && "rounded"}
-          custom-transition-duration-10s ${showVideoItems && (showVideoItems && itemHover === index && triggerAnimItems) ? "opacity-0 z-0" : "opacity-100 z-10"}`}
+          custom-transition-duration-10s ${showVideoItems && itemHover === index && triggerAnimItems ? "opacity-0 z-0" : "opacity-100 z-10"}`}
         onError={handleImageError}
       />
 
       { /* Show Trailer Video */
       itemHover === index && screenWidth >= 640 &&
         <div className={`w-full h-[14.063rem] mt-[-14.063rem] overflow-hidden flex items-center justify-center relative cursor-pointer hover:cursor-pointer
-          ${showVideoItems && itemHover === index && triggerAnimItems ? "z-10" : "z-0"}`}>
+          ${showVideoItems && itemHover === index && triggerAnimItems ? "z-10" : "z-0"}`} key={trailerData}>
           <YoutubePlayerItem
+              key={trailerData}
               id = "youtubePlayerItems"
               videoId = {trailerData} 
               duration = {1500}

@@ -10,7 +10,6 @@ import { getShowTrailer } from "../../services/apiFetchShowList"
 import { useEffect } from "react"
 import { dataInEffect, toggleVideoSoundModal, useClickHandlers } from "../../utils/itemsFunction"
 
-
 const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
     <Tooltip {...props} classes={{ popper: className }} />
   ))(({ theme }) => ({
@@ -23,7 +22,6 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
       padding: ".5rem 1.50rem"
     },
 }))
-
 
 export const ShowsDetails = () => {
     // React Youtube State

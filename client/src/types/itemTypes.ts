@@ -21,5 +21,5 @@ export type ItemSliderProps = {
         name : string
       }[]
     }
-    onMouseOver?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    onMouseOver?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
 }

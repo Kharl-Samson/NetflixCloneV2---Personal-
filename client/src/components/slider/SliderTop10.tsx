@@ -67,7 +67,7 @@ export const SliderTop10 = ({marginStyle, sliderStyle, title, queryType, queryKe
       // Trailer Data Query
       (isFetchedTrailer && !isTrailerError && myTrailerData?.results.length !== 0) && dataInEffect(myTrailerData)
     }, [itemHover, isFetchedTrailer, myTrailerData])
-    
+
     // Swiper Controllers
     const [leftSwiperHover, setLeftSwiperHover] = useState<boolean>(false)
     const [rightSwiperHover, setRightSwiperHover] = useState<boolean>(false)
@@ -119,7 +119,7 @@ export const SliderTop10 = ({marginStyle, sliderStyle, title, queryType, queryKe
                 {
                  data?.results?.length > 1 && data?.results?.map((res : ItemType, index : number) => (
                     <SwiperSlide 
-                      key={index}
+                      key={res?.id}
                       className = {`swiperSlideSmall2 h-[9rem] sm:h-[13rem] ${index >= 10 && "hidden"} cursor-pointer hover:cursor-pointer
                         sm:overflow-hidden ${itemHover === index && triggerAnimItems && "sm:overflow-visible"}
                         ${index === 0 && "ml-[-.5rem] sm:ml-0"} ${index === 9 && "ml-[1.5rem] mr-[7.5rem]"}`}

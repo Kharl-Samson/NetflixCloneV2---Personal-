@@ -30,17 +30,17 @@ export const dataInEffect = (myTrailerData : {results : {name: string, key: stri
     const { setTrailerData } = useAppStore.getState()
 
     for(var i : number = 0 ; i < myTrailerData?.results.length ; i++){
-        if (myTrailerData?.results[i]?.name?.toUpperCase().indexOf("OFFICIAL TRAILER") > -1){
-          setTrailerData(myTrailerData?.results[i].key)
-          break
-        }
-        else if(myTrailerData?.results[i]?.name?.includes("TRAILER")){
-          setTrailerData(myTrailerData?.results[i].key)
-          break
-        }
-        else{
-          setTrailerData(myTrailerData?.results[0].key)
-        }
+      if (myTrailerData?.results[i]?.name?.toUpperCase().indexOf("OFFICIAL TRAILER") > -1){
+        setTrailerData(myTrailerData?.results[i].key)
+        break
+      }
+      else if(myTrailerData?.results[i]?.name?.includes("TRAILER")){
+        setTrailerData(myTrailerData?.results[i].key)
+        break
+      }
+      else{
+        setTrailerData(myTrailerData?.results[0].key)
+      }
     }
 }
 
@@ -85,8 +85,8 @@ export const toggleVideoSoundModal = () => {
 type GetShowDetailsResponse = string
 export const useHoverHandlers = () => {
     const { 
-        showVideo, setShowVideoItems, setIsMutedItems, setPause, setTriggerAnimItems, showVideoModal,
-        setTrailerData, setCategory, setVideoId, setShowDetails, setShowVideo, currentSection, showDetailsModal
+        showVideo, setShowVideoItems, setIsMutedItems, setPause, setTriggerAnimItems, setTrailerData,
+        setCategory, setVideoId, setShowDetails, setShowVideo, currentSection, showDetailsModal
     } = useAppStore.getState()
 
     // fetch show details when hover
@@ -104,7 +104,6 @@ export const useHoverHandlers = () => {
   
     // Hover Show
     const handleHover = (media_type: string | boolean, id: string) => {
-      setShowVideoItems(false)
       const timeOut = setTimeout(() => {
         setPause(true)
         setShowVideo(false)
@@ -124,18 +123,19 @@ export const useHoverHandlers = () => {
     // Remove hover on show
     const handleHoverOut = () => {
       const timeOut = setTimeout(() => {
-        !showDetailsModal && setShowVideo(true) ;
-        (!showDetailsModal && currentSection !== "categorySection") && setPause(false)
+        (!showDetailsModal && currentSection !== "categorySection") && setShowVideo(true); 
+        (!showDetailsModal && currentSection !== "categorySection") && setPause(false);
       }, 100)
-
       setTriggerAnimItems(false)
 
       setShowVideoItems(false)
-      showVideoModal && setTrailerData("")
+      setTrailerData("")
       setCategory("")
       setVideoId("")
+
       setIsMutedItems(true);
-      (!showDetailsModal && showVideo) && setPause(false)
+      (!showDetailsModal && showVideo) && setPause(false);
+      
       return () => clearTimeout(timeOut)
     }
   

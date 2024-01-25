@@ -21,7 +21,7 @@ export const getShowList = async (queryType: string, category : string | null, l
   
     case "US Movies":
       url = `${import.meta.env.VITE_SERVER_URL}/${category}/popular`
-      break;
+      break
   
     default:
       url = ""

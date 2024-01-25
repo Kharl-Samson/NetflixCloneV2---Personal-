@@ -8,7 +8,7 @@ import { SliderTop10 } from "../../components/slider/SliderTop10"
 import { useAppStore } from "../../store/ZustandStore"
 import { getCurrentSection } from "../../utils/getCurrentSection"
 import { Hero } from "./sections/Hero"
-import { ShowsDetails } from "../../components/modals/ShowsDetails"
+import { ShowsDetails } from "../../components/modals/showDetails/ShowsDetails"
 import { useClickHandlers } from "../../utils/itemsFunction"
 import { useLocation } from "react-router-dom"
 
@@ -46,7 +46,7 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
   const params = queryParams.get('q') || "Default"
-
+  
   return (
     <div className="bg-custom-color-hero-1 overflow-hidden h-auto pb-[20rem]">
         

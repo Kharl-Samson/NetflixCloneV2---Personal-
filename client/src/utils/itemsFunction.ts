@@ -28,19 +28,24 @@ export const swipeRight = (classCount : number) => {
 */
 export const dataInEffect = (myTrailerData : {results : {name: string, key: string}[]} ) => {
     const { setTrailerData } = useAppStore.getState()
-
-    for(var i : number = 0 ; i < myTrailerData?.results.length ; i++){
-      if (myTrailerData?.results[i]?.name?.toUpperCase().indexOf("OFFICIAL TRAILER") > -1){
-        setTrailerData(myTrailerData?.results[i].key)
-        break
+    setTrailerData("")
+    if(myTrailerData?.results){
+      for(var i : number = 0 ; i < myTrailerData?.results.length ; i++){
+        if (myTrailerData?.results[i]?.name?.toUpperCase().indexOf("OFFICIAL TRAILER") > -1){
+          setTrailerData(myTrailerData?.results[i].key)
+          break
+        }
+        else if(myTrailerData?.results[i]?.name?.includes("TRAILER")){
+          setTrailerData(myTrailerData?.results[i].key)
+          break
+        }
+        else{
+          setTrailerData(myTrailerData?.results[0].key)
+        }
       }
-      else if(myTrailerData?.results[i]?.name?.includes("TRAILER")){
-        setTrailerData(myTrailerData?.results[i].key)
-        break
-      }
-      else{
-        setTrailerData(myTrailerData?.results[0].key)
-      }
+    }
+    else{
+      setTrailerData("")
     }
 }
 

@@ -42,7 +42,7 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
     return () => document.body.removeEventListener('click', handleClickOutside)
   }, [])
 
-  // Params key when clickin a movie or tv show
+  // Params key when clicking a movie or tv show
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
   const params = queryParams.get('q') || "Default"

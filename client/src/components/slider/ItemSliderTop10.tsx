@@ -11,6 +11,7 @@ import { useEffect, useState } from "react"
 import { ItemSliderProps } from "../../types/itemTypes"
 import { toggleVideoSound } from "../../utils/itemsFunction"
 import { Rank } from "../rank/Rank"
+import { convertToHoursAndMinutes } from "../../utils/getCurrentSection"
 
 const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
     <Tooltip {...props} classes={{ popper: className }} />
@@ -59,15 +60,6 @@ export const ItemSliderTop10 = ({
     },[itemHover])
 
     // Get Show runtime length if the category is movie
-    const convertToHoursAndMinutes = (minutes: number) => {
-      const hours = Math.floor(minutes / 60)
-      const remainingMinutes = minutes % 60
-  
-      return {
-        hours,
-        minutes: remainingMinutes
-      }
-    }
     const showRuntime = mediaType === "movie" ? convertToHoursAndMinutes(showDetails?.runtime || 0) : null
     const { hours, minutes } = showRuntime || { hours: 0, minutes: 0 }
 

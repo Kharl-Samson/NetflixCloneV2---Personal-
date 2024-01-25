@@ -36,7 +36,7 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer} : H
         }
     }
 
-    // State for text animationy
+    // State for text animation
     const [textAnim, setTextAnim] = useState<boolean>(false)
     const ageArray : string[] = ["10", "13", "16"]
     const [age, setAge] = useState<string>("")

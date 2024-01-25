@@ -187,7 +187,7 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
                     :
                     <SwiperSlide 
                       className = "swiperSlide h-[10rem] cursor-pointer hover:cursor-pointer"
-                      key={res?.id}
+                      key={index}
                       onMouseOver={() => { deviceType === "Desktop" && setItemHover(index) ; handleHover((res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id) }}
                       onMouseLeave={() =>{ deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
                       onClick={(event) =>  

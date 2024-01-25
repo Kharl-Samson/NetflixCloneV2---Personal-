@@ -103,6 +103,30 @@ export const getShowDetails = async (category : string, trailerId: string | numb
   }
 }
 
+// Get Casts
+export const getCasts = async (category : string, id: string) => {
+  try {
+    const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/${category}/${id}/credits`, {
+      params: {
+        api_key: import.meta.env.VITE_API_KEY,
+      },
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    return response.data
+  } catch (error : unknown | string) {
+    if (typeof error === 'string') {
+      throw new Error(error)
+    } else if (error instanceof Error) {
+      throw error
+    } else {
+      throw new Error('An unknown error occurred.')
+    }
+  }
+}
+
+
 // Get Genres
 export const getGenres = async (category : string) => {
   try {

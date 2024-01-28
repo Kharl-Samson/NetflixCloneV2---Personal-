@@ -58,7 +58,7 @@ export const ShowsDetails = ({params, scrollToBottom} : ShowDetailsProps) => {
     },[])
 
   return (
-  (isTrailerLoading && isCastsLoading) ? 
+  (isTrailerLoading && isCastsLoading) || (!showDetails) ? 
     <div className="h-screen w-full flex items-center justify-center">
      <CircularProgress sx={{color:"red"}}/>
     </div>

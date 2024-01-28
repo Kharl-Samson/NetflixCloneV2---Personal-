@@ -86,7 +86,7 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
       userAgent.match(/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i) ? setDeviceType("Phone") : setDeviceType("Desktop")
     },[deviceType])
   
-    // Hovers Functions Util
+    // Items Functions Util
     const [itemHover, setItemHover] = useState<number | null>(null)
     const { handleHover, handleHoverOut } = useHoverHandlers()
     const { handleClickModal } = useClickHandlers()

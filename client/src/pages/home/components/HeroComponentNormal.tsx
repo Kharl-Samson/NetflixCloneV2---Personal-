@@ -3,12 +3,14 @@ import { useAppStore } from "../../../store/ZustandStore"
 import { YoutubePlayer } from "../../../widgets/youtubePlayer/YoutubePlayer"
 import play from "../../../assets/images/icons/play.png"
 import info from "../../../assets/images/icons/info.svg"
+import { useClickHandlers } from "../../../utils/itemsFunction"
 
 type HeroProps = {
     myData : {
         backdrop_path?: string
         original_title?: string
         overview?: string
+        id: string
     }
     trailerData : string
     isFetchedTrailer : boolean
@@ -56,6 +58,16 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer} : H
         }
         currentSection !== "categorySection" && !firstLoadStatus && setShowVideo(true)
     }, [currentSection])
+
+    // Device Checker
+    const [deviceType, setDeviceType] = useState<string | null>(null)
+    useEffect(() => {
+      const userAgent = navigator.userAgent.toLowerCase()
+      userAgent.match(/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i) ? setDeviceType("Phone") : setDeviceType("Desktop")
+    },[deviceType])
+
+    // Items Functions Util
+    const { handleClickModal } = useClickHandlers()
 
   return (
     <>
@@ -108,7 +120,13 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer} : H
                     <span className="text-[1.4rem] font-semibold">Play</span>
                   </button>
 
-                  <button className="rounded-md flex items-center gap-x-[15px] font-netflix_regular py-[11px] px-[35px] transition duration-400 bg-[#857e7ea8] hover:opacity-80">
+                  <button 
+                    className="rounded-md flex items-center gap-x-[15px] font-netflix_regular py-[11px] 
+                        px-[35px] transition duration-400 bg-[#857e7ea8] hover:opacity-80"
+                    onClick={(event) =>  
+                        deviceType === "Desktop" && handleClickModal(event, "movie", myData?.id)
+                    }
+                >
                     <img src={info} alt="Info Icon" className="h-[27px]"/>
                     <span className="text-[1.4rem] text-white font-semibold">More Info</span>
                   </button>

@@ -6,7 +6,7 @@ import { HeroComponentSmall } from "../components/HeroComponentSmall"
 import { useAppStore } from "../../../store/ZustandStore"
 
 type MyData = {
-    id: number | string
+    id: string
     backdrop_path?: string
 }
 
@@ -21,7 +21,7 @@ export const Hero = () => {
 
     // Randomize page number and show number
     useEffect(() => {
-        const randomNumber1 = Math.floor(Math.random() * 10) + 1
+        const randomNumber1 = Math.floor(Math.random() * 2) + 1
         const randomNumber2 = Math.floor(Math.random() * 15) + 1
         setRandomPageArray(randomNumber1)
         setRandomShowArray(randomNumber2)

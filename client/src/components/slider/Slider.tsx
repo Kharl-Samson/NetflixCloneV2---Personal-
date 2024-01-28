@@ -47,11 +47,12 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
     const { data : data1, isFetched: isFetchedData1, isError: isDataError1 } = useQuery(
       [`${queryKey}1`, dataCategory1, dataCategory2],
       () => getShowList(
-        queryType, // Query Type (ex. Hero, Romantic Movies, TV Action & Adventure, etc)
-        dataCategory1, // Category (ex. tv or movie)
-        queryType === "Romantic Movies" ? null : "en-US", // Language
-        queryType === "Romantic Movies" ? 10749 : queryType === "TV Action & Adventure" ? 10759 : null, // Genre
-        1 // Page Number
+        queryType,                                                    // Query Type (ex. Hero, Romantic Movies, TV Action & Adventure, etc)
+        dataCategory1,                                                // Category (ex. tv or movie)
+        queryType === "Romantic Movies" ? null : "en-US",             // Language
+        queryType === "Romantic Movies" ? 
+        10749 : queryType === "TV Action & Adventure" ? 10759 : null, // Genre
+        1                                                             // Page Number
       )
     )
 
@@ -59,11 +60,12 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
     const { data : data2, isFetched: isFetchedData2, isError: isDataError2 } = useQuery(
       [`${queryKey}2`, dataCategory1, dataCategory2],
       () => getShowList(
-        queryType, // Query Type (ex. Hero, Romantic Movies, TV Action & Adventure, etc)
-        dataCategory1, // Category (ex. tv or movie)
-        queryType === "Romantic Movies" ? null : "en-US", // Language
-        queryType === "Romantic Movies" ? 10749 : queryType === "TV Action & Adventure" ? 10759 : null, // Genre
-        2 // Page Number
+        queryType,                                            // Query Type (ex. Hero, Romantic Movies, TV Action & Adventure, etc)
+        dataCategory1,                                        // Category (ex. tv or movie)
+        queryType === "Romantic Movies" ? null : "en-US",     // Language
+        queryType === "Romantic Movies" ? 10749 : 
+        queryType === "TV Action & Adventure" ? 10759 : null, // Genre
+        2                                                     // Page Number
       )
     )
 
@@ -94,7 +96,7 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
 
     // Fetch trailer data
     const { data : myTrailerData, isFetched: isFetchedTrailer, isError: isTrailerError } = useQuery(
-      ["trailerItemKey", itemHover],
+      ["trailerItemKey", itemHover, showDetails],
       () => getShowTrailer(!showDetails?.number_of_seasons ? "movie" : "tv", videoId)
     )
 

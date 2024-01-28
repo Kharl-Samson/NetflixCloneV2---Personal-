@@ -12,9 +12,10 @@ import { EpisodeLists } from "./components/EpisodeLists"
 
 type ShowDetailsProps = {
   params : string
+  scrollToBottom: () => void
 }
 
-export const ShowsDetails = ({params} : ShowDetailsProps) => {
+export const ShowsDetails = ({params, scrollToBottom} : ShowDetailsProps) => {
     // React Youtube State
     const { showVideoModal, trailerData, showDetails } = useAppStore()
 
@@ -23,7 +24,7 @@ export const ShowsDetails = ({params} : ShowDetailsProps) => {
 
     // Fetch trailer data
     const { data : myTrailerData, isFetched: isFetchedTrailer, isError: isTrailerError , isLoading: isTrailerLoading } = useQuery(
-      ["trailerModalKey"],
+      ["trailerModalKey", showDetails?.id],
       () => getShowTrailer(!showDetails?.number_of_seasons ? "movie" : "tv", params),
       { cacheTime: 0 } // Remove caching to trigger every click
     )
@@ -105,10 +106,12 @@ export const ShowsDetails = ({params} : ShowDetailsProps) => {
           castsData = {castsData}
           match = {match}
           age = {age}
+          scrollToBottom = {scrollToBottom}
         />
 
         {/* Episodes - [If it is TV Show] */}
         <EpisodeLists
+          castsData = {castsData}
           age = {age}
         />
     </div>

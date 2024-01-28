@@ -3,7 +3,6 @@ import { getShowDetails } from "../services/apiFetchShowList"
 import { useAppStore } from "../store/ZustandStore"
 import { useLocation, useNavigate } from "react-router-dom"
 
-
 /*
  * When the user swipe the slider to left
  * Used ts-ignore because of predefined element
@@ -101,9 +100,6 @@ export const useHoverHandlers = () => {
       {
         onSuccess: (res) => {
           setShowDetails(res)
-        },
-        onError: (error) => {
-          console.log(error)
         }
       }
     )
@@ -168,9 +164,6 @@ export const useClickHandlers = () => {
       {
         onSuccess: (res) => {
           setShowDetails(res)
-        },
-        onError: (error) => {
-          console.log(error)
         }
       }
     )

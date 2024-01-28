@@ -42,11 +42,24 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
     return () => document.body.removeEventListener('click', handleClickOutside)
   }, [])
 
+  // Scroll to bottom in modal ref
+  const scrollToBottom = () => {
+    if (modalRef.current) {
+      modalRef.current.scrollTo({
+        top: modalRef.current.scrollHeight,
+        behavior: 'smooth',
+      })
+    }
+  }
+
   // Params key when clicking a movie or tv show
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
   const params = queryParams.get('q') || "Default"
-  
+
+
+
+
   return (
     <div className="bg-custom-color-hero-1 overflow-hidden h-auto pb-[20rem]">
         
@@ -155,7 +168,7 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
       {/* Modals - [Larger Screens] */
       (screenWidth >= 640 && showDetailsModal) &&
         <div className="min-h-screen w-full fixed z-[1000] modal-background inset-0 overflow-y-scroll hidden sm:block" ref={modalRef}>
-          <ShowsDetails params = {params}/>
+          <ShowsDetails params = {params} scrollToBottom = {scrollToBottom}/>
         </div>
       }
     </div>

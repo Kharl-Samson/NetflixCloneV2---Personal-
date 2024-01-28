@@ -58,7 +58,7 @@ export const SliderTop10 = ({marginStyle, sliderStyle, title, queryType, queryKe
 
     // Fetch trailer data
     const { data : myTrailerData, isFetched: isFetchedTrailer, isError: isTrailerError } = useQuery(
-      ["trailerItemKey", itemHover],
+      ["trailerItemKey", itemHover, showDetails],
       () => getShowTrailer(!showDetails?.number_of_seasons ? "movie" : "tv", videoId)
     )
 

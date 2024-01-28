@@ -37,18 +37,12 @@ export const getShowList = async(queryType: string, category : string | null, la
         page: page
       },
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     })
     return response.data
   } catch (error : unknown | string) {
-    if (typeof error === 'string') {
-      throw new Error(error)
-    } else if (error instanceof Error) {
-      throw error
-    } else {
-      throw new Error('An unknown error occurred.')
-    }
+    console.log(error)
   }
 }
 
@@ -61,18 +55,12 @@ export const getShowTrailer = async(category : string, trailerId: string | numbe
           api_key: import.meta.env.VITE_API_KEY
         },
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       })
       return response.data
     } catch (error : unknown | string) {
-      if (typeof error === 'string') {
-        throw new Error(error)
-      } else if (error instanceof Error) {
-        throw error
-      } else {
-        throw new Error('An unknown error occurred.');
-      }
+      console.log(error)
     }
   }
 }
@@ -87,18 +75,12 @@ export const getShowDetails = async(category : string, trailerId: string | numbe
           language: language
         },
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         }
       })
       return response.data
     } catch (error : unknown | string) {
-      if (typeof error === 'string') {
-        throw new Error(error)
-      } else if (error instanceof Error) {
-        throw error
-      } else {
-        throw new Error('An unknown error occurred.')
-      }
+      console.log(error)
     }
   }
 }
@@ -112,18 +94,12 @@ export const getEpisodeDetails = async(itemId: string, seasonNumber : number) =>
           api_key: import.meta.env.VITE_API_KEY
         },
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         }
       })
       return response.data
     } catch (error : unknown | string) {
-      if (typeof error === 'string') {
-        throw new Error(error)
-      } else if (error instanceof Error) {
-        throw error
-      } else {
-        throw new Error('An unknown error occurred.')
-      }
+      console.log(error)
     }
   }
 }
@@ -138,18 +114,12 @@ export const getSimilarShows = async(category : string | null, itemId: string, p
           page: page
         },
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         }
       })
       return response.data
     } catch (error : unknown | string) {
-      if (typeof error === 'string') {
-        throw new Error(error)
-      } else if (error instanceof Error) {
-        throw error
-      } else {
-        throw new Error('An unknown error occurred.')
-      }
+      console.log(error)
     }
   }
 }
@@ -162,18 +132,12 @@ export const getCasts = async(category : string, id: string) => {
         api_key: import.meta.env.VITE_API_KEY,
       },
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     })
     return response.data
   } catch (error : unknown | string) {
-    if (typeof error === 'string') {
-      throw new Error(error)
-    } else if (error instanceof Error) {
-      throw error
-    } else {
-      throw new Error('An unknown error occurred.')
-    }
+    console.log(error)
   }
 }
 
@@ -186,17 +150,11 @@ export const getGenres = async(category : string) => {
         api_key: import.meta.env.VITE_API_KEY,
       },
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     })
     return response.data
   } catch (error : unknown | string) {
-    if (typeof error === 'string') {
-      throw new Error(error)
-    } else if (error instanceof Error) {
-      throw error
-    } else {
-      throw new Error('An unknown error occurred.')
-    }
+    console.log(error)
   }
 }

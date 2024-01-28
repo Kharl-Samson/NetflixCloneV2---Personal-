@@ -21,7 +21,7 @@ export const Hero = () => {
 
     // Randomize page number and show number
     useEffect(() => {
-        const randomNumber1 = Math.floor(Math.random() * 100) + 1
+        const randomNumber1 = Math.floor(Math.random() * 10) + 1
         const randomNumber2 = Math.floor(Math.random() * 15) + 1
         setRandomPageArray(randomNumber1)
         setRandomShowArray(randomNumber2)
@@ -33,7 +33,7 @@ export const Hero = () => {
 
     // Fetch data to be showned in hero section 
     const { data, isFetched: isFetchedData, isError: isDataError } = useQuery(
-        ["heroKey"],
+        ["heroKey", randomPageArray],
         () => getShowList("Hero", categoryArray[randomCategoryIndex], "en-US", 14, randomPageArray)
     )
 

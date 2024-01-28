@@ -9,7 +9,7 @@ export const YoutubePlayerModal = ({ id, videoId, duration, isFetchedTrailer } :
     const [video, setVideo] = useState<any>(null)
 
     // React Youtube State
-    const { setShowVideo, setShowVideoModal, showVideoModal, isMutedModal, playAgainModal, setPause } = useAppStore()
+    const { setShowVideoModal, showVideoModal, isMutedModal, playAgainModal } = useAppStore()
 
     // Video Valid State
     const [videoValid, setVideoValid] = useState<boolean>(false)
@@ -22,8 +22,6 @@ export const YoutubePlayerModal = ({ id, videoId, duration, isFetchedTrailer } :
         setVideoValid(true)
         const timeOut = setTimeout(() => {
           setShowVideoModal(true)
-          setShowVideo(false)
-          setPause(true)
         }, duration)
         return () => {
           clearTimeout(timeOut)

@@ -25,10 +25,18 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
 }))
 
 type EpisodeListsProps = {
+  castsData : {
+    cast : {
+        original_name : string
+    }[]
+    crew? : {
+      name : string
+    }
+  }
   age : string
 }
 
-export const EpisodeLists = ({age} : EpisodeListsProps) => {
+export const EpisodeLists = ({castsData, age} : EpisodeListsProps) => {
     // React Youtube State
     const { showDetails } = useAppStore()
 
@@ -87,10 +95,10 @@ export const EpisodeLists = ({age} : EpisodeListsProps) => {
       ["trendingNow1", showDetails?.id],
       () => getShowList(
         "Trending Now", // Query Type (ex. Hero, Romantic Movies, TV Action & Adventure, etc)
-        "tv", // Category (ex. tv or movie)
-        "en-US", // Language
-        null, // Genre
-        1 // Page Number
+        "tv",           // Category (ex. tv or movie)
+        "en-US",        // Language
+        null,           // Genre
+        1               // Page Number
       )
     )
 
@@ -100,8 +108,7 @@ export const EpisodeLists = ({age} : EpisodeListsProps) => {
     // Random Array - [Match and Age]
     const matchArray : string[] = ["95", "96","97", "98"]
     const ageArray : string[] = ["10", "13", "16"]
-
-    console.log(similarShowsData?.results.length)
+    
   return (
     <div className="relative mt-10 px-14">
 
@@ -201,11 +208,11 @@ export const EpisodeLists = ({age} : EpisodeListsProps) => {
               <LazyLoadImage
                 alt="Episode Banner Image"
                 src={`${res?.still_path && import.meta.env.VITE_BASE_IMAGE_URL}${res?.still_path}`} 
-                className="h-[4.8rem] w-[8.7rem] min-w-[8.7rem] rounded bg-[#131313]"
+                className="h-[4.9rem] w-[8.7rem] min-w-[8.7rem] rounded bg-[#131313]"
                 onError={handleImageError}
               />
               {/* Play Icon */}
-              <div className="h-[4.8rem] w-[8.7rem] ml-[-9.95rem] min-w-[8.7rem] flex items-center justify-center relative z-10">
+              <div className="h-[4.9rem] w-[8.7rem] ml-[-9.95rem] min-w-[8.7rem] flex items-center justify-center relative z-10">
                 <div 
                   className={`rounded-full h-[3rem] w-[3rem] modal-background border border-white flex items-center justify-center
                     opacity-0 custom-transition-duration-5s ${(hoverStatus && hoverItemIndex === res?.id) && "opacity-100" }`}
@@ -222,7 +229,12 @@ export const EpisodeLists = ({age} : EpisodeListsProps) => {
                 </div>
 
                 {/* Overview */}
-                <p className="mt-2 text-sm text-[#d2d2d2]">{res?.overview ? `${sentenceCutter(1, res?.overview)}` : "No overview available."}</p>
+                <p className="mt-2 text-sm text-[#d2d2d2]">
+                  {res?.overview ? 
+                    `${sentenceCutter(1, res?.overview).length <=10 ? sentenceCutter(2, res?.overview) : sentenceCutter(1, res?.overview)}` 
+                    :
+                    "No overview available."}
+                </p>
               </div>
             </div>
           ))}
@@ -307,7 +319,7 @@ export const EpisodeLists = ({age} : EpisodeListsProps) => {
               </div>
 
               {/* Overview */}
-              <p className="mt-4 text-sm text-[#d2d2d2] mx-3">{sentenceCutter(1, res?.overview)}</p>
+              <p className="mt-4 text-sm text-[#d2d2d2] mx-3">{sentenceCutter(1, res?.overview).length <=10 ? sentenceCutter(2, res?.overview) : sentenceCutter(1, res?.overview)}</p>
             </div>
           ))
         }
@@ -340,6 +352,57 @@ export const EpisodeLists = ({age} : EpisodeListsProps) => {
         }
       </div>
 
+      {/* About this item section */}
+      <div className="mt-7 w-full disable-highlight">
+        <p className="mb-5 text-white text-2xl">About <span className="text-2xl font-bold tracking-wide">{showDetails?.name || showDetails?.original_title}</span></p>
+
+        {/* Creators */
+        showDetails && showDetails.created_by && showDetails.created_by.length !== 0 &&
+          <p className="text-[#9b9b9b] text-sm">
+            Creators:&nbsp;
+            {// Creators mapping
+            showDetails.created_by.map((res: { name: string }, index: number) => 
+                <span className="text-sm text-white" key={res?.name}>
+                  {res?.name}{index < showDetails.created_by.length - 1 && ",\u00A0\u00A0"}
+                </span>
+              )
+            }
+          </p>
+        }
+
+        {/* Cast */}
+        <p className="text-[#9b9b9b] text-sm mt-[.50rem]">
+          Cast:&nbsp;
+          {// Creators mapping
+            castsData && castsData.cast.map((res: { original_name: string }, index: number) => 
+              <span className="text-sm text-white" key={res?.original_name}>
+                {res?.original_name}{index < castsData.cast.length - 1 && ",\u00A0\u00A0"}
+              </span>
+            )
+          }
+        </p>
+
+        {/* Genres */}
+        <p className="text-[#9b9b9b] text-sm mt-[.50rem]">
+          Genres:&nbsp;
+          {/* Cast Mapping */}
+          {showDetails?.genres?.map((res: { name: string }, index: number, array: { name: string }[]) => 
+            <span className="text-sm text-white" key={res?.name}>
+              {res?.name}{index < array.length - 1 ? ', ' : ''}
+            </span>
+          )}
+        </p>
+
+        {/* Tagline */}
+        <p className="text-[#9b9b9b] text-sm mt-[.50rem]">Tagline: <span className="text-sm text-white">{showDetails?.tagline || "Not Available"}</span></p>
+
+        {/* Maturity Rating */}
+        <div className="flex items-center gap-x-3 mt-[.50rem]">
+          <p className="text-[#9b9b9b] text-sm">Maturity rating:</p>
+          <div className="text-white float-left text-sm px-[5px] border border-white">{age}+</div>
+          <p className="text-white text-sm">Recommended for age {age} and up</p>
+        </div>
+      </div>
     </div>
   )
 }

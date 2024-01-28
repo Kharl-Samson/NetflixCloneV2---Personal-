@@ -3,15 +3,16 @@ import { useAppStore } from "../../../../store/ZustandStore"
 
 type ShowDescriptionProps = {
   castsData : {
-      cast : {
-          original_name : string
-      }[]
+    cast : {
+      original_name : string
+    }[]
   }
   match : string
   age : string
+  scrollToBottom: () => void
 }
 
-export const ShowDescription = ({castsData, match, age} : ShowDescriptionProps) => {
+export const ShowDescription = ({castsData, match, age, scrollToBottom} : ShowDescriptionProps) => {
     // React Youtube State
     const { showDetails } = useAppStore()
 
@@ -64,7 +65,7 @@ export const ShowDescription = ({castsData, match, age} : ShowDescriptionProps) 
               <span className="text-sm text-white" key={res?.original_name}>{res?.original_name},&nbsp;</span>
             )
           }
-          <span className="text-sm text-white italic cursor-pointer hover:underline">more</span>
+          <span className="text-sm text-white italic cursor-pointer hover:underline" onClick={scrollToBottom}>more</span>
         </p>
         {/* Genres */}
         <p className="text-[#9b9b9b] text-sm mt-4">

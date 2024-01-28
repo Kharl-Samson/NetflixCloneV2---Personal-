@@ -90,12 +90,12 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
     const { handleClickModal } = useClickHandlers()
 
     // React Youtube State
-    const { category, videoId, trailerData, showDetails } = useAppStore()
+    const { videoId, trailerData, showDetails } = useAppStore()
 
     // Fetch trailer data
     const { data : myTrailerData, isFetched: isFetchedTrailer, isError: isTrailerError } = useQuery(
       ["trailerItemKey", itemHover],
-      () => getShowTrailer(category, videoId)
+      () => getShowTrailer(!showDetails?.number_of_seasons ? "movie" : "tv", videoId)
     )
 
     // When done querying put the data in states variable

@@ -1,35 +1,24 @@
-import { useEffect, useState } from "react"
 import { convertToHoursAndMinutes } from "../../../../utils/getCurrentSection"
 import { useAppStore } from "../../../../store/ZustandStore"
 
 type ShowDescriptionProps = {
-    castsData : {
-        cast : {
-            original_name : string
-        }[]
-    }
+  castsData : {
+      cast : {
+          original_name : string
+      }[]
+  }
+  match : string
+  age : string
 }
 
-export const ShowDescription = ({castsData} : ShowDescriptionProps) => {
+export const ShowDescription = ({castsData, match, age} : ShowDescriptionProps) => {
     // React Youtube State
     const { showDetails } = useAppStore()
-
-    // Random Array - [Match and Age]
-    const matchArray : string[] = ["95", "96","97", "98"]
-    const ageArray : string[] = ["10", "13", "16"]
-    const [match, setMatch] = useState<string>("")
-    const [age, setAge] = useState<string>("")
-    useEffect(() => {
-      const randomMatch = Math.floor(Math.random() * matchArray.length)
-      const randomAge = Math.floor(Math.random() * ageArray.length)
-      setMatch(matchArray[randomMatch])
-      setAge(ageArray[randomAge])
-    },[])
 
      // Get Show runtime length if the category is movie
     const showRuntime = !showDetails?.number_of_seasons ? convertToHoursAndMinutes(showDetails?.runtime || 0) : null
     const { hours, minutes } = showRuntime || { hours: 0, minutes: 0 }
-
+    
   return (
     <div className="px-14 mt-[4.5rem] relative z-10 flex gap-x-12 justify-between">
       {/* Description */}
@@ -71,7 +60,7 @@ export const ShowDescription = ({castsData} : ShowDescriptionProps) => {
         <p className="text-[#9b9b9b] text-sm">
           Cast:&nbsp;
           {/* Cast Mapping */
-            castsData?.cast?.slice(0, 4).map((res: { original_name: string }) => 
+          castsData && castsData.cast.slice(0, 4).map((res: { original_name: string }) => 
               <span className="text-sm text-white" key={res?.original_name}>{res?.original_name},&nbsp;</span>
             )
           }
@@ -87,7 +76,7 @@ export const ShowDescription = ({castsData} : ShowDescriptionProps) => {
             </span>
           )}
         </p>
-        {/* Taglne */}
+        {/* Tagline */}
         <p className="text-[#9b9b9b] text-sm mt-4">Tagline: <span className="text-sm text-white">{showDetails?.tagline || "Not Available"}</span></p>
       </div>
     </div>

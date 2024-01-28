@@ -152,9 +152,9 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
         />
       </section>
 
-      {/* Modals */
+      {/* Modals - [Larger Screens] */
       (screenWidth >= 640 && showDetailsModal) &&
-        <div className="min-h-screen w-full fixed z-[1000] modal-background inset-0 overflow-y-scroll" ref={modalRef}>
+        <div className="min-h-screen w-full fixed z-[1000] modal-background inset-0 overflow-y-scroll hidden sm:block" ref={modalRef}>
           <ShowsDetails params = {params}/>
         </div>
       }

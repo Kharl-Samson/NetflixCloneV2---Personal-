@@ -41,8 +41,6 @@ type appStore = {
   // Items States
   trailerData: string
   setTrailerData: (value: string) => void
-  category: string
-  setCategory: (value: string) => void
   videoId: string
   setVideoId: (value: string) => void
   showDetails: any
@@ -103,8 +101,6 @@ const useAppStore = create<appStore>()(
     // Items States
     trailerData: "",
     setTrailerData: (value: string) => set({ trailerData: value }),
-    category: "",
-    setCategory: (value: string) => set({ category: value }),
     videoId: "",
     setVideoId: (value: string) => set({ videoId: value }),
     showDetails: "",

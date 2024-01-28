@@ -34,7 +34,7 @@ export const Hero = () => {
     // Fetch data to be showned in hero section 
     const { data, isFetched: isFetchedData, isError: isDataError } = useQuery(
         ["heroKey"],
-        () => getShowList("Hero",categoryArray[randomCategoryIndex], "en-US", 14, randomPageArray)
+        () => getShowList("Hero", categoryArray[randomCategoryIndex], "en-US", 14, randomPageArray)
     )
 
     // Fetch trailer data

@@ -1,7 +1,7 @@
 import axios from "axios"
 
 // Get Data List
-export const getShowList = async (queryType: string, category : string | null, language?: string | null, genres?: number | null, page?: number) => {
+export const getShowList = async(queryType: string, category : string | null, language?: string | null, genres?: number | null, page?: number) => {
   let url : string = ""
   switch (queryType) {
     case "Hero":
@@ -53,7 +53,7 @@ export const getShowList = async (queryType: string, category : string | null, l
 }
 
 // Get Trailer Details
-export const getShowTrailer = async (category : string, trailerId: string | number) => {
+export const getShowTrailer = async(category : string, trailerId: string | number) => {
   if(trailerId){
     try {
       const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/${category}/${trailerId}/videos`, {
@@ -78,7 +78,7 @@ export const getShowTrailer = async (category : string, trailerId: string | numb
 }
 
 // Get Show Details
-export const getShowDetails = async (category : string, trailerId: string | number, language?: string) => {
+export const getShowDetails = async(category : string, trailerId: string | number, language?: string) => {
   if(trailerId){
     try {
       const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/${category}/${trailerId}`, {
@@ -103,8 +103,59 @@ export const getShowDetails = async (category : string, trailerId: string | numb
   }
 }
 
+// Get Episodes Details if the Item is TV show
+export const getEpisodeDetails = async(itemId: string, seasonNumber : number) => {
+  if(seasonNumber){
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/tv/${itemId}/season/${seasonNumber}`, {
+        params: {
+          api_key: import.meta.env.VITE_API_KEY
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      return response.data
+    } catch (error : unknown | string) {
+      if (typeof error === 'string') {
+        throw new Error(error)
+      } else if (error instanceof Error) {
+        throw error
+      } else {
+        throw new Error('An unknown error occurred.')
+      }
+    }
+  }
+}
+
+// Get Similar Shows
+export const getSimilarShows = async(category : string | null, itemId: string, page?: number) => {
+  if(itemId){
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/${category}/${itemId}/recommendations`, {
+        params: {
+          api_key: import.meta.env.VITE_API_KEY,
+          page: page
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      return response.data
+    } catch (error : unknown | string) {
+      if (typeof error === 'string') {
+        throw new Error(error)
+      } else if (error instanceof Error) {
+        throw error
+      } else {
+        throw new Error('An unknown error occurred.')
+      }
+    }
+  }
+}
+
 // Get Casts
-export const getCasts = async (category : string, id: string) => {
+export const getCasts = async(category : string, id: string) => {
   try {
     const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/${category}/${id}/credits`, {
       params: {
@@ -128,7 +179,7 @@ export const getCasts = async (category : string, id: string) => {
 
 
 // Get Genres
-export const getGenres = async (category : string) => {
+export const getGenres = async(category : string) => {
   try {
     const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/genre/${category}/list`, {
       params: {

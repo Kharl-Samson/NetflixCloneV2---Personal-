@@ -42,7 +42,6 @@ export const ItemSlider = ({
     const hoverStyle = `swiperSlideHover h-auto relative z-30 cursor-pointer hover:cursor-pointer overflow-auto 
       item-shadow mt-[-6rem] rounded-lg ${itemHover !== 0 && "ml-[-3.438rem]"}`
 
-    
     // React Youtube State
     const { showVideoItems, triggerAnimItems, isMutedItems, videoEndedItems } = useAppStore()
 

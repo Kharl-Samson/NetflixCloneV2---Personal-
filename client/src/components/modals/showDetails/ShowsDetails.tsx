@@ -3,11 +3,12 @@ import { handleImageError } from "../../../types/errorTypes"
 import { YoutubePlayerModal } from "../../../widgets/youtubePlayer/YoutubePlayerModal"
 import { useQuery } from "react-query"
 import { getCasts, getShowTrailer } from "../../../services/apiFetchShowList"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { dataInEffect, useClickHandlers } from "../../../utils/itemsFunction"
 import CircularProgress from "@mui/material/CircularProgress"
 import { BannerData } from "./components/BannerData"
 import { ShowDescription } from "./components/ShowDescription"
+import { EpisodeLists } from "./components/EpisodeLists"
 
 type ShowDetailsProps = {
   params : string
@@ -15,7 +16,7 @@ type ShowDetailsProps = {
 
 export const ShowsDetails = ({params} : ShowDetailsProps) => {
     // React Youtube State
-    const { showVideoModal, trailerData, category, showDetails } = useAppStore()
+    const { showVideoModal, trailerData, showDetails } = useAppStore()
 
     // Setting Web Title
     document.title = `${showDetails?.name || showDetails?.original_title} - Netflix Clone by Kharl`
@@ -23,17 +24,17 @@ export const ShowsDetails = ({params} : ShowDetailsProps) => {
     // Fetch trailer data
     const { data : myTrailerData, isFetched: isFetchedTrailer, isError: isTrailerError , isLoading: isTrailerLoading } = useQuery(
       ["trailerModalKey"],
-      () => getShowTrailer(category, params),
+      () => getShowTrailer(!showDetails?.number_of_seasons ? "movie" : "tv", params),
       { cacheTime: 0 } // Remove caching to trigger every click
     )
 
     // Fetch Casts
-    const { data : castsData, isFetched: isFetchedCasts } = useQuery(
-      ["castKey"],
-      () => getCasts(category, showDetails?.id),
+    const { data : castsData, isFetched: isFetchedCasts, isLoading: isCastsLoading } = useQuery(
+      ["castKey", showDetails?.id],
+      () => getCasts(!showDetails?.number_of_seasons ? "movie" : "tv", showDetails?.id),
       { cacheTime: 0 } // Remove caching to trigger every click
     )
-    
+
     // When done querying put the data in states variable
     useEffect(() => {
       // Trailer Data Query
@@ -43,13 +44,25 @@ export const ShowsDetails = ({params} : ShowDetailsProps) => {
     // Closing Modal
     const { handleCloseModalOut } = useClickHandlers()
 
+    // Random Array - [Match and Age]
+    const matchArray : string[] = ["95", "96","97", "98"]
+    const ageArray : string[] = ["10", "13", "16"]
+    const [match, setMatch] = useState<string>("")
+    const [age, setAge] = useState<string>("")
+    useEffect(() => {
+      const randomMatch = Math.floor(Math.random() * matchArray.length)
+      const randomAge = Math.floor(Math.random() * ageArray.length)
+      setMatch(matchArray[randomMatch])
+      setAge(ageArray[randomAge])
+    },[])
+
   return (
-  isTrailerLoading ? 
+  (isTrailerLoading && isCastsLoading) ? 
     <div className="h-screen w-full flex items-center justify-center">
      <CircularProgress sx={{color:"red"}}/>
     </div>
     :
-    <div className="min-h-screen w-[95%] 801size:w-[80%] max-w-[55rem] bg-[#181818] mx-auto mt-9 rounded-lg overflow-hidden">
+    <div className="min-h-screen w-[95%] 801size:w-[80%] max-w-[55rem] bg-[#181818] mx-auto mt-9 rounded-lg overflow-hidden pb-[2.5rem]">
         {/* Image Banner */}
         <img 
             src={`${showDetails?.backdrop_path && import.meta.env.VITE_BASE_IMAGE_URL}${showDetails?.backdrop_path}`}
@@ -88,7 +101,16 @@ export const ShowsDetails = ({params} : ShowDetailsProps) => {
         <BannerData/>
 
         {/* Details */}
-        <ShowDescription castsData = {castsData} />
+        <ShowDescription 
+          castsData = {castsData}
+          match = {match}
+          age = {age}
+        />
+
+        {/* Episodes - [If it is TV Show] */}
+        <EpisodeLists
+          age = {age}
+        />
     </div>
   )
 }

@@ -92,7 +92,7 @@ type GetShowDetailsResponse = string
 export const useHoverHandlers = () => {
     const { 
         showVideo, setShowVideoItems, setIsMutedItems, setPause, setTriggerAnimItems, setTrailerData,
-        setCategory, setVideoId, setShowDetails, setShowVideo, currentSection, showDetailsModal, setVideoEndedItems
+        setVideoId, setShowDetails, setShowVideo, currentSection, showDetailsModal, setVideoEndedItems
     } = useAppStore.getState()
 
     // fetch show details when hover
@@ -114,7 +114,6 @@ export const useHoverHandlers = () => {
         setPause(true)
         setShowVideo(false)
       }, 100)
-      setCategory(media_type.toString())
       setVideoId(id)
   
       mutation.mutate({
@@ -136,7 +135,6 @@ export const useHoverHandlers = () => {
 
       setShowVideoItems(false)
       setTrailerData("")
-      setCategory("")
       setVideoId("")
 
       setVideoEndedItems(false)
@@ -161,7 +159,7 @@ export const useClickHandlers = () => {
       
     const { 
         setShowVideoItems, setIsMutedItems, setPause, setTriggerAnimItems, setShowVideoModal, currentSection,
-        setTrailerData, setCategory, setVideoId, setShowDetails, setShowDetailsModal, setShowVideo, showDetailsModal
+        setTrailerData, setVideoId, setShowDetails, setShowDetailsModal, setShowVideo, showDetailsModal
     } = useAppStore.getState()
 
     // fetch show details when hover
@@ -190,7 +188,6 @@ export const useClickHandlers = () => {
         const body = document.body
         body.style.overflowY = "hidden"
 
-        setCategory(media_type.toString())
         setVideoId(id)
 
         mutation.mutate({
@@ -217,7 +214,6 @@ export const useClickHandlers = () => {
 
       setShowVideoItems(false)
       setTrailerData("")
-      setCategory("")
       setVideoId("")
       setIsMutedItems(true);
       (!showDetailsModal && currentSection !== "categorySection") && setPause(false);

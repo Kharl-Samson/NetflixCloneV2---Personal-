@@ -12,6 +12,7 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight"
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft"
 import { ItemSliderTop10 } from "./ItemSliderTop10"
 import { dataInEffect, swipeLeft, swipeRight, useHoverHandlers, useClickHandlers } from "../../utils/itemsFunction"
+import { useNavigate } from "react-router-dom"
 
 type SliderProps = {
   marginStyle : string
@@ -23,6 +24,8 @@ type SliderProps = {
 }
 
 export const SliderTop10 = ({marginStyle, sliderStyle, title, queryType, queryKey, classCount} : SliderProps) => {
+    // Navigate
+    const navigate = useNavigate()
 
     // State from zustand
     const {screenWidth} = useAppStore()
@@ -125,7 +128,12 @@ export const SliderTop10 = ({marginStyle, sliderStyle, title, queryType, queryKe
                         ${index === 0 && "ml-[-.5rem] sm:ml-0"} ${index === 9 && "ml-[1.5rem] mr-[7.5rem]"}`}
                       onMouseLeave={() => { deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
                       onClick={(event) => 
-                        deviceType === "Desktop" && handleClickModal(event, (res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id) 
+                        deviceType === "Desktop" && screenWidth > 639  ? 
+                          // In Desktop
+                          handleClickModal(event, (res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id)
+                          :
+                          // In Smaller Devices
+                          navigate(`/browse/${res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"}?q=${res?.id}`)
                       }
                     >
                       {index < 10 &&

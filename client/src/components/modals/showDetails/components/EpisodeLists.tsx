@@ -289,7 +289,7 @@ export const EpisodeLists = ({castsData, age} : EpisodeListsProps) => {
               {/* Show name and Season count or Run Time */}
               <div className="w-full h-[8.5rem] mt-[-8.5rem] relative z-10 bg-[#02020249] flex items-end">
                 {/* Item Name */}
-                <p className="text-white movie-title-font-large max-w-[80%] leading-tight text-large capitalize tracking-wide ml-4 mb-4 [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)]">
+                <p className="text-white movie-title-font-large max-w-[80%] leading-tight text-base capitalize tracking-wide ml-4 mb-4 [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)]">
                   {res?.name || res?.original_title}
                 </p>
               </div> 
@@ -305,7 +305,7 @@ export const EpisodeLists = ({castsData, age} : EpisodeListsProps) => {
                     <div className="text-[#bcbcbc] float-left text-sm px-[5px] border border-[#bcbcbc]">{ageArray[Math.floor(Math.random() * ageArray.length)]}+</div>
                     {/* Release Date */}
                     <p className="text-[#bcbcbc] font-medium disable-highlight">
-                      {new Date(res?.release_date || res?.last_air_date || res?.first_air_date || "N/A").getFullYear()}
+                      {new Date(res?.release_date || res?.last_air_date || res?.first_air_date || "2024-01-25").getFullYear()}
                     </p>
                   </div>
                 </div>

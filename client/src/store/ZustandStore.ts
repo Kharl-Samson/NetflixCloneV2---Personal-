@@ -38,6 +38,16 @@ type appStore = {
   playAgainModal: boolean
   setPlayAgainModal: (value: boolean) => void
 
+  // React Youtube States -> Phone
+  showVideoPhone: boolean
+  setShowVideoPhone: (value: boolean) => void
+  isMutedPhone: boolean
+  setIsMutedPhone: (value: boolean) => void
+  videoEndedPhone: boolean
+  setVideoEndedPhone: (value: boolean) => void
+  playAgainPhone: boolean
+  setPlayAgainPhone: (value: boolean) => void
+
   // Items States
   trailerData: string
   setTrailerData: (value: string) => void
@@ -97,6 +107,16 @@ const useAppStore = create<appStore>()(
     setVideoEndedModal: (value: boolean) => set({ videoEndedModal: value }),
     playAgainModal: false,
     setPlayAgainModal: (value: boolean) => set({ playAgainModal: value }),
+
+    // React Youtube States -> Phone
+    showVideoPhone: false,
+    setShowVideoPhone: (value: boolean) => set({ showVideoPhone: value }),
+    isMutedPhone: true,
+    setIsMutedPhone: (value: boolean) => set({ isMutedPhone: value }),
+    videoEndedPhone: false,
+    setVideoEndedPhone: (value: boolean) => set({ videoEndedPhone: value }),
+    playAgainPhone: false,
+    setPlayAgainPhone: (value: boolean) => set({ playAgainPhone: value }),
     
     // Items States
     trailerData: "",

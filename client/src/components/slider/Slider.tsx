@@ -14,6 +14,7 @@ import { ItemSlider } from "./ItemSlider"
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight"
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft"
 import { dataInEffect, swipeLeft, swipeRight, useClickHandlers, useHoverHandlers } from "../../utils/itemsFunction"
+import { useNavigate } from "react-router-dom"
 
 type SliderProps = {
   marginStyle : string
@@ -25,6 +26,8 @@ type SliderProps = {
 }
 
 export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, classCount} : SliderProps) => {
+    // Navigate
+    const navigate = useNavigate()
 
     // State from zustand
     const {screenWidth} = useAppStore()
@@ -141,8 +144,8 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
           onMouseOver={() => deviceType === "Desktop" && setSwiperHover(true)} 
           onMouseOut={() => deviceType === "Desktop" && setSwiperHover(false)}
         >
-            {/* Swiper Controller */
-            screenWidth >= 640 &&
+          {/* Swiper Controller */
+          screenWidth >= 640 &&
             <div className="hidden sm:block">
               <div className={`cursor-pointer absolute h-40 w-[3.75rem] bg-[hsla(0,0%,8%,.5)] text-white
                   z-20 items-center justify-center custom-transition-duration-3s rounded-r ${swiperHover && showLeftSwipe ? "flex" : "hidden"}`}
@@ -161,55 +164,56 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
                 <KeyboardArrowRightIcon sx={{ fontSize: rightSwiperHover ? "5rem" : "3rem", fontWeight: "bold", transition : ".3s"}}/>
               </div>
             </div>
-            }
+          }
 
-            {/* Carousel Using React Swiper */
-            combinedData?.results?.length > 1 && 
-              <Swiper
-                mousewheel={true}
-                slidesPerView="auto"
-                spaceBetween={8}
-                grabCursor={false}
-                loop={true}
-                navigation={true}
-                modules={[Navigation]}
-                className={`w-full h-[9rem] sm:h-auto ${marginStyle} overflow-visible mySwiper`}
-              >
-                {
-                combinedData?.results?.map((res : ItemType, index : number) => (
-                  screenWidth < 640 ?
-                    <SwiperSlide className="h-full swiperSlide" key={res?.id}>
-                        <LazyLoadImage
-                          alt="Show Image"
-                          src={`${res?.poster_path && import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
-                          className="showSkeleton h-full w-full rounded"
-                          onError={handleImageError}
-                        />
-                    </SwiperSlide>
-                    :
-                    <SwiperSlide 
-                      className = "swiperSlide h-[10rem] cursor-pointer hover:cursor-pointer"
-                      key={index}
-                      onMouseOver={() => { deviceType === "Desktop" && setItemHover(index) ; handleHover((res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id) }}
-                      onMouseLeave={() =>{ deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
-                      onClick={(event) =>  
-                        deviceType === "Desktop" && handleClickModal(event, (res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id)
-                      }
-                    >
-                        <ItemSlider
-                          itemHover = {itemHover}
-                          index = {index}
-                          imageUrl = {res?.backdrop_path}
-                          trailerData = {trailerData}
-                          isFetchedTrailer = {isFetchedTrailer}
-                          mediaType = {res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"}
-                          showDetails = {showDetails}
-                        />
-                    </SwiperSlide>
-                  ))
-                }
-              </Swiper>
-            }
+          {/* Carousel Using React Swiper */
+          combinedData?.results?.length > 1 && 
+            <Swiper
+              mousewheel={true}
+              slidesPerView="auto"
+              spaceBetween={8}
+              grabCursor={false}
+              loop={true}
+              navigation={true}
+              modules={[Navigation]}
+              className={`w-full h-[9rem] sm:h-auto ${marginStyle} overflow-visible mySwiper`}
+            >
+              {
+              combinedData?.results?.map((res : ItemType, index : number) => (
+                screenWidth < 640 ?
+                  <SwiperSlide className="h-full swiperSlide" key={index}>
+                      <LazyLoadImage
+                        alt="Show Image"
+                        src={`${res?.poster_path && import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
+                        className="showSkeleton h-full w-full rounded"
+                        onError={handleImageError}
+                        onClick={() => navigate(`/browse/${res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"}?q=${res?.id}`)}
+                      />
+                  </SwiperSlide>
+                  :
+                  <SwiperSlide 
+                    className = "swiperSlide h-[10rem] cursor-pointer hover:cursor-pointer"
+                    key={index}
+                    onMouseOver={() => { deviceType === "Desktop" && setItemHover(index) ; handleHover((res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id) }}
+                    onMouseLeave={() =>{ deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
+                    onClick={(event) =>  
+                      deviceType === "Desktop" && handleClickModal(event, (res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id)
+                    }
+                  >
+                      <ItemSlider
+                        itemHover = {itemHover}
+                        index = {index}
+                        imageUrl = {res?.backdrop_path}
+                        trailerData = {trailerData}
+                        isFetchedTrailer = {isFetchedTrailer}
+                        mediaType = {res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"}
+                        showDetails = {showDetails}
+                      />
+                  </SwiperSlide>
+                ))
+              }
+            </Swiper>
+          }
         </div>
     </div>
   )

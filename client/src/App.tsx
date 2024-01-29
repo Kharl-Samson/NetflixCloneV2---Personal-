@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom"
 import { Page } from "./pages/home/Page"
+import { Page as Browse } from "./pages/browseItem/Page"
 import { useAppStore } from "./store/ZustandStore"
 import { useEffect, useState } from "react"
 
@@ -37,6 +38,7 @@ function App() {
       <Routes>
         {/* Main Pages */}
         <Route path="/" element={<Page scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>}/>
+        <Route path="/browse/:category" element={<Browse/>}/>
       </Routes>
     </>
   )

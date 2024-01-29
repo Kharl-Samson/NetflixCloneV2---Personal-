@@ -84,6 +84,23 @@ export const toggleVideoSoundModal = () => {
 }
 
 /*
+ * When the user click the video sound button - Phone
+*/
+export const toggleVideoSoundPhone = () => {
+  const { setPlayAgainPhone, setIsMutedPhone, isMutedPhone, videoEndedPhone, setVideoEndedPhone, setShowVideoPhone } = useAppStore.getState()
+
+  setPlayAgainPhone(false)
+  setIsMutedPhone(!isMutedPhone)
+  
+  if(videoEndedPhone) {
+    setVideoEndedPhone(false)
+    setShowVideoPhone(true)
+    setIsMutedPhone(true)
+    setPlayAgainPhone(true)
+  }
+}
+
+/*
  * Custom hook for item hover
  * Includes onMouseOver and onMouseOut
 */
@@ -213,4 +230,19 @@ export const useClickHandlers = () => {
     }
   
     return { handleClickModal, handleCloseModalOut }
-  }
+}
+
+/*
+ * Function for smaller device
+ * Closing selected item and Navigate to Home
+*/
+export const handleCloseItemPhone = () => {
+    const { setShowVideoPhone, setIsMutedPhone, setTrailerData, setVideoId } = useAppStore.getState()
+
+    document.title = "Netflix Clone by Kharl"
+
+    setShowVideoPhone(false)
+    setIsMutedPhone(true)
+    setTrailerData("")
+    setVideoId("")
+}

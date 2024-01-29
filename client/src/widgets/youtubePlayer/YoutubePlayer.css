@@ -30,9 +30,15 @@
         cursor: pointer !important;
     }
 
-    /* Youtubel Player -> When hovering items */
+    #youtubePlayerPhone{
+        width: 200%;
+        height: 40rem;
+        margin-left: -50%;
+        margin-top: -10rem;
+        pointer-events: none !important;
+    }
 
-    /* 951size breakpoint styles */
+    /* 801size breakpoint styles */
     @media (min-width: 801px) {
         #youtubePlayer {
             margin-left: -50rem;

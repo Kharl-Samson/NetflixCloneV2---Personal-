@@ -57,9 +57,6 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
   const queryParams = new URLSearchParams(location.search)
   const params = queryParams.get('q') || "Default"
 
-
-
-
   return (
     <div className="bg-custom-color-hero-1 overflow-hidden h-auto pb-[20rem]">
         

@@ -16,7 +16,7 @@ export const ShowDescription = ({castsData, match, age, scrollToBottom} : ShowDe
     // React Youtube State
     const { showDetails } = useAppStore()
 
-     // Get Show runtime length if the category is movie
+    // Get Show runtime length if the category is movie
     const showRuntime = !showDetails?.number_of_seasons ? convertToHoursAndMinutes(showDetails?.runtime || 0) : null
     const { hours, minutes } = showRuntime || { hours: 0, minutes: 0 }
     

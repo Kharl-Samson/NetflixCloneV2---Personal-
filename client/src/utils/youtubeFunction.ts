@@ -24,4 +24,11 @@ export const videoEndedModal = () => {
     setPlayAgainModal(false)
 }
 
+export const videoEndedPhone = () => {
+    const { setVideoEndedPhone, setShowVideoPhone, setPlayAgainPhone  } = useAppStore.getState()
+
+    setVideoEndedPhone(true)
+    setShowVideoPhone(false)
+    setPlayAgainPhone(false)
+}
 

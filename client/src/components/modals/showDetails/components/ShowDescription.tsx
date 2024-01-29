@@ -1,5 +1,4 @@
 import { convertToHoursAndMinutes } from "../../../../utils/getCurrentSection"
-import { useAppStore } from "../../../../store/ZustandStore"
 
 type ShowDescriptionProps = {
   castsData : {
@@ -7,17 +6,26 @@ type ShowDescriptionProps = {
       original_name : string
     }[]
   }
+  showDetailsData : {
+    number_of_seasons? : number
+    number_of_episodes? : number
+    runtime? : number
+    release_date? : string
+    last_air_date? : string
+    overview : string
+    genres : {
+      name : string
+    }[]
+    tagline? : string
+  }
   match : string
   age : string
   scrollToBottom: () => void
 }
 
-export const ShowDescription = ({castsData, match, age, scrollToBottom} : ShowDescriptionProps) => {
-    // React Youtube State
-    const { showDetails } = useAppStore()
-
+export const ShowDescription = ({castsData, showDetailsData, match, age, scrollToBottom} : ShowDescriptionProps) => {
     // Get Show runtime length if the category is movie
-    const showRuntime = !showDetails?.number_of_seasons ? convertToHoursAndMinutes(showDetails?.runtime || 0) : null
+    const showRuntime = !showDetailsData?.number_of_seasons ? convertToHoursAndMinutes(showDetailsData?.runtime || 0) : null
     const { hours, minutes } = showRuntime || { hours: 0, minutes: 0 }
     
   return (
@@ -29,18 +37,18 @@ export const ShowDescription = ({castsData, match, age, scrollToBottom} : ShowDe
           <p className="text-[#42c161] font-medium disable-highlight">{match}% Match</p>
 
           {/* Release Date */}
-          <p className="text-[#9b9b9b] font-medium disable-highlight">{ new Date(showDetails?.release_date || showDetails?.last_air_date).getFullYear() }</p>
+          <p className="text-[#9b9b9b] font-medium disable-highlight">{ new Date(showDetailsData?.release_date || showDetailsData?.last_air_date || "2024-01-25").getFullYear() }</p>
 
           {/* Season Count or Episode Count or Movie length*/}
           <p className="text-[#9b9b9b] font-medium disable-highlight">
             {
-              !showDetails?.number_of_seasons ? // If movie -> Show the movie length
+              !showDetailsData?.number_of_seasons ? // If movie -> Show the movie length
                 `${hours}h ${minutes}m`
               :
-              showDetails?.number_of_seasons === 1 ? // If season but only 1 -> Show total episodes
-                `${showDetails?.number_of_episodes} Episodes` || "No data available"
+              showDetailsData?.number_of_seasons === 1 ? // If season but only 1 -> Show total episodes
+                `${showDetailsData?.number_of_episodes} Episodes` || "No data available"
               : // If seasons but its more than 1 -> Show total seasons
-                `${showDetails?.number_of_seasons} Seasons` || "No data available"
+                `${showDetailsData?.number_of_seasons} Seasons` || "No data available"
             }
           </p>
 
@@ -52,7 +60,7 @@ export const ShowDescription = ({castsData, match, age, scrollToBottom} : ShowDe
         <div className="text-white float-left mt-2 text-sm py-[1px] px-[8px] border border-white">{age}+</div>
 
         {/* Overview */}
-        <p className="mt-[4rem] text-sm font-thin text-white clear-both disable-highlight">{showDetails?.overview}</p>
+        <p className="mt-[4rem] text-sm font-thin text-white clear-both disable-highlight">{showDetailsData?.overview}</p>
       </div>
 
       {/* Casts, Genres and Tagline */}
@@ -71,14 +79,14 @@ export const ShowDescription = ({castsData, match, age, scrollToBottom} : ShowDe
         <p className="text-[#9b9b9b] text-sm mt-4">
           Genres:&nbsp;
           {/* Cast Mapping */}
-          {showDetails?.genres?.map((res: { name: string }, index: number, array: { name: string }[]) => 
+          {showDetailsData?.genres?.map((res: { name: string }, index: number, array: { name: string }[]) => 
             <span className="text-sm text-white" key={res?.name}>
               {res?.name}{index < array.length - 1 ? ', ' : ''}
             </span>
           )}
         </p>
         {/* Tagline */}
-        <p className="text-[#9b9b9b] text-sm mt-4">Tagline: <span className="text-sm text-white">{showDetails?.tagline || "Not Available"}</span></p>
+        <p className="text-[#9b9b9b] text-sm mt-4">Tagline: <span className="text-sm text-white">{showDetailsData?.tagline || "Not Available"}</span></p>
       </div>
     </div>
   )

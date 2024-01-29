@@ -9,8 +9,7 @@ import { useAppStore } from "../../store/ZustandStore"
 import { getCurrentSection } from "../../utils/getCurrentSection"
 import { Hero } from "./sections/Hero"
 import { ShowsDetails } from "../../components/modals/showDetails/ShowsDetails"
-import { useClickHandlers } from "../../utils/itemsFunction"
-import { useLocation } from "react-router-dom"
+import { useClickHandlers, useRouteAndQueryParams } from "../../utils/itemsFunction"
 
 type NavbarProps = {
   scrollDirection : string
@@ -18,6 +17,9 @@ type NavbarProps = {
 }
 
 export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
+  // Params Url Getter
+  const { params, categoryParams } = useRouteAndQueryParams()
+
   // State from zustand
   const {screenWidth} = useAppStore()
 
@@ -51,11 +53,6 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
       })
     }
   }
-
-  // Params key when clicking a movie or tv show
-  const location = useLocation()
-  const queryParams = new URLSearchParams(location.search)
-  const params = queryParams.get('q') || "Default"
 
   return (
     <div className="bg-custom-color-hero-1 overflow-hidden h-auto pb-[20rem]">
@@ -163,9 +160,9 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
       </section>
 
       {/* Modals - [Larger Screens] */
-      (screenWidth >= 640 && showDetailsModal) &&
+      ((screenWidth >= 640 && showDetailsModal) || (params && (categoryParams === "tv" || categoryParams === "movie"))) &&
         <div className="min-h-screen w-full fixed z-[1000] modal-background inset-0 overflow-y-scroll hidden sm:block" ref={modalRef}>
-          <ShowsDetails params = {params} scrollToBottom = {scrollToBottom}/>
+          <ShowsDetails scrollToBottom = {scrollToBottom}/>
         </div>
       }
     </div>

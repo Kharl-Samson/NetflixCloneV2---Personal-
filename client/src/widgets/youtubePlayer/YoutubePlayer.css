@@ -31,11 +31,20 @@
     }
 
     #youtubePlayerPhone{
-        width: 200%;
-        height: 40rem;
-        margin-left: -50%;
+        width: 150%;
+        height: 35rem;
+        margin-left: -25%;
         margin-top: -10rem;
         pointer-events: none !important;
+    }
+
+    /* 400size breakpoint styles */
+    @media (min-width: 400px) {
+        #youtubePlayerPhone{
+            width: 200%;
+            height: 40rem;
+            margin-left: -50%;
+        }
     }
 
     /* 801size breakpoint styles */

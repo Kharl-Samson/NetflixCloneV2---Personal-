@@ -2,37 +2,46 @@ import { useAppStore } from "../../../store/ZustandStore"
 import { handleImageError } from "../../../types/errorTypes"
 import { YoutubePlayerModal } from "../../../widgets/youtubePlayer/YoutubePlayerModal"
 import { useQuery } from "react-query"
-import { getCasts, getShowTrailer } from "../../../services/apiFetchShowList"
+import { getCasts, getShowDetails, getShowTrailer } from "../../../services/apiFetchShowList"
 import { useEffect, useState } from "react"
-import { dataInEffect, useClickHandlers } from "../../../utils/itemsFunction"
+import { dataInEffect, useClickHandlers, useRouteAndQueryParams } from "../../../utils/itemsFunction"
 import CircularProgress from "@mui/material/CircularProgress"
 import { BannerData } from "./components/BannerData"
 import { ShowDescription } from "./components/ShowDescription"
 import { EpisodeLists } from "./components/EpisodeLists"
 
-type ShowDetailsProps = {
-  params : string
+type showDetailsDataProps = {
   scrollToBottom: () => void
 }
 
-export const ShowsDetails = ({params, scrollToBottom} : ShowDetailsProps) => {
-    // React Youtube State
-    const { showVideoModal, trailerData, showDetails } = useAppStore()
+export const ShowsDetails = ({scrollToBottom} : showDetailsDataProps) => {
+    const body = document.body
+    body.style.overflowY = "hidden"
 
-    // Setting Web Title
-    document.title = `${showDetails?.name || showDetails?.original_title} - Netflix Clone by Kharl`
+    // Params Url Getter
+    const { params, categoryParams } = useRouteAndQueryParams()
+  
+    // React Youtube State
+    const { showVideoModal, trailerData } = useAppStore()
+
+    // Fetch show data 
+    const { data : showDetailsData, isFetched: isFetchedShowDetails, isLoading: isShowDetailsLoading } = useQuery(
+      ["showDetailsDesktopKey", params],
+      () => getShowDetails(categoryParams, params, "en-US"),
+      { cacheTime: 0 } // Remove caching to trigger every click
+    )
 
     // Fetch trailer data
     const { data : myTrailerData, isFetched: isFetchedTrailer, isError: isTrailerError , isLoading: isTrailerLoading } = useQuery(
-      ["trailerModalKey", showDetails?.id],
-      () => getShowTrailer(!showDetails?.number_of_seasons ? "movie" : "tv", params),
+      ["trailerModalKey", params],
+      () => getShowTrailer(categoryParams, params),
       { cacheTime: 0 } // Remove caching to trigger every click
     )
 
     // Fetch Casts
     const { data : castsData, isFetched: isFetchedCasts, isLoading: isCastsLoading } = useQuery(
-      ["castKey", showDetails?.id],
-      () => getCasts(!showDetails?.number_of_seasons ? "movie" : "tv", showDetails?.id),
+      ["castKey", params],
+      () => getCasts(categoryParams, params),
       { cacheTime: 0 } // Remove caching to trigger every click
     )
 
@@ -41,6 +50,13 @@ export const ShowsDetails = ({params, scrollToBottom} : ShowDetailsProps) => {
       // Trailer Data Query
       (isFetchedTrailer && !isTrailerError && myTrailerData?.results.length !== 0) && dataInEffect(myTrailerData)
     }, [isFetchedTrailer, myTrailerData, isFetchedCasts, castsData])
+
+    // Setting Web Title
+    useEffect(() => {
+      if (isFetchedShowDetails && !isShowDetailsLoading) {
+        document.title = `${showDetailsData.name || showDetailsData.original_title} - Netflix Clone by Kharl`
+      }
+    },[showDetailsData])
 
     // Closing Modal
     const { handleCloseModalOut } = useClickHandlers()
@@ -58,7 +74,7 @@ export const ShowsDetails = ({params, scrollToBottom} : ShowDetailsProps) => {
     },[])
 
   return (
-  (isTrailerLoading && isCastsLoading) || (!showDetails) ? 
+  (isTrailerLoading && isCastsLoading && isShowDetailsLoading)  ? 
     <div className="h-screen w-full flex items-center justify-center">
      <CircularProgress sx={{color:"red"}}/>
     </div>
@@ -66,7 +82,7 @@ export const ShowsDetails = ({params, scrollToBottom} : ShowDetailsProps) => {
     <div className="min-h-screen w-[95%] 801size:w-[80%] max-w-[55rem] bg-[#181818] mx-auto mt-9 rounded-lg overflow-hidden pb-[2.5rem]">
         {/* Image Banner */}
         <img 
-            src={`${showDetails?.backdrop_path && import.meta.env.VITE_BASE_IMAGE_URL}${showDetails?.backdrop_path}`}
+            src={`${showDetailsData?.backdrop_path && import.meta.env.VITE_BASE_IMAGE_URL}${showDetailsData?.backdrop_path}`}
             alt="Movie Image"
             className={`custom-transition-duration-10s w-full h-[31rem] z-[1] relative object-cover ${showVideoModal ? "opacity-0" : "opacity-100"}`}
             onError={handleImageError}
@@ -99,11 +115,12 @@ export const ShowsDetails = ({params, scrollToBottom} : ShowDetailsProps) => {
         <div className="hidden sm:block z-[4] shadowing-hero-modal"></div>
 
         {/* Banner Title and Buttons */}
-        <BannerData/>
+        <BannerData showDetailsData = {showDetailsData}/>
 
         {/* Details */}
         <ShowDescription 
           castsData = {castsData}
+          showDetailsData = {showDetailsData}
           match = {match}
           age = {age}
           scrollToBottom = {scrollToBottom}
@@ -112,6 +129,7 @@ export const ShowsDetails = ({params, scrollToBottom} : ShowDetailsProps) => {
         {/* Episodes - [If it is TV Show] */}
         <EpisodeLists
           castsData = {castsData}
+          showDetailsData = {showDetailsData}
           age = {age}
         />
     </div>

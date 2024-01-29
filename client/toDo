@@ -4,6 +4,7 @@ Done : When hovering items, fetch the specific details
 Done : Skeleton Loading
 Done : Fix Bug in hovering - Video is playing even it is not available
 Done : Fix bug when video is ended
+Done : Fix item modal when the user directed in a URL
 
 Finish Browse Item in phone
-Fix item modal when the user directed in a URL
+Add Netflix logo if the show in produce by netflix in Item Modal

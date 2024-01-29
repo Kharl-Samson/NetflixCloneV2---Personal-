@@ -1,7 +1,7 @@
 import { useMutation } from "react-query"
 import { getShowDetails } from "../services/apiFetchShowList"
 import { useAppStore } from "../store/ZustandStore"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useNavigate, useParams, useLocation, Location } from "react-router-dom"
 
 /*
  * When the user swipe the slider to left
@@ -146,6 +146,7 @@ export const useHoverHandlers = () => {
       }, 100)
       setTriggerAnimItems(false)
 
+      setShowDetails("")
       setShowVideoItems(false)
       setTrailerData("")
       setVideoId("")
@@ -167,23 +168,11 @@ export const useHoverHandlers = () => {
 export const useClickHandlers = () => {
     // Navigate
     const navigate = useNavigate()
-    const location = useLocation()
-    const currentRoute = location.pathname
-      
+
     const { 
         setShowVideoItems, setIsMutedItems, setPause, setTriggerAnimItems, setShowVideoModal, currentSection,
         setTrailerData, setVideoId, setShowDetails, setShowDetailsModal, setShowVideo, showDetailsModal
     } = useAppStore.getState()
-
-    // fetch show details when hover
-    const mutation = useMutation<GetShowDetailsResponse, Error, { category: string, trailerId: string | number, language?: string }>(
-      ({ category, trailerId, language }) => getShowDetails(category, trailerId, language),
-      {
-        onSuccess: (res) => {
-          setShowDetails(res)
-        }
-      }
-    )
 
     // Click Show
     const handleClickModal = (event: React.MouseEvent<HTMLElement, MouseEvent> , media_type: string | boolean, id: string) => {
@@ -193,24 +182,15 @@ export const useClickHandlers = () => {
         setShowVideo(false)
         setPause(true)
 
-        navigate(`${currentRoute}?q=${id}`)
+        navigate(`/browse/${media_type}?q=${id}`)
         
-        const body = document.body
-        body.style.overflowY = "hidden"
-
         setVideoId(id)
-
-        mutation.mutate({
-          category: media_type.toString(),
-          trailerId: id,
-          language: "en-US"
-        })
       }
     }
   
     // Close Show
     const handleCloseModalOut = () => {
-      navigate(currentRoute)
+      navigate("/")
 
       document.title = "Netflix Clone by Kharl"
       const body = document.body
@@ -245,4 +225,33 @@ export const handleCloseItemPhone = () => {
     setIsMutedPhone(true)
     setTrailerData("")
     setVideoId("")
+}
+
+/*
+ * Getting Parameters in my url
+ * Category and Item ID
+*/
+type RouteAndQueryParams = {
+  params: string
+  categoryParams: string
+}
+export function getRouteAndQueryParams(location: Location, categoryParam: { category?: string }): RouteAndQueryParams {
+  // Extract query parameter
+  const queryParams = new URLSearchParams(location.search);
+  const params = queryParams.get('q') || "Default"
+
+  // Extract route parameter
+  const categoryParams = categoryParam.category || ""
+
+  return { params, categoryParams }
+}
+
+/*
+ * Custom hook for getRouteAndQueryParams
+ * return category and item ID
+*/
+export function useRouteAndQueryParams(): RouteAndQueryParams {
+  const location = useLocation()
+  const params = useParams<{ category?: string }>()
+  return getRouteAndQueryParams(location, params)
 }

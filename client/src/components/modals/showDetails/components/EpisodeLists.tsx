@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { useAppStore } from "../../../../store/ZustandStore"
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"
 import { useQuery } from "react-query"
 import { getEpisodeDetails, getShowList, getSimilarShows } from "../../../../services/apiFetchShowList"
@@ -10,6 +9,7 @@ import { handleImageError } from "../../../../types/errorTypes"
 import { styled } from "@mui/material/styles"
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip"
 import add from "../../../../assets/images/icons/add.png"
+import { useRouteAndQueryParams } from "../../../../utils/itemsFunction";
 
 const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -33,12 +33,28 @@ type EpisodeListsProps = {
       name : string
     }
   }
+  showDetailsData : {
+    original_title? : string
+    name? : string
+    id : string
+    number_of_seasons? : number
+    tagline? : string
+    created_by : {
+      name : string
+    }[]
+    genres : {
+      name : string
+    }[]
+    seasons : {
+      season_number : number
+    }[]
+  }
   age : string
 }
 
-export const EpisodeLists = ({castsData, age} : EpisodeListsProps) => {
-    // React Youtube State
-    const { showDetails } = useAppStore()
+export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsProps) => {
+    // Params Url Getter
+    const { params, categoryParams } = useRouteAndQueryParams()
 
     // Season dropdown controller
     const [selectedSeason, setSelectedSeason] = useState<number>(1)
@@ -60,7 +76,7 @@ export const EpisodeLists = ({castsData, age} : EpisodeListsProps) => {
     // Fetch Episode Details
     const { data : episodeData, isLoading: isLoadingEpisode } = useQuery(
       ["episodeKey", selectedSeason],
-      () => showDetails?.number_of_seasons && getEpisodeDetails(showDetails?.id, selectedSeason)
+      () => showDetailsData?.number_of_seasons && getEpisodeDetails(showDetailsData?.id, selectedSeason)
     )
     
     // State for episodes list size to show in data
@@ -86,13 +102,13 @@ export const EpisodeLists = ({castsData, age} : EpisodeListsProps) => {
 
     // Fetch Similar Shows
     const { data : similarShowsData, isLoading: isLoadingSimilarShows } = useQuery(
-      ["similarShowsKey", showDetails?.id],
-      () => getSimilarShows(!showDetails?.number_of_seasons ? "movie" : "tv", showDetails?.id, 1)
+      ["similarShowsKey", params],
+      () => getSimilarShows(categoryParams, params, 1)
     )
 
     // Fetch Trending tv show if similar Show is invalid
     const { data : trendingShowsData, isLoading: isLoadingTrendingShows } = useQuery(
-      ["trendingNow1", showDetails?.id],
+      ["trendingNow1", params],
       () => getShowList(
         "Trending Now", // Query Type (ex. Hero, Romantic Movies, TV Action & Adventure, etc)
         "tv",           // Category (ex. tv or movie)
@@ -116,13 +132,13 @@ export const EpisodeLists = ({castsData, age} : EpisodeListsProps) => {
         * If the item is TV Show
         * Episode Title and Season Identifier, dropdown 
         */
-      showDetails?.number_of_seasons &&
+        showDetailsData?.number_of_seasons &&
         <div className="w-full flex justify-between items-start gap-x-10">
           <p className="text-white text-2xl font-semibold tracking-wide">Episodes</p>
 
-          {showDetails?.number_of_seasons === 1 ?
+          {showDetailsData?.number_of_seasons === 1 ?
             // If 1 Season only
-            <p className="text-white text-xl">Season {showDetails?.number_of_seasons}</p>
+            <p className="text-white text-xl">Season {showDetailsData?.number_of_seasons}</p>
             :
             // If more than 1 season
             <div className="relative w-[11rem] disable-highlight" ref={dropDownRef}>
@@ -139,7 +155,7 @@ export const EpisodeLists = ({castsData, age} : EpisodeListsProps) => {
               {// Dropdown menu
               isOpen && (
                 <div className="select-season absolute border border-[#424242] mt-[2px] bg-[#242424] w-[13rem] ml-[-2rem] z-10 max-h-[23rem] overflow-y-scroll">
-                  {showDetails?.seasons.map((res : {season_number: number}, index: number) => (
+                  {showDetailsData?.seasons.map((res : {season_number: number}, index: number) => (
                     res?.season_number !== 0 && (
                       <div
                         key={index}
@@ -161,7 +177,7 @@ export const EpisodeLists = ({castsData, age} : EpisodeListsProps) => {
         * If item is TV Show
         * Show season identifier and age restriction
         */
-      showDetails?.number_of_seasons > 1 &&
+        showDetailsData?.number_of_seasons && showDetailsData?.number_of_seasons > 1 &&
         <div className="mt-1 flex items-center gap-x-2">
           <p className="text-white text-sm font-medium tracking-wide">Season {selectedSeason}:</p>
           {/* Age */}
@@ -173,7 +189,7 @@ export const EpisodeLists = ({castsData, age} : EpisodeListsProps) => {
         * If the item is TV Show 
         * Episodes lists section
         */
-      showDetails?.number_of_seasons &&
+        showDetailsData?.number_of_seasons &&
         <div className="mt-2 w-full">
           {// If data is loading
           isLoadingEpisode ?
@@ -263,7 +279,7 @@ export const EpisodeLists = ({castsData, age} : EpisodeListsProps) => {
         <div className="mt-4 w-full grid gap-5 grid-cols-3">
         {// Episode Data Mapping
          (similarShowsData?.results.length !== 0 ? similarShowsData : trendingShowsData)?.results
-         .filter((res: { id:  number }) => res.id !== showDetails?.id)
+         .filter((res: { id:  string }) => res.id !== showDetailsData?.id)
          .slice(0, similarShowSize)
          .map((
             res : {
@@ -354,16 +370,16 @@ export const EpisodeLists = ({castsData, age} : EpisodeListsProps) => {
 
       {/* About this item section */}
       <div className="mt-7 w-full disable-highlight">
-        <p className="mb-5 text-white text-2xl">About <span className="text-2xl font-bold tracking-wide">{showDetails?.name || showDetails?.original_title}</span></p>
+        <p className="mb-5 text-white text-2xl">About <span className="text-2xl font-bold tracking-wide">{showDetailsData?.name || showDetailsData?.original_title}</span></p>
 
         {/* Creators */
-        showDetails && showDetails.created_by && showDetails.created_by.length !== 0 &&
+        showDetailsData && showDetailsData.created_by && showDetailsData.created_by.length !== 0 &&
           <p className="text-[#9b9b9b] text-sm">
             Creators:&nbsp;
             {// Creators mapping
-            showDetails.created_by.map((res: { name: string }, index: number) => 
+            showDetailsData.created_by.map((res: { name: string }, index: number) => 
                 <span className="text-sm text-white" key={res?.name}>
-                  {res?.name}{index < showDetails.created_by.length - 1 && ",\u00A0\u00A0"}
+                  {res?.name}{index < showDetailsData.created_by.length - 1 && ",\u00A0\u00A0"}
                 </span>
               )
             }
@@ -386,7 +402,7 @@ export const EpisodeLists = ({castsData, age} : EpisodeListsProps) => {
         <p className="text-[#9b9b9b] text-sm mt-[.50rem]">
           Genres:&nbsp;
           {/* Cast Mapping */}
-          {showDetails?.genres?.map((res: { name: string }, index: number, array: { name: string }[]) => 
+          {showDetailsData?.genres?.map((res: { name: string }, index: number, array: { name: string }[]) => 
             <span className="text-sm text-white" key={res?.name}>
               {res?.name}{index < array.length - 1 ? ', ' : ''}
             </span>
@@ -394,7 +410,7 @@ export const EpisodeLists = ({castsData, age} : EpisodeListsProps) => {
         </p>
 
         {/* Tagline */}
-        <p className="text-[#9b9b9b] text-sm mt-[.50rem]">Tagline: <span className="text-sm text-white">{showDetails?.tagline || "Not Available"}</span></p>
+        <p className="text-[#9b9b9b] text-sm mt-[.50rem]">Tagline: <span className="text-sm text-white">{showDetailsData?.tagline || "Not Available"}</span></p>
 
         {/* Maturity Rating */}
         <div className="flex items-center gap-x-3 mt-[.50rem]">

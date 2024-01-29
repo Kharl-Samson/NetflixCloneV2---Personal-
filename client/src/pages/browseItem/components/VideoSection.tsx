@@ -22,7 +22,7 @@ export const VideoSection = ({ isFetchedTrailer, showDetailsData } : VideoSectio
   return (
     <div className="sticky inset-0">
       {/* Video Player */}
-      <div className="max-w-[3000px] mx-auto top-0 w-full h-[17rem] overflow-hidden" key={trailerData}>
+      <div className="max-w-[3000px] mx-auto top-0 w-full h-[13rem] 400size:h-[17rem] overflow-hidden" key={trailerData}>
         <YoutubePlayerPhone
           key={trailerData}
           id = "youtubePlayerPhone"
@@ -36,13 +36,13 @@ export const VideoSection = ({ isFetchedTrailer, showDetailsData } : VideoSectio
       <LazyLoadImage
         alt="Episode Banner Image"
         src={`${showDetailsData?.backdrop_path && import.meta.env.VITE_BASE_IMAGE_URL}${showDetailsData?.backdrop_path}`} 
-        className={`custom-transition-duration-10s h-[17rem] w-full mt-[-17rem] relative z-10 object-cover object-center ${showVideoPhone ? "opacity-0" : "opacity-100"}`}
+        className={`custom-transition-duration-10s h-[13rem] 400size:h-[17rem] w-full mt-[-13rem] 400size:mt-[-17rem] relative z-10 object-cover object-center ${showVideoPhone ? "opacity-0" : "opacity-100"}`}
         onError={handleImageError}
       />
 
       {/* Video Player Controller */}
       <div 
-        className={`w-full h-[17rem] mt-[-17rem] relative z-20 flex flex-col justify-between ${videoEndedPhone &&"bg-[#000000ab]"}`}
+        className={`w-full h-[13rem] 400size:h-[17rem] mt-[-13rem] 400size:mt-[-17rem] relative z-20 flex flex-col justify-between ${videoEndedPhone &&"bg-[#000000ab]"}`}
       >
         {/* Close */}
         <div 

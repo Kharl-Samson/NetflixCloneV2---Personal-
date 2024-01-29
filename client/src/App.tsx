@@ -6,7 +6,7 @@ import { useEffect, useState } from "react"
 
 function App() {
   // Set Screen Width
-  const { setScreenWidth} = useAppStore()
+  const { setScreenWidth, screenWidth} = useAppStore()
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth)
     setScreenWidth(window.innerWidth)
@@ -38,7 +38,7 @@ function App() {
       <Routes>
         {/* Main Pages */}
         <Route path="/" element={<Page scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>}/>
-        <Route path="/browse/:category" element={<Browse/>}/>
+        <Route path="/browse/:category" element={screenWidth < 640 ? <Browse/> : <Page scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>}/>
       </Routes>
     </>
   )

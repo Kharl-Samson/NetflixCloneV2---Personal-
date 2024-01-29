@@ -67,15 +67,14 @@ export const HeroComponentSmall = ( {myData} : HeroProps ) => {
 
                 {/* Buttons */}
                 <div className="flex justify-center gap-x-3 mb-5">
-                    <button className="w-full py-2 rounded flex items-center justify-center gap-x-2 bg-white text-sm netflix-font-medium active:opacity-80">
+                    <button className="w-full py-2 rounded flex items-center justify-center gap-x-2 bg-white text-sm active:opacity-80">
                         <img src={play} alt="Play Image" className="h-4"/>
                         Play
                     </button>
 
                     <button 
-                        className="w-full py-2 rounded flex items-center justify-center 
-                            gap-x-2 bg-[#080808] bg-opacity-70 text-sm text-white 
-                            netflix-font-medium active:opacity-80"
+                        className="w-full py-2 rounded flex items-center justify-center text-white
+                            gap-x-2 bg-[#080808] bg-opacity-70 text-sm active:opacity-80"
                         >
                         <img src={add} alt="Add Image" className="h-4"/>
                         My List

@@ -60,6 +60,7 @@ export const Page = () => {
     const showRuntime = !showDetailsData?.number_of_seasons ? convertToHoursAndMinutes(showDetailsData?.runtime || 0) : null
     const { hours, minutes } = showRuntime || { hours: 0, minutes: 0 }
 
+    console.log(isCastsLoading, isShowDetailsLoading, isTrailerLoading)
     console.log(showDetailsData)
 
   return (

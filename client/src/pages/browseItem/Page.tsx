@@ -6,6 +6,7 @@ import { VideoSection } from "./components/VideoSection"
 import Skeleton from "@mui/material/Skeleton"
 import { useAppStore } from "../../store/ZustandStore"
 import { ShowDescription } from "./components/ShowDescription"
+import { EpisodeLists } from "./components/EpisodeLists"
 
 export const Page = () => {
     // Params Url Getter
@@ -59,7 +60,7 @@ export const Page = () => {
       </div>
     </>
     :
-    <section>
+    <section className="disable-highlight">
       {/* Video Player */}
       <VideoSection
         isFetchedTrailer = {isFetchedTrailer}
@@ -67,8 +68,15 @@ export const Page = () => {
       />
 
       {/* Details */}
-      <ShowDescription showDetailsData = {showDetailsData}/>
-
+      <ShowDescription 
+        castsData = {castsData}
+        showDetailsData = {showDetailsData}
+      />
+      
+      {/* Episodes Section */}
+      <EpisodeLists  
+        showDetailsData = {showDetailsData}
+      />
     </section>
   )
 }

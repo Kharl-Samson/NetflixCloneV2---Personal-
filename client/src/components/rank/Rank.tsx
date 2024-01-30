@@ -2,7 +2,7 @@ import rankData from "../../data/rankData"
 
 type RankProps = {
     index : number
-    onMouseOver : any
+    onMouseOver?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
 }
 
 export const Rank = ({index, onMouseOver} : RankProps) => {

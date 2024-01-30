@@ -20,7 +20,7 @@ export const VideoSection = ({ isFetchedTrailer, showDetailsData } : VideoSectio
     const { trailerData, showVideoPhone, isMutedPhone, videoEndedPhone  } = useAppStore()
 
   return (
-    <div className="sticky inset-0">
+    <div className="sticky inset-0 z-20">
       {/* Video Player */}
       <div className="max-w-[3000px] mx-auto top-0 w-full h-[13rem] 400size:h-[17rem] overflow-hidden" key={trailerData}>
         <YoutubePlayerPhone

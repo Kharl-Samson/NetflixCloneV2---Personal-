@@ -5,6 +5,8 @@ Done : Skeleton Loading
 Done : Fix Bug in hovering - Video is playing even it is not available
 Done : Fix bug when video is ended
 Done : Fix item modal when the user directed in a URL
+Done : Finish Browse Item in phone
+Done : Add episode count in season dropdown
 
-Finish Browse Item in phone
-Add Netflix logo if the show in produce by netflix in Item Modal
+Add netflix logo if the show in produce by netflix in Item Modal
+Add share button in browse item phone

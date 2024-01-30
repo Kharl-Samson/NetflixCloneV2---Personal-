@@ -123,9 +123,9 @@ export const SliderTop10 = ({marginStyle, sliderStyle, title, queryType, queryKe
                  data?.results?.length > 1 && data?.results?.map((res : ItemType, index : number) => (
                     <SwiperSlide 
                       key={res?.id}
-                      className = {`swiperSlideSmall2 h-[9rem] sm:h-[13rem] ${index >= 10 && "hidden"} cursor-pointer hover:cursor-pointer
-                        sm:overflow-hidden ${itemHover === index && triggerAnimItems && "sm:overflow-visible"}
-                        ${index === 0 && "ml-[-.5rem] sm:ml-0"} ${index === 9 && "ml-[1.5rem] mr-[7.5rem]"}`}
+                      className = {`swiperSlideSmall2 h-[9rem] sm:h-[13rem] ${index >= 10 && "hidden"} hover:cursor-pointer
+                        cursor-pointer overflow-hidden ${itemHover === index && triggerAnimItems && "sm:overflow-visible"}
+                        ${index === 0 && "ml-[-.5rem] sm:ml-0"} ${index === 9 && " mr-[7.7rem]"}`}
                       onMouseLeave={() => { deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
                       onClick={(event) => 
                         deviceType === "Desktop" && screenWidth > 639  ? 
@@ -147,8 +147,8 @@ export const SliderTop10 = ({marginStyle, sliderStyle, title, queryType, queryKe
                           showDetails = {showDetails}
                           onMouseOver={() => { 
                             deviceType === "Desktop" && setItemHover(index) ; 
-                            handleHover((res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id) }
-                          }
+                            handleHover((res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id) 
+                          }}
                         />
                       }
                     </SwiperSlide>

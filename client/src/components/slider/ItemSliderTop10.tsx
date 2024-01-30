@@ -70,7 +70,7 @@ export const ItemSliderTop10 = ({
       } 
     >
       {/* Show Rankings */}
-      <Rank index = {index || 0} onMouseOver = {onMouseOver}/>
+      <Rank index={index || 0} onMouseOver={onMouseOver}/>
       
       {/* Show Cover */}
       <LazyLoadImage

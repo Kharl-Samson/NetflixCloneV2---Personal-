@@ -9,7 +9,7 @@ import { handleImageError } from "../../../../types/errorTypes"
 import { styled } from "@mui/material/styles"
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip"
 import add from "../../../../assets/images/icons/add.png"
-import { useRouteAndQueryParams } from "../../../../utils/itemsFunction";
+import { useRouteAndQueryParams } from "../../../../utils/itemsFunction"
 
 const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -47,6 +47,7 @@ type EpisodeListsProps = {
     }[]
     seasons : {
       season_number : number
+      episode_count: number
     }[]
   }
   age : string
@@ -65,7 +66,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
       setIsOpen(false)
     }
 
-    // Closing dropwdown
+    // Closing dropdown
     const dropDownRef = useRef<HTMLDivElement>(null)
     useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => dropDownRef.current && !dropDownRef.current.contains(event.target as Node) && setIsOpen(false)
@@ -124,7 +125,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
     // Random Array - [Match and Age]
     const matchArray : string[] = ["95", "96","97", "98"]
     const ageArray : string[] = ["10", "13", "16"]
-    
+  
   return (
     <div className="relative mt-10 px-14">
 
@@ -154,15 +155,15 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
               
               {// Dropdown menu
               isOpen && (
-                <div className="select-season absolute border border-[#424242] mt-[2px] bg-[#242424] w-[13rem] ml-[-2rem] z-10 max-h-[23rem] overflow-y-scroll">
-                  {showDetailsData?.seasons.map((res : {season_number: number}, index: number) => (
+                <div className="select-season absolute border border-[#424242] mt-[2px] bg-[#242424] w-[15rem] ml-[-4rem] z-10 max-h-[23rem] overflow-y-scroll">
+                  {showDetailsData?.seasons?.map((res : {season_number: number, episode_count: number}, index: number) => (
                     res?.season_number !== 0 && (
                       <div
                         key={index}
-                        className="text-white py-2 px-4 cursor-pointer hover:bg-[#424242]"
+                        className="text-white py-2 px-4 cursor-pointer hover:bg-[#424242] flex items-center gap-x-2"
                         onClick={() => handleSelect(res?.season_number)}
                       >
-                        Season {res?.season_number}
+                        Season {res?.season_number} <span className="text-sm">{`(${res?.episode_count} Episodes)`}</span>
                       </div>
                     )
                   ))}
@@ -200,7 +201,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
             </div>
           :
           // Episode Data Mapping
-          episodeData?.episodes.slice(0, episodeSize).map((
+          episodeData?.episodes?.slice(0, episodeSize).map((
             res : {
               id: number, 
               episode_number: number, 
@@ -228,7 +229,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
                 onError={handleImageError}
               />
               {/* Play Icon */}
-              <div className="h-[4.9rem] w-[8.7rem] ml-[-9.95rem] min-w-[8.7rem] flex items-center justify-center relative z-10">
+              <div className="h-[4.9rem] w-[8.7rem] min-w-[8.7rem] ml-[-9.95rem] flex items-center justify-center relative z-10">
                 <div 
                   className={`rounded-full h-[3rem] w-[3rem] modal-background border border-white flex items-center justify-center
                     opacity-0 custom-transition-duration-5s ${(hoverStatus && hoverItemIndex === res?.id) && "opacity-100" }`}

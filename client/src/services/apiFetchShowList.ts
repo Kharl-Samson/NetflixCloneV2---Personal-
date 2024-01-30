@@ -141,7 +141,6 @@ export const getCasts = async(category : string, id: string) => {
   }
 }
 
-
 // Get Genres
 export const getGenres = async(category : string) => {
   try {
@@ -156,5 +155,24 @@ export const getGenres = async(category : string) => {
     return response.data
   } catch (error : unknown | string) {
     console.log(error)
+  }
+}
+
+// Get Items Collection
+export const getCollections = async( collectionId: string) => {
+  if(collectionId){
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/collection/${collectionId}`, {
+        params: {
+          api_key: import.meta.env.VITE_API_KEY,
+        },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      return response.data
+    } catch (error : unknown | string) {
+      console.log(error)
+    }
   }
 }

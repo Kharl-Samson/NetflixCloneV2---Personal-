@@ -12,6 +12,7 @@ export default {
         "400size": "400px",
         "801size": "801px",
         "951size": "951px",
+        "1051size": "1051px"
       },
       colors: {
         "custom-light-1" : "#fdfefe",

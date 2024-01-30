@@ -55,7 +55,7 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
   }
 
   return (
-    <div className="bg-custom-color-hero-1 overflow-hidden h-auto pb-[20rem]">
+    <section className="bg-custom-color-hero-1 overflow-hidden h-auto pb-[20rem]">
         
       {// My Navigation
         screenWidth < 640 ?
@@ -64,7 +64,7 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
         screenWidth <= 800 ?
           <NavbarMedium scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>
         :
-        screenWidth <= 950 ?
+        screenWidth <= 1050 ?
           <NavbarNormal scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>
         :
           <NavbarLarge scrollDirection = {scrollDirection} isAtTop = {isAtTop} active = "Home"/>
@@ -165,6 +165,6 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
           <ShowsDetails scrollToBottom = {scrollToBottom}/>
         </div>
       }
-    </div>
+    </section>
   )
 }

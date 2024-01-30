@@ -72,19 +72,19 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer} : H
   return (
     <>
         {/* Image Banner */
-        screenWidth >= 640 && 
+        screenWidth >= 640 && myData?.backdrop_path &&
             <img 
                 src={`${myData?.backdrop_path && import.meta.env.VITE_BASE_IMAGE_URL}${myData?.backdrop_path}`}
                 alt="Movie Image"
                 className={`max-h-[90rem] hidden sm:block absolute top-0 max-w-[3000px] mx-auto w-full h-[45rem] 801size:h-[50rem]
-                    951size:h-screen object-center object-cover custom-transition-duration-10s z-10
+                    951size:h-screen object-center object-cover custom-transition-duration-10s z-10 disable-highlight
                   bg-black bg-opacity-50 image-inline-shadow ${showVideo ? "opacity-0" : "opacity-100"}`}
             />
         }
 
         {/* Video Player */
         screenWidth >= 640 &&
-            <div className={`max-h-[90rem] hidden absolute max-w-[3000px] mx-auto top-0 w-full h-[45rem] 801size:h-[50rem] 951size:h-screen overflow-hidden z-0 ${showVideo && "sm:block"}`}>
+            <div className={`max-h-[90rem] hidden disable-highlight absolute max-w-[3000px] mx-auto top-0 w-full h-[45rem] 801size:h-[50rem] 951size:h-screen overflow-hidden z-0 ${showVideo && "sm:block"}`}>
                 <YoutubePlayer
                     id = "youtubePlayer"
                     videoId = {trailerData} 
@@ -97,8 +97,8 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer} : H
         {/* Main Content */
         screenWidth >= 640 && 
             <div className="max-w-[3000px] max-h-[90rem] mx-auto z-20 absolute top-0 hidden sm:flex flex-col 
-                justify-end w-full h-[45rem] 801size:h-[50rem] 951size:h-screen px-7 951size:px-14"
-                style = {{background: "linear-gradient(0deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.40) 100%)"}}
+                disable-highlight justify-end w-full h-[45rem] 801size:h-[50rem] 951size:h-screen px-7 951size:px-14"
+                style={{background: "linear-gradient(0deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.40) 100%)"}}
             >
                 <p 
                     className={`text-white custom-transition-duration-10s

@@ -1,4 +1,5 @@
 import Logo from "../../assets/images/logo.png"
+
 import { SearchInput } from "../../widgets/searchInput/SearchInput"
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined"
 import placeholderAvatar from "../../assets/images/placeholderAvatar.png"
@@ -12,6 +13,10 @@ type NavbarProps = {
 }
   
 export const NavbarLarge = ( {scrollDirection, isAtTop, active} : NavbarProps ) => {
+    // Get search value params
+    const urlParams = new URLSearchParams(window.location.search)
+    const searchParams = urlParams.get('search')
+
     // Data Links
     const arrayLink : string[] = ["Home", "TV Shows", "Movies", "New & Popular", "My List"]
 
@@ -21,7 +26,7 @@ export const NavbarLarge = ( {scrollDirection, isAtTop, active} : NavbarProps ) 
   return (
     <nav 
       className={`w-full py-4 px-14 fixed max-w-[3000px] mx-auto top-0 flex justify-between items-center custom-transition-duration-3s
-        z-50 ${scrollDirection === "down" || !isAtTop ? "bg-black" : "shadowing"}`
+        z-50 ${searchParams === "1" ? "bg-[#181414]" : scrollDirection === "down" || !isAtTop ? "bg-black" : "shadowing"}`
       }
     >
         {/* Logo and Menu */}

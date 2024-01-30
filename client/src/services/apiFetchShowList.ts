@@ -37,7 +37,7 @@ export const getShowList = async(queryType: string, category : string | null, la
         page: page
       },
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
     })
     return response.data
@@ -55,7 +55,7 @@ export const getShowTrailer = async(category : string, trailerId: string | numbe
           api_key: import.meta.env.VITE_API_KEY
         },
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
       })
       return response.data
@@ -75,7 +75,7 @@ export const getShowDetails = async(category : string, trailerId: string | numbe
           language: language
         },
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         }
       })
       return response.data
@@ -94,7 +94,7 @@ export const getEpisodeDetails = async(itemId: string, seasonNumber : number) =>
           api_key: import.meta.env.VITE_API_KEY
         },
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         }
       })
       return response.data
@@ -114,7 +114,7 @@ export const getSimilarShows = async(category : string | null, itemId: string, p
           page: page
         },
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         }
       })
       return response.data
@@ -129,10 +129,10 @@ export const getCasts = async(category : string, id: string) => {
   try {
     const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/${category}/${id}/credits`, {
       params: {
-        api_key: import.meta.env.VITE_API_KEY,
+        api_key: import.meta.env.VITE_API_KEY
       },
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
     })
     return response.data
@@ -146,10 +146,10 @@ export const getGenres = async(category : string) => {
   try {
     const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/genre/${category}/list`, {
       params: {
-        api_key: import.meta.env.VITE_API_KEY,
+        api_key: import.meta.env.VITE_API_KEY
       },
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
     })
     return response.data
@@ -164,10 +164,31 @@ export const getCollections = async( collectionId: string) => {
     try {
       const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/collection/${collectionId}`, {
         params: {
-          api_key: import.meta.env.VITE_API_KEY,
+          api_key: import.meta.env.VITE_API_KEY
         },
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
+        },
+      })
+      return response.data
+    } catch (error : unknown | string) {
+      console.log(error)
+    }
+  }
+}
+
+// Get Search Query
+export const getSearchQuery = async( seaarchParam: string, page? : number) => {
+  if(seaarchParam){
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/search/multi`, {
+        params: {
+          api_key: import.meta.env.VITE_API_KEY,
+          query: seaarchParam,
+          page: page
+        },
+        headers: {
+          "Content-Type": "application/json"
         },
       })
       return response.data

@@ -11,7 +11,7 @@ type NavbarProps = {
 export const NavbarNormal = ( {scrollDirection, isAtTop} : NavbarProps ) => {
   return (
     <nav 
-      className={`951size:hidden w-full py-4 px-7 fixed top-0 flex justify-between items-center custom-transition-duration-3s
+      className={`1051size:hidden w-full py-4 px-7 fixed top-0 flex justify-between items-center custom-transition-duration-3s
         z-50 ${scrollDirection === "down" || !isAtTop ? "bg-black bg-opacity-60" : "bg-custom-dark-2"}`
       }
     >

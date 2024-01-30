@@ -63,8 +63,8 @@ export const EpisodeLists = ({showDetailsData} : EpisodeListsProps) => {
 
     // Fetch Collections Show
     const { data : collectionData, isLoading: isLoadingCollection } = useQuery(
-        ["collectionKey", selectedSeason],
-        () => showDetailsData?.belongs_to_collection && getCollections(showDetailsData?.belongs_to_collection?.id)
+        ["collectionKey", params, categoryParams],
+        () => showDetailsData && showDetailsData.belongs_to_collection && getCollections(showDetailsData?.belongs_to_collection?.id)
     )
 
     // Fetch Similar Shows

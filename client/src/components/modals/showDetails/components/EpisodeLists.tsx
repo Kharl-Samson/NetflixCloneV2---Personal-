@@ -107,13 +107,13 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
 
     // Fetch Collections Show
     const { data : collectionData, isLoading: isLoadingCollection } = useQuery(
-      ["collectionKey", selectedSeason],
+      ["collectionKey", params, selectedSeason],
       () => showDetailsData?.belongs_to_collection && getCollections(showDetailsData?.belongs_to_collection?.id)
     )
 
     // Fetch Similar Shows
     const { data : similarShowsData, isLoading: isLoadingSimilarShows } = useQuery(
-      ["similarShowsKey", params],
+      ["similarShowsKey", params, categoryParams],
       () => getSimilarShows(categoryParams, params, 1)
     )
 

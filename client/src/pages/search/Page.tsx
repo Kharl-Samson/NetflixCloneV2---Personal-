@@ -41,7 +41,7 @@ export const Page = () => {
           {// Related title mapping
           combinedData && combinedData.results
             .reduce((unique: {title: string}[], item: {title: string}) => {
-              !unique.some(obj => obj.title === item.title) && unique.push(item)
+              !unique.some(obj => obj?.title?.toUpperCase() === item?.title?.toUpperCase()) && unique.push(item)
               return unique
             }, [])
             .slice(0,9)

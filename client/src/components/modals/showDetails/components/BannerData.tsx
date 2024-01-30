@@ -4,6 +4,7 @@ import { toggleVideoSoundModal } from "../../../../utils/itemsFunction"
 import { styled } from "@mui/material/styles"
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip"
 import { useAppStore } from "../../../../store/ZustandStore"
+import logo from "../../../../assets/images/icons/logo.png"
 
 const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
     <Tooltip {...props} classes={{ popper: className }} />
@@ -22,6 +23,9 @@ type BannerDataProps = {
   showDetailsData : {
     name? : string
     original_title? : string
+    networks : {
+      name : string
+    }[]
   }
 }
 
@@ -30,11 +34,24 @@ export const BannerData = ({showDetailsData} : BannerDataProps) => {
     const { showVideoModal, isMutedModal, videoEndedModal } = useAppStore()
 
   return (
-    <div className="relative z-[5] mt-[-17.5rem] px-14">
+    <div 
+      className={`relative z-[5] px-14 
+      ${showDetailsData && showDetailsData.networks && showDetailsData.networks.some((network: {name : string}) => network.name === "Netflix") ? 
+      "mt-[-18.8rem]" : "mt-[-17.5rem]"}`}
+    >
+
+      {/* If the item is produce by Netflix */
+      showDetailsData && showDetailsData.networks && showDetailsData.networks.some((network: {name : string}) => network.name === "Netflix") && 
+      <div className="flex items-center gap-x-1 mb-1">
+        <img src={logo} alt="Netflix logo" className="h-4"/>
+        <p className="text-[.60rem] text-[#cecece] tracking-[0.3rem] font-bold mt-[2px]">SERIES</p>
+      </div>
+      }
+
       <p 
-        className={`text-white custom-transition-duration-10s
+        className="text-white custom-transition-duration-10s
           movie-title-font-large max-w-[40rem] xl:max-w-[80%] 
-          leading-tight text-4xl capitalize`}
+          leading-tight text-4xl capitalize"
       >
         {showDetailsData?.name || showDetailsData?.original_title}
       </p>

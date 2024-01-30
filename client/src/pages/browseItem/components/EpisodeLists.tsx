@@ -61,6 +61,12 @@ export const EpisodeLists = ({showDetailsData} : EpisodeListsProps) => {
         return sentences ? sentences.slice(0, size).join(" ") : text;
     }
 
+    // Fetch Collections Show
+    const { data : collectionData, isLoading: isLoadingCollection } = useQuery(
+        ["collectionKey", selectedSeason],
+        () => showDetailsData?.belongs_to_collection && getCollections(showDetailsData?.belongs_to_collection?.id)
+    )
+
     // Fetch Similar Shows
     const { data : similarShowsData, isLoading: isLoadingSimilarShows } = useQuery(
         ["similarShowsKey", params],
@@ -79,18 +85,23 @@ export const EpisodeLists = ({showDetailsData} : EpisodeListsProps) => {
       )
     )
 
-    // Fetch Collections Show
-    const { data : collectionData, isLoading: isLoadingCollection } = useQuery(
-        ["collectionKey", selectedSeason],
-        () => showDetailsData?.belongs_to_collection && getCollections(showDetailsData?.belongs_to_collection?.id)
-    )
-
     // Tab Controller
-    const [currentTab, setCurrentTab] = useState<string>("")
+    const [currentTab, setCurrentTab] = useState<string>(categoryParams === "tv" ? "Episodes" : "More Like This")
     useEffect(() => {
-        //(!isLoadingSimilarShows && !isLoadingTrendingShows && !isLoadingCollection) &&
-        setCurrentTab(showDetailsData?.number_of_seasons ? "Episodes" : collectionData ? "Collection" : "More Like This")
-    }, [similarShowsData, showDetailsData, collectionData, episodeData, params])
+        if (!isLoadingSimilarShows && !isLoadingTrendingShows && !isLoadingCollection) {
+            let newTab = ""
+            if (showDetailsData?.number_of_seasons) {
+                newTab = "Episodes"
+            } else if (collectionData) {
+                newTab = "Collection"
+            } else if (similarShowsData) { 
+                newTab = "More Like This"
+            } else {
+                categoryParams === "tv" ? newTab = "Episodes" : newTab = "More Like This"
+            }
+            setCurrentTab(newTab)
+        }
+    }, [isLoadingSimilarShows, isLoadingTrendingShows, isLoadingCollection, similarShowsData, showDetailsData, collectionData, episodeData, params])
 
   return (
     <div className="mx-2 mt-7">
@@ -249,7 +260,7 @@ export const EpisodeLists = ({showDetailsData} : EpisodeListsProps) => {
                     ))
                 :
                 // Episode Data Mapping
-                collectionData?.parts.map((
+                collectionData?.parts?.map((
                     res : {
                       id: number, 
                       poster_path: string,

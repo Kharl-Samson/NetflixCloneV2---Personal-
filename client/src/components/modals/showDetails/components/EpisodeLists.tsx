@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"
 import { useQuery } from "react-query"
-import { getEpisodeDetails, getShowList, getSimilarShows } from "../../../../services/apiFetchShowList"
+import { getCollections, getEpisodeDetails, getShowList, getSimilarShows } from "../../../../services/apiFetchShowList"
 import down from "../../../../assets/images/icons/down.png"
 import Skeleton from "@mui/material/Skeleton"
 import { LazyLoadImage } from "react-lazy-load-image-component"
@@ -49,6 +49,10 @@ type EpisodeListsProps = {
       season_number : number
       episode_count: number
     }[]
+    belongs_to_collection? : {
+      id : string
+      name : string
+    }
   }
   age : string
 }
@@ -101,6 +105,12 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
       return sentences ? sentences.slice(0, size).join(" ") : text;
     }
 
+    // Fetch Collections Show
+    const { data : collectionData, isLoading: isLoadingCollection } = useQuery(
+      ["collectionKey", selectedSeason],
+      () => showDetailsData?.belongs_to_collection && getCollections(showDetailsData?.belongs_to_collection?.id)
+    )
+
     // Fetch Similar Shows
     const { data : similarShowsData, isLoading: isLoadingSimilarShows } = useQuery(
       ["similarShowsKey", params],
@@ -125,6 +135,28 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
     // Random Array - [Match and Age]
     const matchArray : string[] = ["95", "96","97", "98"]
     const ageArray : string[] = ["10", "13", "16"]
+
+    // State to store the random ages and mathes
+    const [ageRandom1, setAgeRandom1] = useState<string[]>([])
+    const [matchRandom1, setMatchRandom1] = useState<string[]>([])
+    const [ageRandom2, setAgeRandom2] = useState<string[]>([])
+    const [matchRandom2, setMatchRandom2] = useState<string[]>([])
+
+    // Effect to generate ages when the component mounts or items change
+    useEffect(() => {
+      setMatchRandom1(collectionData && collectionData?.parts?.map(() => matchArray[Math.floor(Math.random() * matchArray.length)]))
+      setAgeRandom1(collectionData && collectionData?.parts?.map(() => ageArray[Math.floor(Math.random() * ageArray.length)]))
+
+      setMatchRandom2(
+        (similarShowsData?.results.length !== 0 ? 
+          similarShowsData : trendingShowsData)?.results?.map(() => matchArray[Math.floor(Math.random() * matchArray.length)])
+      )
+
+      setAgeRandom2(
+        (similarShowsData?.results.length !== 0 ? 
+          similarShowsData : trendingShowsData)?.results?.map(() => ageArray[Math.floor(Math.random() * ageArray.length)])
+      )
+    }, [collectionData, similarShowsData, trendingShowsData]) 
   
   return (
     <div className="relative mt-10 px-14">
@@ -273,12 +305,87 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
         </div>
       }
 
+      {/* Collection section */
+      collectionData && !isLoadingCollection &&
+        <div className="mt-6 w-full">
+          <div className="flex items-center gap-x-3">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="title-group-collection ltr-4z3qvp e1svuwfo1 text-white mt-[1px]" data-name="Collection" aria-hidden="true"><path fillRule="evenodd" clipRule="evenodd" d="M2 3C0.895431 3 0 3.89543 0 5V19C0 20.1046 0.895431 21 2 21H22C23.1046 21 24 20.1046 24 19V5C24 3.89543 23.1046 3 22 3H2ZM2 5H22V19H2V5ZM5 7V17H7V7H5ZM9 17V7H11V17H9ZM13.0715 7.37139L17.0715 17.3714L18.9285 16.6286L14.9285 6.62861L13.0715 7.37139Z" fill="currentColor"></path></svg>
+            <p className="text-white text-2xl font-bold">
+              {showDetailsData?.belongs_to_collection?.name || "Show Collection"}
+            </p>
+          </div>
+
+          <div className="mt-4 w-full grid gap-5 grid-cols-3">
+          {// Items Data Mapping
+           collectionData?.parts?.map((
+              res : {
+                id: number, 
+                backdrop_path: string,
+                name?: string,
+                original_title?: string,
+                release_date?: string,
+                last_air_date?: string,
+                first_air_date?: string,
+                overview: string
+              },
+              index : number
+            ) => (
+              <div className="rounded pb-6 bg-[#2f2f2f] cursor-pointer overflow-hidden" key={res?.id}>
+                {/* Poster */}
+                <LazyLoadImage
+                  alt="Show Image"
+                  src={`${res?.backdrop_path && import.meta.env.VITE_BASE_IMAGE_URL}${res?.backdrop_path}`} 
+                  className="w-full h-[8.5rem]"
+                  onError={handleImageError}
+                />
+
+                {/* Show name and Season count or Run Time */}
+                <div className="w-full h-[8.5rem] mt-[-8.5rem] relative z-10 bg-[#02020249] flex items-end">
+                  {/* Item Name */}
+                  <p className="text-white movie-title-font-large max-w-[80%] leading-tight text-base capitalize tracking-wide ml-4 mb-4 [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)]">
+                    {res?.name || res?.original_title}
+                  </p>
+                </div> 
+
+                {/* Match, Age, Year and Add to my list button */}
+                <div className="mt-4 mx-3 flex justify-between gap-x-2">
+                  <div>
+                    {/* Match Percentage */}
+                    <p className="text-[#42c161] text-sm font-bold">{matchRandom1 && matchRandom1[index]}% Match</p>
+
+                    <div className="flex items-center gap-x-2 mt-1">
+                      {/* Age */}
+                      <div className="text-[#bcbcbc] float-left text-sm px-[5px] border border-[#bcbcbc]">{ageRandom1 && ageRandom1[index]}+</div>
+                      {/* Release Date */}
+                      <p className="text-[#bcbcbc] font-medium disable-highlight">
+                        {new Date(res?.release_date || res?.last_air_date || res?.first_air_date || "2024-01-25").getFullYear()}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Add to Mylist */}
+                  <LightTooltip title="Add to My List" arrow sx={{'& .MuiTooltip-arrow': {color: '#ffff',},}}>
+                    <div className="bg-[#232323] rounded-full h-11 w-11 flex items-center justify-center border-2 border-[#8b8b8b] cursor-pointer disable-highlight">
+                      <img src={add} alt="Play Icon" className="h-5"/>
+                    </div>
+                  </LightTooltip>
+                </div>
+
+                {/* Overview */}
+                <p className="mt-4 text-sm text-[#d2d2d2] mx-3">{sentenceCutter(1, res?.overview).length <=10 ? sentenceCutter(2, res?.overview) : sentenceCutter(1, res?.overview)}</p>
+              </div>
+            ))
+          }
+          </div>
+        </div>
+      }
+
       {/* More like this section */}
       <div className="mt-6 w-full">
         <p className="text-white text-2xl font-bold">More Like This</p>
 
         <div className="mt-4 w-full grid gap-5 grid-cols-3">
-        {// Episode Data Mapping
+        {// Items Data Mapping
          (similarShowsData?.results.length !== 0 ? similarShowsData : trendingShowsData)?.results
          .filter((res: { id:  string }) => res.id !== showDetailsData?.id)
          .slice(0, similarShowSize)
@@ -292,7 +399,8 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
               last_air_date?: string,
               first_air_date?: string,
               overview: string
-            }
+            },
+            index : number
           ) => (
             <div className="rounded pb-6 bg-[#2f2f2f] cursor-pointer overflow-hidden" key={res?.id}>
               {/* Poster */}
@@ -315,11 +423,11 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
               <div className="mt-4 mx-3 flex justify-between gap-x-2">
                 <div>
                   {/* Match Percentage */}
-                  <p className="text-[#42c161] text-sm font-bold">{matchArray[Math.floor(Math.random() * matchArray.length)]}% Match</p>
+                  <p className="text-[#42c161] text-sm font-bold">{matchRandom2 && matchRandom2[index]}% Match</p>
 
                   <div className="flex items-center gap-x-2 mt-1">
                     {/* Age */}
-                    <div className="text-[#bcbcbc] float-left text-sm px-[5px] border border-[#bcbcbc]">{ageArray[Math.floor(Math.random() * ageArray.length)]}+</div>
+                    <div className="text-[#bcbcbc] float-left text-sm px-[5px] border border-[#bcbcbc]">{ageRandom2 && ageRandom2[index]}+</div>
                     {/* Release Date */}
                     <p className="text-[#bcbcbc] font-medium disable-highlight">
                       {new Date(res?.release_date || res?.last_air_date || res?.first_air_date || "2024-01-25").getFullYear()}

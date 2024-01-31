@@ -53,7 +53,7 @@ export const ShowDescription = ({castsData, showDetailsData} : ShowDescriptionPr
     // Cast, Creator, Genres, and Tagline Modal Controller
     const [isMoreModalStatus, setMoreModalStatus] = useState<boolean>(false)
   return (
-    <div className="mx-2 mt-2">
+    <div className="mx-2 mt-0">
         {/* If the item is produce by Netflix */
         showDetailsData && showDetailsData.networks && showDetailsData.networks.some((network: {name : string}) => network.name === "Netflix") && 
           <div className="flex items-center gap-x-1">

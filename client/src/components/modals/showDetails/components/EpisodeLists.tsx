@@ -270,7 +270,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
             index : number
           ) => (
             <div 
-              key={res?.id}
+              key={index}
               className="rounded w-full py-7 border-b border-[#424242] flex items-center gap-x-5 cursor-pointer" 
               onMouseOver={() => hoverEpisodeItem(res?.id)}
               onMouseOut={hoverOutEpisodeItem}
@@ -356,7 +356,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
               index : number
             ) => (
               <div
-                key={res?.id} 
+                key={index} 
                 className="rounded pb-6 bg-[#2f2f2f] cursor-pointer overflow-hidden"
                 onMouseOver={() => hoverEpisodeItemCollection(res?.id)}
                 onMouseOut={hoverOutEpisodeItemCollection}
@@ -442,7 +442,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
             index : number
           ) => (
             <div 
-              key={res?.id}
+              key={index}
               className="rounded pb-6 bg-[#2f2f2f] cursor-pointer overflow-hidden"
               onMouseOver={() => hoverEpisodeItemLikeThis(res?.id)}
               onMouseOut={hoverOutEpisodeItemLikeThis}
@@ -540,7 +540,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
             Creators:&nbsp;
             {// Creators mapping
             showDetailsData.created_by.map((res: { name: string }, index: number) => 
-                <span className="text-sm text-white" key={res?.name}>
+                <span className="text-sm text-white" key={index}>
                   {res?.name}{index < showDetailsData.created_by.length - 1 && ",\u00A0\u00A0"}
                 </span>
               )
@@ -553,7 +553,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
           Cast:&nbsp;
           {// Creators mapping
             castsData && castsData.cast.map((res: { original_name: string }, index: number) => 
-              <span className="text-sm text-white" key={res?.original_name}>
+              <span className="text-sm text-white" key={index}>
                 {res?.original_name}{index < castsData.cast.length - 1 && ",\u00A0\u00A0"}
               </span>
             )
@@ -565,7 +565,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
           Genres:&nbsp;
           {/* Cast Mapping */}
           {showDetailsData?.genres?.map((res: { name: string }, index: number, array: { name: string }[]) => 
-            <span className="text-sm text-white" key={res?.name}>
+            <span className="text-sm text-white" key={index}>
               {res?.name}{index < array.length - 1 ? ', ' : ''}
             </span>
           )}

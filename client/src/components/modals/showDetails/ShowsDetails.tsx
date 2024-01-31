@@ -84,7 +84,7 @@ export const ShowsDetails = ({scrollToBottom} : showDetailsDataProps) => {
         <img 
             src={`${showDetailsData?.backdrop_path && import.meta.env.VITE_BASE_IMAGE_URL}${showDetailsData?.backdrop_path}`}
             alt="Movie Image"
-            className={`custom-transition-duration-10s w-full h-[31rem] z-[1] relative object-cover ${showVideoModal ? "opacity-0" : "opacity-100"}`}
+            className={`custom-transition-duration-10s w-full h-[31rem] z-[1] relative object-cover 1051size:object-contain ${showVideoModal ? "opacity-0" : "opacity-100"}`}
             onError={handleImageError}
         />
 

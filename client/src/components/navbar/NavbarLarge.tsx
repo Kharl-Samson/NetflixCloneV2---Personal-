@@ -5,6 +5,8 @@ import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNone
 import placeholderAvatar from "../../assets/images/placeholderAvatar.png"
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined'
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { useAppStore } from "../../store/ZustandStore"
 
 type NavbarProps = {
     scrollDirection : string
@@ -13,6 +15,8 @@ type NavbarProps = {
 }
   
 export const NavbarLarge = ( {scrollDirection, isAtTop, active} : NavbarProps ) => {
+    const navigate = useNavigate()
+
     // Get search value params
     const urlParams = new URLSearchParams(window.location.search)
     const searchParams = urlParams.get("search")
@@ -22,6 +26,9 @@ export const NavbarLarge = ( {scrollDirection, isAtTop, active} : NavbarProps ) 
 
     // Hover Avatar
     const [isAvatarHover, setAvatarHover] = useState<boolean>(false)
+
+    // Zustand State
+    const { setSearchClick, setSearchValue } = useAppStore()
 
   return (
     <nav 
@@ -38,6 +45,7 @@ export const NavbarLarge = ( {scrollDirection, isAtTop, active} : NavbarProps ) 
               {// Links Mapping
                 arrayLink?.map((res: string) => (
                   <li 
+                    onClick={() => {setSearchClick(false) ; setSearchValue("")}}
                     key={res} 
                     className={`text-sm cursor-pointer hover:opacity-80 custom-transition-duration-3s font-light
                     ${active === res ? "text-white " : ""}`}

@@ -1,14 +1,21 @@
 import searchIcon from "../../assets/images/icons/search.png"
 import closeIcon from "../../assets/images/icons/close.png"
-import { SetStateAction, useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import { Page as Search } from "../../pages/search/Page"
 import { useAppStore } from "../../store/ZustandStore"
+import { useRouteAndQueryParams } from "../../utils/itemsFunction"
 
 export const SearchInput = () => {
+    // Params Url Getter
+    const { params, categoryParams } = useRouteAndQueryParams()
+
     // Navigate
     const navigate = useNavigate()
     
+    // Zustand State
+    const { setPause, setShowVideo, isSearchClick, setSearchClick, searchValue, setSearchValue } = useAppStore()
+
     // Get search value params
     const urlParams = new URLSearchParams(window.location.search)
     const searchParams = urlParams.get("search")
@@ -17,7 +24,6 @@ export const SearchInput = () => {
     //Click Search Input
     const inputRef = useRef<HTMLInputElement>(null)
     const parentRef = useRef<HTMLDivElement>(null)
-    const [isSearchClick, setSearchClick] = useState<boolean>(false)
     const clickSearch = () => setSearchClick(true)
 
     // Close Search Input
@@ -32,21 +38,27 @@ export const SearchInput = () => {
     }, [isSearchClick, searchParams])
 
     // When the user inputted in search input
-    const [searchValue, setSearchValue] = useState<string>(sParam || "")
-    const handleChange = (event: { target: { value: SetStateAction<string> } }) => {
-        isSearchClick && setSearchValue(event?.target?.value)
-    } 
-
-    // React Youtube State
-    const { setPause, setShowVideo } = useAppStore()
+    const handleChange = (event: { target: { value: string } }) => isSearchClick && setSearchValue(event?.target?.value)
 
     useEffect(() => {
-        searchValue !== "" ? navigate(`/?search=1&s=${searchValue}`) : navigate("/")
+        if(searchValue !== "" && (!params || params === "Default")){
+            navigate(`/?search=1&s=${searchValue}`)
+        }
+        else if((categoryParams !== "tv" && categoryParams !== "movie" && !params) || (searchValue === "" && searchParams === "1")){
+            setSearchValue("")
+            navigate("/")
+        }
+   
+       // searchValue !== "" ? navigate(`/?search=1&s=${searchValue}`) :  navigate("/")
         searchValue !== "" ? setPause(true) : setPause(false)
         searchValue !== "" ? setShowVideo(false) : setShowVideo(true)
         searchValue !== "" && setSearchClick(true)
-    },[searchValue, sParam, searchParams])
+    },[searchValue, sParam, searchParams, isSearchClick])
 
+    useEffect(()=> {
+      //  (!searchValue || searchValue === "") && navigate("/")
+    },[searchValue])
+  
     // Clear Search Input
     const clearSearchInput = () => setSearchValue("")
 
@@ -79,7 +91,7 @@ export const SearchInput = () => {
         </div>
 
         {/* Search Section */
-          searchParams === "1" &&
+        searchParams === "1" &&
           <Search/>
         }
     </div>

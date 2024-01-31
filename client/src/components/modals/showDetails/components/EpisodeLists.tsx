@@ -411,7 +411,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
                 onError={handleImageError}
               />
 
-              {/* Show name and Season count or Run Time */}
+              {/* Show name */}
               <div className="w-full h-[8.5rem] mt-[-8.5rem] relative z-10 bg-[#02020249] flex items-end">
                 {/* Item Name */}
                 <p className="text-white movie-title-font-large max-w-[80%] leading-tight text-base capitalize tracking-wide ml-4 mb-4 [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)]">

@@ -14,15 +14,15 @@ export const Page = () => {
     // Fetch show data 
     const { data : searchData1, isFetched: isFetchedSearchData1 } = useQuery(
       ["searchDataKey1", sParam],
-      () => getSearchQuery(sParam ? sParam : "Default", 1)
+      () => sParam && getSearchQuery(sParam ? sParam : "Default", 1)
     )
     const { data : searchData2, isFetched: isFetchedSearchData2 } = useQuery(
       ["searchDataKey2", sParam],
-      () => getSearchQuery(sParam ? sParam : "Default", 2)
+      () => sParam && getSearchQuery(sParam ? sParam : "Default", 2)
     )
     const { data : searchData3, isFetched: isFetchedSearchData3 } = useQuery(
       ["searchDataKey3", sParam],
-      () => getSearchQuery(sParam ? sParam : "Default", 3)
+      () => sParam && getSearchQuery(sParam ? sParam : "Default", 3)
     )
 
     const combinedData = useMemo(() => {
@@ -37,10 +37,10 @@ export const Page = () => {
     // Fetch show data with infinite scroll
     const {data, fetchNextPage, hasNextPage, isFetchingNextPage} = useInfiniteQuery(
         ['searchDataKey', sParam],
-        ({ pageParam = 1 }) => getSearchQuery(sParam ? sParam : "", pageParam),
+        ({ pageParam = 1 }) => sParam && getSearchQuery(sParam ? sParam : "", pageParam),
         {
           getNextPageParam: (lastPage) => {
-            return lastPage.page < lastPage.total_pages ? lastPage.page + 1 : undefined
+            return lastPage?.page < lastPage?.total_pages ? lastPage?.page + 1 : undefined
           }
         }
     )
@@ -91,7 +91,7 @@ export const Page = () => {
         <p className="text-2xl text-[#808080] whitespace-nowrap">More to explore: </p>
         <div className="mt-[-2px] flex flex-wrap items-center gap-x-3">
           {// Related title mapping
-          combinedData && combinedData.results
+          combinedData && combinedData?.results
             .reduce((unique: {title: string}[], item: {title: string}) => {
               !unique.some(obj => obj?.title?.toUpperCase() === item?.title?.toUpperCase()) && unique.push(item)
               return unique
@@ -108,9 +108,9 @@ export const Page = () => {
       </div>
 
       <div className="my-grid-search mt-5 w-full grid gap-x-3 gap-y-[4rem] disable-highlight">
-        {data?.pages.map((group, groupIndex) => (
+        {data?.pages?.map((group, groupIndex) => (
             <React.Fragment key={groupIndex}>
-              {group.results.map((res : ItemType, index : number) => {
+              {group.results?.map((res : ItemType, index : number) => {
                 return (
                   <div
                     key={index}

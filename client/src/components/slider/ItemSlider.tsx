@@ -26,21 +26,41 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
   }))
 
 export const ItemSlider = ({
-        itemHover,
-        index,
-        imageUrl,
-        trailerData,
-        isFetchedTrailer,
-        mediaType,
-        showDetails,
-    }: ItemSliderProps
+    itemHover,
+    index,
+    imageUrl,
+    trailerData,
+    isFetchedTrailer,
+    mediaType,
+    showDetails,
+  }: ItemSliderProps
 ) => {
     // State from zustand
     const {screenWidth} = useAppStore()
 
+    // Get search value params
+    const urlParams = new URLSearchParams(window.location.search)
+    const searchParams = urlParams.get("search")
+
+    // Hover Style if search param is equals to 1
+    const [searchHoverStyle, setSearchHoverStyle] = useState<string>("")
+    useEffect(() => {
+      if(searchParams === "1") {
+        if (screenWidth >= 1890) {
+          setSearchHoverStyle("search-hover-style-1880")
+        } else if (screenWidth >= 1600) {
+          setSearchHoverStyle("search-hover-style-1580")
+        }else if (screenWidth >= 1290) {
+          setSearchHoverStyle("search-hover-style-1280")
+        } else if (screenWidth >= 1051) {
+          setSearchHoverStyle("search-hover-style-1051")
+        }
+      }
+    },[screenWidth])
+
     // Style when hover the item
-    const hoverStyle = `swiperSlideHover h-auto relative z-30 cursor-pointer hover:cursor-pointer overflow-auto 
-      item-shadow mt-[-6rem] rounded-lg ${itemHover !== 0 && "ml-[-3.438rem]"}`
+    const hoverStyle = `${searchParams === "1" && `search-hover-style ${searchHoverStyle}`} swiperSlideHover h-auto relative z-30 cursor-pointer 
+      hover:cursor-pointer overflow-auto item-shadow mt-[-6rem] rounded-lg ${(itemHover !== 0) && "ml-[-3.438rem]"}`
 
     // React Youtube State
     const { showVideoItems, triggerAnimItems, isMutedItems, videoEndedItems } = useAppStore()

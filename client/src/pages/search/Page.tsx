@@ -1,24 +1,28 @@
-import { useQuery } from "react-query"
-import { getSearchQuery } from "../../services/apiFetchShowList"
-import { useRouteAndQueryParams } from "../../utils/itemsFunction"
-import { useMemo } from "react"
+import { useInfiniteQuery, useQuery } from "react-query"
+import { getSearchQuery, getShowTrailer } from "../../services/apiFetchShowList"
+import { dataInEffect, useClickHandlers, useHoverHandlers } from "../../utils/itemsFunction"
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { ItemType } from "../../types/itemTypes"
+import { ItemSlider } from "../../components/slider/ItemSlider"
+import { useAppStore } from "../../store/ZustandStore"
 
 export const Page = () => {
-    // Params Url Getter
-    const { params } = useRouteAndQueryParams()
+    // Get search value params
+    const urlParams = new URLSearchParams(window.location.search)
+    const sParam = urlParams.get("s")
 
     // Fetch show data 
     const { data : searchData1, isFetched: isFetchedSearchData1 } = useQuery(
-      ["searchDataKey1", params],
-      () => getSearchQuery(params, 1)
+      ["searchDataKey1", sParam],
+      () => getSearchQuery(sParam ? sParam : "Default", 1)
     )
     const { data : searchData2, isFetched: isFetchedSearchData2 } = useQuery(
-      ["searchDataKey2", params],
-      () => getSearchQuery(params, 2)
+      ["searchDataKey2", sParam],
+      () => getSearchQuery(sParam ? sParam : "Default", 2)
     )
     const { data : searchData3, isFetched: isFetchedSearchData3 } = useQuery(
-      ["searchDataKey3", params],
-      () => getSearchQuery(params, 3)
+      ["searchDataKey3", sParam],
+      () => getSearchQuery(sParam ? sParam : "Default", 3)
     )
 
     const combinedData = useMemo(() => {
@@ -30,13 +34,61 @@ export const Page = () => {
       return null
     }, [searchData1, searchData2, searchData3])
 
+    // Fetch show data with infinite scroll
+    const {data, fetchNextPage, hasNextPage, isFetchingNextPage} = useInfiniteQuery(
+        ['searchDataKey', sParam],
+        ({ pageParam = 1 }) => getSearchQuery(sParam ? sParam : "", pageParam),
+        {
+          getNextPageParam: (lastPage) => {
+            return lastPage.page < lastPage.total_pages ? lastPage.page + 1 : undefined
+          }
+        }
+    )
+
+    // Infinite scroll function
+    const observer = useRef<IntersectionObserver>()
+    const lastElementRef = useCallback((node: HTMLDivElement | null) => {
+      if (isFetchingNextPage) return
+      if (observer.current) observer.current.disconnect()
+      observer.current = new IntersectionObserver(entries => {
+          entries[0].isIntersecting && hasNextPage && fetchNextPage()
+      })
+      if (node) observer.current.observe(node)
+    }, [isFetchingNextPage, fetchNextPage, hasNextPage])
+
+    // React Youtube State
+    const { videoId, trailerData, showDetails } = useAppStore()
+
+    // Device Checker
+    const [deviceType, setDeviceType] = useState<string | null>(null)
+    useEffect(() => {
+      const userAgent = navigator.userAgent.toLowerCase()
+      userAgent.match(/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i) ? setDeviceType("Phone") : setDeviceType("Desktop")
+    },[deviceType])
+
+    // Items Functions Util
+    const [itemHover, setItemHover] = useState<number | null>(null)
+    const { handleHover, handleHoverOut } = useHoverHandlers()
+    const { handleClickModal } = useClickHandlers()
+
+    // Fetch trailer data
+    const { data : myTrailerData, isFetched: isFetchedTrailer, isError: isTrailerError } = useQuery(
+      ["trailerItemKey", itemHover, showDetails],
+      () => getShowTrailer(!showDetails?.number_of_seasons ? "movie" : "tv", videoId)
+    )
+
+    // When done querying put the data in states variable
+    useEffect(() => {
+      // Trailer Data Query
+      (isFetchedTrailer && !isTrailerError && myTrailerData?.results.length !== 0) && dataInEffect(myTrailerData)
+    }, [itemHover, isFetchedTrailer, myTrailerData])
+
   return (
-    <section className="mt-[4.5rem] min-h-screen fixed inset-0 z-[49] bg-[#181414] overflow-y-scroll search-section px-14">
+    <section className="max-w-[3000px] mx-auto mt-[4.5rem] min-h-[100dvh] fixed inset-0 z-[49] bg-[#181414] overflow-y-scroll search-section px-14">
         
+      {/* More related title */}
       <div className="mt-[6rem] flex gap-x-5">
         <p className="text-2xl text-[#808080] whitespace-nowrap">More to explore: </p>
-
-        {/* More related title */}
         <div className="mt-[-2px] flex flex-wrap items-center gap-x-3">
           {// Related title mapping
           combinedData && combinedData.results
@@ -53,9 +105,39 @@ export const Page = () => {
               </div>
           )}
         </div>
-        
       </div>
 
+      <div className="my-grid-search mt-5 w-full grid gap-x-3 gap-y-[4rem] disable-highlight">
+        {data?.pages.map((group, groupIndex) => (
+            <React.Fragment key={groupIndex}>
+              {group.results.map((res : ItemType, index : number) => {
+                return (
+                  <div
+                    key={index}
+                    className = "max-w-[17.5rem] h-[10rem] cursor-pointer hover:cursor-pointer"
+                    onMouseOver={() => { deviceType === "Desktop" && setItemHover(index + parseInt(res.id) + parseInt(res?.vote_count)) ; handleHover(res?.media_type, res?.id) }}
+                    onMouseLeave={() =>{ deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
+                    onClick={(event) =>  
+                      deviceType === "Desktop" && handleClickModal(event, res?.media_type, res?.id)
+                    }
+                  >
+                    <ItemSlider
+                      itemHover = {itemHover}
+                      index = {index + parseInt(res.id) + parseInt(res?.vote_count)}
+                      imageUrl = {res?.backdrop_path}
+                      trailerData = {trailerData}
+                      isFetchedTrailer = {isFetchedTrailer}
+                      mediaType = {res?.media_type}
+                      showDetails = {showDetails}
+                    />
+                  </div>
+                )
+              })}
+            </React.Fragment>
+        ))}
+        <div ref={hasNextPage ? lastElementRef : null} className={`${hasNextPage && "h-[30dvh]"} w-full`}/>
+      </div>
+      {isFetchingNextPage && <p className="my-2 text-center mx-auto">Loading more...</p>}
     </section>
   )
 }

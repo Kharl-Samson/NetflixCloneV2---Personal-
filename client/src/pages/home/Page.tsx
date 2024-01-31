@@ -73,7 +73,7 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
       {/* Hero Section */}
       <Hero/>
 
-      <section id="categorySection">
+      <main id="categorySection">
         {/* Top 10 TV Shows */}
         <SliderTop10
           marginStyle = { 
@@ -157,11 +157,11 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
           queryKey = "tvActionAdventure"
           classCount = {5}
         />
-      </section>
+      </main>
 
       {/* Modals - [Larger Screens] */
       ((screenWidth >= 640 && showDetailsModal) || (params && (categoryParams === "tv" || categoryParams === "movie"))) &&
-        <div className="min-h-screen w-full fixed z-[1000] modal-background inset-0 overflow-y-scroll hidden sm:block" ref={modalRef}>
+        <div className="min-h-[100dvh] w-full fixed z-[1000] modal-background inset-0 overflow-y-scroll hidden sm:block" ref={modalRef}>
           <ShowsDetails scrollToBottom = {scrollToBottom}/>
         </div>
       }

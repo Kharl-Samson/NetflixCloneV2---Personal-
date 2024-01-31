@@ -39,7 +39,6 @@ function App() {
         {/* Main Pages */}
         <Route path="/" element={<Page scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>}/>
         <Route path="/browse/:category" element={screenWidth < 640 ? <Browse/> : <Page scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>}/>
-
       </Routes>
     </>
   )

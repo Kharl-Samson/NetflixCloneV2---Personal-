@@ -11,6 +11,10 @@ export const YoutubePlayerItem = ( {id, videoId, duration, isFetchedTrailer} : Y
     // React Youtube State
     const { setShowVideoItems, setTriggerAnimItems, isMutedItems, playAgainItems, setPause } = useAppStore()
 
+    // Get search value params
+    const urlParams = new URLSearchParams(window.location.search)
+    const searchParams = urlParams.get("search")
+
     // React Youtube Configuration
     const [videoValid, setVideoValid] = useState<boolean>(false)
     const onReady: YouTubeProps["onReady"] = (event) => {
@@ -22,7 +26,7 @@ export const YoutubePlayerItem = ( {id, videoId, duration, isFetchedTrailer} : Y
         const timeOut1 = setTimeout(() => setShowVideoItems(true), duration)
         const timeOut2 = setTimeout(() => {
           setTriggerAnimItems(true)
-          setPause(true)
+          searchParams !== "1" && setPause(true)
         }, 100)
         return () => {
           clearTimeout(timeOut1)
@@ -35,7 +39,7 @@ export const YoutubePlayerItem = ( {id, videoId, duration, isFetchedTrailer} : Y
         const timeOut1 = setTimeout(() => setShowVideoItems(false), (duration + 100))
         const timeOut2 = setTimeout(() => {
           setTriggerAnimItems(true)
-          setPause(true)
+          searchParams !== "1" && setPause(true)
         }, 100)
         return () => {
           clearTimeout(timeOut1)

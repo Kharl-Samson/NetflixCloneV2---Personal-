@@ -15,7 +15,7 @@ type NavbarProps = {
 export const NavbarLarge = ( {scrollDirection, isAtTop, active} : NavbarProps ) => {
     // Get search value params
     const urlParams = new URLSearchParams(window.location.search)
-    const searchParams = urlParams.get('search')
+    const searchParams = urlParams.get("search")
 
     // Data Links
     const arrayLink : string[] = ["Home", "TV Shows", "Movies", "New & Popular", "My List"]

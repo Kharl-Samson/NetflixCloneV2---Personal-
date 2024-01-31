@@ -5,15 +5,19 @@ export const getCurrentSection = () => {
     const [currentSection, setCurrentSection] = useState<string | null>(null)
   
     const handleScroll = () => {
-      const sections : NodeListOf<HTMLElement> = document.querySelectorAll("section")
+      const mainElement : NodeListOf<HTMLElement> = document.querySelectorAll("main")
       const scrollPosition = window.scrollY + window.innerHeight / 2
   
-      for (const section of sections) {
-        const top = section.offsetTop
-        const height = section.offsetHeight
-  
+      for (const main of mainElement) {
+        const top = main.offsetTop
+        const height = main.offsetHeight
+        
         if (scrollPosition >= top && scrollPosition <= top + height) {
-          setCurrentSection(section.id)
+          setCurrentSection(main.id)
+          break
+        }
+        else{
+          setCurrentSection(null)
           break
         }
       }

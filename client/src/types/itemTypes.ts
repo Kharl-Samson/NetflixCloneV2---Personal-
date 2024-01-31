@@ -4,6 +4,7 @@ export type ItemType = {
     poster_path: string
     backdrop_path: string
     media_type : string
+    vote_count : string
 }
 // Types for my Item Slider
 export type ItemSliderProps = {

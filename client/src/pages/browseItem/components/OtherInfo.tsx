@@ -23,8 +23,8 @@ type OtherInfoProps = {
 export const OtherInfo = ({isMoreModalStatus, castsData, showDetailsData, age, onClick} : OtherInfoProps) => {
   return (
     <div 
-      className={`custom-transition-duration-3s h-screen w-full fixed left-0 rounded-t-[10px] z-20
-      bg-[#242424] flex flex-col ${isMoreModalStatus ? "top-[.20rem]" : "top-[100vh]"}`}
+      className={`custom-transition-duration-3s h-[100dvh] w-full fixed left-0 rounded-t-[10px] z-20
+      bg-[#242424] flex flex-col ${isMoreModalStatus ? "top-[.20rem]" : "top-[100dvh]"}`}
     >
       {/* Close */}
       <div className="bg-[#3f3f3f] h-[2rem] w-[2rem] rounded-full flex items-center justify-center text-white ml-auto mt-2 mr-2" onClick={onClick}>

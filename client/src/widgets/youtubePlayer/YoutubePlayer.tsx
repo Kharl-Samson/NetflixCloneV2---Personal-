@@ -14,18 +14,22 @@ export const YoutubePlayer = ({ id, videoId, duration, isFetchedTrailer } : Yout
     // Video Valid State
     const [videoValid, setVideoValid] = useState<boolean>(false)
 
+    // Get search value params
+    const urlParams = new URLSearchParams(window.location.search)
+    const searchParams = urlParams.get("search")
+
     // React Youtube Configuration
     const onReady: YouTubeProps["onReady"] = (event) => {
       event.target.setPlaybackQuality("highres")
       setVideo(() => event.target)
 
-      if(isFetchedTrailer && videoId && event.target.getVideoData().video_id && event.target.getVideoData().isPlayable) {
+      if(searchParams !== "1" && isFetchedTrailer && videoId && event.target.getVideoData().video_id && event.target.getVideoData().isPlayable) {
         setVideoValid(true)
         const timeOut = setTimeout(() => setShowVideo(true), duration)
         return () => clearTimeout(timeOut)
       }
       else{
-        setShowVideo(false)
+        searchParams !== "1" && setShowVideo(false)
         setVideoValid(false)
       }
     }

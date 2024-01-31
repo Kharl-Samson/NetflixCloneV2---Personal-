@@ -144,7 +144,7 @@ export const EpisodeLists = ({showDetailsData} : EpisodeListsProps) => {
 
                 {/* Season dropdown modal */}
                 <div 
-                  className={`custom-transition-duration-3s h-screen w-full fixed left-0 rounded-t-[10px] z-20
+                  className={`custom-transition-duration-3s h-[100dvh] w-full fixed left-0 rounded-t-[10px] z-20
                   modal-glassmorphism flex flex-col ${seasonModalStatus ? "top-[.20rem]" : "top-[100vh]"}`}
                 >
                     <div className="flex-grow mt-14 overflow-y-scroll mb-5">
@@ -170,7 +170,7 @@ export const EpisodeLists = ({showDetailsData} : EpisodeListsProps) => {
 
                 {/* More info modal */}
                 <div 
-                  className={`custom-transition-duration-3s h-screen w-full fixed left-0 rounded-t-[10px] z-20
+                  className={`custom-transition-duration-3s h-[100dvh] w-full fixed left-0 rounded-t-[10px] z-20
                   bg-[#242424] flex flex-col ${moreInfoModalStatus ? "top-[.20rem]" : "top-[100vh]"}`}
                 >
                     {/* Close */}

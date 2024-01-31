@@ -1,9 +1,9 @@
 import searchIcon from "../../assets/images/icons/search.png"
 import closeIcon from "../../assets/images/icons/close.png"
 import { SetStateAction, useEffect, useRef, useState } from "react"
-import { useRouteAndQueryParams } from "../../utils/itemsFunction"
 import { useNavigate } from "react-router-dom"
 import { Page as Search } from "../../pages/search/Page"
+import { useAppStore } from "../../store/ZustandStore"
 
 export const SearchInput = () => {
     // Navigate
@@ -11,16 +11,14 @@ export const SearchInput = () => {
     
     // Get search value params
     const urlParams = new URLSearchParams(window.location.search)
-    const searchParams = urlParams.get('search')
+    const searchParams = urlParams.get("search")
+    const sParam = urlParams.get("s")
 
     //Click Search Input
     const inputRef = useRef<HTMLInputElement>(null)
     const parentRef = useRef<HTMLDivElement>(null)
     const [isSearchClick, setSearchClick] = useState<boolean>(false)
-    const clickSearch = () => {
-        isSearchClick && inputRef?.current?.focus()
-        setSearchClick(true)
-    }
+    const clickSearch = () => setSearchClick(true)
 
     // Close Search Input
     const closeSearchInput = (event: MouseEvent) => {
@@ -28,21 +26,26 @@ export const SearchInput = () => {
     }
 
     useEffect(() => {
+        isSearchClick && inputRef?.current?.focus()
         isSearchClick ? document.addEventListener("mousedown", closeSearchInput) : document.removeEventListener("mousedown", closeSearchInput)
         return () =>  document.removeEventListener("mousedown", closeSearchInput)
     }, [isSearchClick, searchParams])
 
     // When the user inputted in search input
-    const { params } = useRouteAndQueryParams()
-    const [searchValue, setSearchValue] = useState<string>(params === "Default" ? "" : params)
+    const [searchValue, setSearchValue] = useState<string>(sParam || "")
     const handleChange = (event: { target: { value: SetStateAction<string> } }) => {
         isSearchClick && setSearchValue(event?.target?.value)
     } 
 
+    // React Youtube State
+    const { setPause, setShowVideo } = useAppStore()
+
     useEffect(() => {
-        searchValue ? navigate(`/?search=1&q=${searchValue}`) : navigate("/")
+        searchValue !== "" ? navigate(`/?search=1&s=${searchValue}`) : navigate("/")
+        searchValue !== "" ? setPause(true) : setPause(false)
+        searchValue !== "" ? setShowVideo(false) : setShowVideo(true)
         searchValue !== "" && setSearchClick(true)
-    },[searchValue])
+    },[searchValue, sParam, searchParams])
 
     // Clear Search Input
     const clearSearchInput = () => setSearchValue("")

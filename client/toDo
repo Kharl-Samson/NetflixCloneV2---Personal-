@@ -8,7 +8,8 @@ Done : Fix item modal when the user directed in a URL
 Done : Finish Browse Item in phone
 Done : Add episode count in season dropdown
 Done : Add netflix logo if the show in produce by netflix in Item Modal
+Done : Fixed Modals in browse item - use dvh instead of screen and vh
 
 Add share button in browse item phone
 Add play icon when the user is hovering the item for more like this or collection part in item modal
-Fixed Modals in browse item - use dvh instead of screen and vh
+Add no result found in search

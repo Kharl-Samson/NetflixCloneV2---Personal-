@@ -158,7 +158,57 @@ button:hover {
     .search-section::-webkit-scrollbar-thumb:window-inactive {
         background: transparent; 
     }
-    
+
+    /* Custom style in items in search section */
+    .my-grid-search > div:nth-child(3n+1) .search-hover-style-1051 {
+        margin-left: 0;
+    }
+    .my-grid-search > div:nth-child(3n+3) .search-hover-style-1051, .my-grid > div:nth-child(3n) .search-hover-style-1051 {
+        margin-left: -7rem;
+    }
+    .my-grid-search > div:nth-child(4n+1) .search-hover-style-1280 {
+        margin-left: 0;
+    }
+    .my-grid-search > div:nth-child(4n+4) .search-hover-style-1280, .my-grid > div:nth-child(4n) .search-hover-style-1280 {
+        margin-left: -7rem;
+    }
+    .my-grid-search > div:nth-child(5n+1) .search-hover-style-1580 {
+        margin-left: 0;
+    }
+    .my-grid-search > div:nth-child(5n+5) .search-hover-style-1580, .my-grid > div:nth-child(5n) .search-hover-style-1580 {
+        margin-left: -7rem;
+    }
+    .my-grid-search > div:nth-child(6n+1) .search-hover-style-1880 {
+        margin-left: 0;
+    }
+    .my-grid-search > div:nth-child(6n+6) .search-hover-style-1880, .my-grid > div:nth-child(6n) .search-hover-style-1880 {
+        margin-left: -7rem;
+    }
+
+    /* 1051px breakpoint styles */
+    @media (min-width: 1051px) {
+        .my-grid-search {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+    /* 1290px breakpoint styles */
+    @media (min-width: 1290px) {
+        .my-grid-search {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+    }
+    /* 1600px breakpoint styles */
+    @media (min-width: 1600px) {
+        .my-grid-search {
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+        }
+    }
+    /* 1890px breakpoint styles */
+    @media (min-width: 1890px) {
+        .my-grid-search {
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+        }
+    }
 
     /* Custom Skeleton */
     .showSkeleton{
@@ -193,7 +243,7 @@ button:hover {
     .swiperSlideSmall2 {
         width: 9.8rem !important;
     }
-    /* 951size breakpoint styles */
+    /* 640size breakpoint styles */
     @media (min-width: 640px) {
         .swiperSlide {
             width: 18rem !important;

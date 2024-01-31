@@ -83,7 +83,7 @@ export const Hero = () => {
         {/* For shadowing */
         screenWidth >= 640 && 
           <div>
-            <div className="hidden sm:block max-h-[90rem] h-[40rem] 801size:h-[50rem] 951size:h-screen"></div>
+            <div className="hidden sm:block max-h-[90rem] h-[40rem] 801size:h-[50rem] 951size:h-[100dvh]"></div>
             <div className="hidden sm:block z-20 shadowing-hero"></div>
           </div> 
         }

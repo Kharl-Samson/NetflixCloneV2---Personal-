@@ -26,10 +26,14 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer} : H
         videoEnded, setVideoEnded, setPlayAgain, setPause
     } = useAppStore()
   
+    // Get search value params
+    const urlParams = new URLSearchParams(window.location.search)
+    const searchParams = urlParams.get("search")
+
     const toggleVideoSound = () => {
-        setPlayAgain(false)
-        setIsMuted(!isMuted)
-        if(videoEnded) {
+        searchParams !== "1" && setPlayAgain(false)
+        searchParams !== "1" && setIsMuted(!isMuted)
+        if(searchParams !== "1" && videoEnded) {
             setPause(false)
             setVideoEnded(false)
             setShowVideo(true)
@@ -52,11 +56,11 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer} : H
     // Render Hero Video Component if the user is in hero section
     const [firstLoadStatus, setFirstLoadStatus] = useState<boolean>(true)
     useEffect(() => {
-        if(currentSection === "categorySection") {
+        if(searchParams !== "1" && currentSection === "categorySection") {
             setShowVideo(false)
             setFirstLoadStatus(false)
-        }
-        currentSection !== "categorySection" && !firstLoadStatus && setShowVideo(true)
+        }     
+        (searchParams !== "1" && currentSection !== "categorySection" && !firstLoadStatus) && setShowVideo(true)
     }, [currentSection])
 
     // Device Checker
@@ -77,14 +81,14 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer} : H
                 src={`${myData?.backdrop_path && import.meta.env.VITE_BASE_IMAGE_URL}${myData?.backdrop_path}`}
                 alt="Movie Image"
                 className={`max-h-[90rem] hidden sm:block absolute top-0 max-w-[3000px] mx-auto w-full h-[45rem] 801size:h-[50rem]
-                    951size:h-screen object-center object-cover custom-transition-duration-10s z-10 disable-highlight
+                    951size:h-[100dvh] object-center object-cover custom-transition-duration-10s z-10 disable-highlight
                   bg-black bg-opacity-50 image-inline-shadow ${showVideo ? "opacity-0" : "opacity-100"}`}
             />
         }
 
         {/* Video Player */
         screenWidth >= 640 &&
-            <div className={`max-h-[90rem] hidden disable-highlight absolute max-w-[3000px] mx-auto top-0 w-full h-[45rem] 801size:h-[50rem] 951size:h-screen overflow-hidden z-0 ${showVideo && "sm:block"}`}>
+            <div className={`max-h-[90rem] hidden disable-highlight absolute max-w-[3000px] mx-auto top-0 w-full h-[45rem] 801size:h-[50rem] 951size:h-[100dvh] overflow-hidden z-0 ${showVideo && "sm:block"}`}>
                 <YoutubePlayer
                     id = "youtubePlayer"
                     videoId = {trailerData} 
@@ -97,7 +101,7 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer} : H
         {/* Main Content */
         screenWidth >= 640 && 
             <div className="max-w-[3000px] max-h-[90rem] mx-auto z-20 absolute top-0 hidden sm:flex flex-col 
-                disable-highlight justify-end w-full h-[45rem] 801size:h-[50rem] 951size:h-screen px-7 951size:px-14"
+                disable-highlight justify-end w-full h-[45rem] 801size:h-[50rem] 951size:h-[100dvh] px-7 951size:px-14"
                 style={{background: "linear-gradient(0deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.40) 100%)"}}
             >
                 <p 

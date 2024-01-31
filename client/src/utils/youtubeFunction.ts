@@ -1,11 +1,15 @@
 import { useAppStore } from "../store/ZustandStore"
 
 export const videoEnded = () => {
+    // Get search value params
+    const urlParams = new URLSearchParams(window.location.search)
+    const searchParams = urlParams.get("search")
+
     const { setVideoEnded, setShowVideo, setPlayAgain } = useAppStore.getState()
 
-    setVideoEnded(true)
-    setShowVideo(false)
-    setPlayAgain(false)
+    searchParams !== "1" && setVideoEnded(true)
+    searchParams !== "1" && setShowVideo(false)
+    searchParams !== "1" && setPlayAgain(false)
 }
 
 export const videoEndedItems = () => {

@@ -107,8 +107,8 @@ export const toggleVideoSoundPhone = () => {
 type GetShowDetailsResponse = string
 export const useHoverHandlers = () => {
     const { 
-        showVideo, setShowVideoItems, setIsMutedItems, setPause, setTriggerAnimItems, setTrailerData,
-        setVideoId, setShowDetails, setShowVideo, currentSection, showDetailsModal, setVideoEndedItems
+        setShowVideoItems, setIsMutedItems, setPause, setTriggerAnimItems, setTrailerData,
+        setVideoId, setShowDetails, setShowVideo, setVideoEndedItems
     } = useAppStore.getState()
 
     // fetch show details when hover
@@ -120,12 +120,16 @@ export const useHoverHandlers = () => {
         }
       }
     )
-  
+
     // Hover Show
     const handleHover = (media_type: string | boolean, id: string) => {
+      // Get search value params
+      const urlParams = new URLSearchParams(window.location.search)
+      const searchParams = urlParams.get("search")
+
       const timeOut = setTimeout(() => {
-        setPause(true)
-        setShowVideo(false)
+        searchParams !== "1" && setPause(true)
+        searchParams !== "1" && setShowVideo(false)
       }, 100)
       setVideoId(id)
   
@@ -140,9 +144,15 @@ export const useHoverHandlers = () => {
   
     // Remove hover on show
     const handleHoverOut = () => {
+      const { showVideo, currentSection, showDetailsModal } = useAppStore.getState()
+
+      // Get search value params
+      const urlParams = new URLSearchParams(window.location.search)
+      const searchParams = urlParams.get("search")
+
       const timeOut = setTimeout(() => {
-        (!showDetailsModal && currentSection !== "categorySection") && setShowVideo(true); 
-        (!showDetailsModal && currentSection !== "categorySection") && setPause(false);
+        (!showDetailsModal && currentSection !== "categorySection" && searchParams !== "1") && setShowVideo(true); 
+        (!showDetailsModal && currentSection !== "categorySection" && searchParams !== "1") && setPause(false);
       }, 100)
       setTriggerAnimItems(false)
 
@@ -153,7 +163,7 @@ export const useHoverHandlers = () => {
 
       setVideoEndedItems(false)
       setIsMutedItems(true);
-      (!showDetailsModal && showVideo) && setPause(false);
+      (!showDetailsModal && showVideo && searchParams !== "1") && setPause(false);
       
       return () => clearTimeout(timeOut)
     }
@@ -169,20 +179,26 @@ export const useClickHandlers = () => {
     // Navigate
     const navigate = useNavigate()
 
-    const { 
-        setShowVideoItems, setIsMutedItems, setPause, setTriggerAnimItems, setShowVideoModal, currentSection,
-        setTrailerData, setVideoId, setShowDetails, setShowDetailsModal, setShowVideo, showDetailsModal
-    } = useAppStore.getState()
+
 
     // Click Show
     const handleClickModal = (event: React.MouseEvent<HTMLElement, MouseEvent> , media_type: string | boolean, id: string) => {
       if (!((event.target as HTMLElement).id.includes("notValidModal"))) {
+        // Zustand States
+        const { setPause, setShowVideoModal, setVideoId, setShowDetailsModal, setShowVideo} = useAppStore.getState()
+
+        // Get search value params
+        const urlParams = new URLSearchParams(window.location.search)
+        const searchParams = urlParams.get("search")
+        const sParam = urlParams.get("s")
+
         setShowVideoModal(false)
         setShowDetailsModal(true)
-        setShowVideo(false)
-        setPause(true)
+        searchParams !== "1" && setShowVideo(false)
+        searchParams !== "1" && setPause(true)
 
-        navigate(`/browse/${media_type}?q=${id}`)
+
+        searchParams === "1" ? navigate(`/browse/${media_type}?search=1&s=${sParam}&q=${id}`) : navigate(`/browse/${media_type}?q=${id}`)
         
         setVideoId(id)
       }
@@ -190,7 +206,18 @@ export const useClickHandlers = () => {
   
     // Close Show
     const handleCloseModalOut = () => {
-      navigate("/")
+      // Zustand States
+      const { 
+        setShowVideoItems, setIsMutedItems, setPause, setTriggerAnimItems, setShowVideoModal, currentSection,
+        setTrailerData, setVideoId, setShowDetails, setShowDetailsModal, setShowVideo, showDetailsModal
+      } = useAppStore.getState()
+
+      // Get search value params
+      const urlParams = new URLSearchParams(window.location.search)
+      const searchParams = urlParams.get("search")
+      const sParam = urlParams.get("s")
+
+      searchParams === "1" ? navigate(`/?search=1&s=${sParam}`) : navigate("/")
 
       document.title = "Netflix Clone by Kharl"
       const body = document.body
@@ -198,7 +225,7 @@ export const useClickHandlers = () => {
 
       setShowDetails("")
       setShowVideoModal(false)
-      setShowVideo(true)
+      searchParams !== "1" && setShowVideo(true)
       setShowDetailsModal(false)
       setTriggerAnimItems(false)
 
@@ -206,7 +233,8 @@ export const useClickHandlers = () => {
       setTrailerData("")
       setVideoId("")
       setIsMutedItems(true);
-      (!showDetailsModal && currentSection !== "categorySection") && setPause(false);
+
+      (searchParams !== "1" && !showDetailsModal && currentSection !== "categorySection") && setPause(false);
     }
   
     return { handleClickModal, handleCloseModalOut }

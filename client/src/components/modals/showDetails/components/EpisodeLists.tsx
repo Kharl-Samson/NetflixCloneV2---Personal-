@@ -99,6 +99,30 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
       setHoverStatus(false)
     }
 
+    // When item is hover in more like this section -> show play icon
+    const [hoverStatusLikeThis, setHoverStatusLikeThis] = useState<boolean>(false)
+    const [hoverItemIndexLikeThis, setHoverItemIndexLikeThis] = useState<number | null>(null)
+    const hoverEpisodeItemLikeThis = (id : number | null) => {
+      setHoverItemIndexLikeThis(id)
+      setHoverStatusLikeThis(true)
+    }
+    const hoverOutEpisodeItemLikeThis = () => {
+      setHoverItemIndexLikeThis(null)
+      setHoverStatusLikeThis(false)
+    }
+    
+    // When item is hover in collection section -> show play icon
+    const [hoverStatusCollection, setHoverStatusCollection] = useState<boolean>(false)
+    const [hoverItemIndexCollection, setHoverItemIndexCollection] = useState<number | null>(null)
+    const hoverEpisodeItemCollection = (id : number | null) => {
+      setHoverItemIndexCollection(id)
+      setHoverStatusCollection(true)
+    }
+    const hoverOutEpisodeItemCollection = () => {
+      setHoverItemIndexCollection(null)
+      setHoverStatusCollection(false)
+    }
+    
     // Sentece Cutter
     const sentenceCutter = (size: number, text: string): string => {
       const sentences = text.match(/[^.!?]+[.!?]+/g);
@@ -158,6 +182,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
       )
     }, [collectionData, similarShowsData, trendingShowsData]) 
   
+
   return (
     <div className="relative mt-10 px-14">
 
@@ -330,7 +355,12 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
               },
               index : number
             ) => (
-              <div className="rounded pb-6 bg-[#2f2f2f] cursor-pointer overflow-hidden" key={res?.id}>
+              <div
+                key={res?.id} 
+                className="rounded pb-6 bg-[#2f2f2f] cursor-pointer overflow-hidden"
+                onMouseOver={() => hoverEpisodeItemCollection(res?.id)}
+                onMouseOut={hoverOutEpisodeItemCollection}
+              >
                 {/* Poster */}
                 <LazyLoadImage
                   alt="Show Image"
@@ -339,13 +369,22 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
                   onError={handleImageError}
                 />
 
-                {/* Show name and Season count or Run Time */}
+                {/* Show name */}
                 <div className="w-full h-[8.5rem] mt-[-8.5rem] relative z-10 bg-[#02020249] flex items-end">
-                  {/* Item Name */}
                   <p className="text-white movie-title-font-large max-w-[80%] leading-tight text-base capitalize tracking-wide ml-4 mb-4 [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)]">
                     {res?.name || res?.original_title}
                   </p>
                 </div> 
+
+                {/* Play Icon */}
+                <div className="w-full h-[8.5rem] mt-[-8.5rem] relative z-10 flex items-center justify-center">
+                  <div 
+                    className={`rounded-full h-[3rem] w-[3rem] modal-background border border-white flex items-center justify-center
+                      opacity-0 custom-transition-duration-5s ${(hoverStatusCollection && hoverItemIndexCollection === res?.id) && "opacity-100" }`}
+                  >
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-white" data-name="Play" aria-hidden="true"><path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path></svg>
+                  </div>
+                </div>
 
                 {/* Match, Age, Year and Add to my list button */}
                 <div className="mt-4 mx-3 flex justify-between gap-x-2">
@@ -402,7 +441,12 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
             },
             index : number
           ) => (
-            <div className="rounded pb-6 bg-[#2f2f2f] cursor-pointer overflow-hidden" key={res?.id}>
+            <div 
+              key={res?.id}
+              className="rounded pb-6 bg-[#2f2f2f] cursor-pointer overflow-hidden"
+              onMouseOver={() => hoverEpisodeItemLikeThis(res?.id)}
+              onMouseOut={hoverOutEpisodeItemLikeThis}
+            >
               {/* Poster */}
               <LazyLoadImage
                 alt="Show Image"
@@ -413,11 +457,20 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
 
               {/* Show name */}
               <div className="w-full h-[8.5rem] mt-[-8.5rem] relative z-10 bg-[#02020249] flex items-end">
-                {/* Item Name */}
                 <p className="text-white movie-title-font-large max-w-[80%] leading-tight text-base capitalize tracking-wide ml-4 mb-4 [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)]">
                   {res?.name || res?.original_title}
                 </p>
               </div> 
+
+              {/* Play Icon */}
+              <div className="w-full h-[8.5rem] mt-[-8.5rem] relative z-10 flex items-center justify-center">
+                <div 
+                  className={`rounded-full h-[3rem] w-[3rem] modal-background border border-white flex items-center justify-center
+                    opacity-0 custom-transition-duration-5s ${(hoverStatusLikeThis && hoverItemIndexLikeThis === res?.id) && "opacity-100" }`}
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-white" data-name="Play" aria-hidden="true"><path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path></svg>
+                </div>
+              </div>
 
               {/* Match, Age, Year and Add to my list button */}
               <div className="mt-4 mx-3 flex justify-between gap-x-2">

@@ -1,11 +1,9 @@
 import Logo from "../../assets/images/logo.png"
-
 import { SearchInput } from "../../widgets/searchInput/SearchInput"
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined"
 import placeholderAvatar from "../../assets/images/placeholderAvatar.png"
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined'
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
 import { useAppStore } from "../../store/ZustandStore"
 
 type NavbarProps = {
@@ -15,7 +13,6 @@ type NavbarProps = {
 }
   
 export const NavbarLarge = ( {scrollDirection, isAtTop, active} : NavbarProps ) => {
-    const navigate = useNavigate()
 
     // Get search value params
     const urlParams = new URLSearchParams(window.location.search)

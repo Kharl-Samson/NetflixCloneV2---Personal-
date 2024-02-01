@@ -3,10 +3,11 @@ import { Page } from "./pages/home/Page"
 import { Page as Browse } from "./pages/browseItem/Page"
 import { useAppStore } from "./store/ZustandStore"
 import { useEffect, useState } from "react"
+import { useRouteAndQueryParams } from "./utils/itemsFunction"
 
 function App() {
   // Set Screen Width
-  const { setScreenWidth, screenWidth} = useAppStore()
+  const { setScreenWidth, screenWidth, setPause, showDetailsModal, currentSection, setShowVideo } = useAppStore()
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth)
     setScreenWidth(window.innerWidth)
@@ -32,6 +33,38 @@ function App() {
 
     return () => window.removeEventListener("scroll", handleScroll)
   }, [prevScrollPos])
+
+  // Params Url Getter
+  const { params, categoryParams } = useRouteAndQueryParams()
+
+  // Get search value params
+  const urlParams = new URLSearchParams(window.location.search)
+  const searchParams = urlParams.get("search")
+
+  // Set video status if user in changing tab
+  useEffect(() => {
+    // Handler to call on visibility change
+    const handleVisibilityChange = () => {
+      // For video player in hero
+      if (currentSection !== "categorySection") {
+        if (document.hidden) { // Tab is inactive
+          if (((!params && params === "Default") && !categoryParams) || (searchParams !== "1")) {
+            setShowVideo(false)
+            setPause(true)
+          } 
+        } 
+        else { // Tab is active
+          if ((searchParams && searchParams !== "1") || (!searchParams && !categoryParams && (!params || params === "Default"))) {
+            setShowVideo(true)
+            setPause(false)
+          }
+        }
+      }
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    // Clean up
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
+  }, [params, categoryParams, searchParams, showDetailsModal, currentSection])
 
   return (
     <>

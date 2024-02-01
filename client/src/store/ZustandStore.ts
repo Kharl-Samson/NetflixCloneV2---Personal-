@@ -46,6 +46,8 @@ export const useAppStore = create<appStoreType>()(
     setVideoEndedModal: (value: boolean) => set({ videoEndedModal: value }),
     playAgainModal: false,
     setPlayAgainModal: (value: boolean) => set({ playAgainModal: value }),
+    pauseModal: false,
+    setPauseModal: (value: boolean) => set({ pauseModal: value }),
 
     // React Youtube States -> Phone
     showVideoPhone: false,

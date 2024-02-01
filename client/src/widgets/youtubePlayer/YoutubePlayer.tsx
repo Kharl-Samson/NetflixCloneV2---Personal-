@@ -46,7 +46,7 @@ export const YoutubePlayer = ({ id, videoId, duration, isFetchedTrailer } : Yout
       if (video && videoValid && video.g && video.g.src) {
         // Mute
         isMuted ? video.mute() : video.unMute()
-        // // Pause
+        // Pause
         pause ? video.pauseVideo() : video.playVideo()   
         // Play Again
         playAgain && video.playVideo()

@@ -35,6 +35,8 @@ export type appStoreType = {
     setVideoEndedModal: (value: boolean) => void
     playAgainModal: boolean
     setPlayAgainModal: (value: boolean) => void
+    pauseModal: boolean
+    setPauseModal: (value: boolean) => void
   
     // React Youtube States -> Phone
     showVideoPhone: boolean

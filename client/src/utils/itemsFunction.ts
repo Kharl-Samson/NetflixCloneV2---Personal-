@@ -179,7 +179,8 @@ export const useClickHandlers = () => {
     // Navigate
     const navigate = useNavigate()
 
-
+    // Zustand State
+    const { setShowDetailsModal, showDetailsModal} = useAppStore.getState()
 
     // Click Show
     const handleClickModal = (event: React.MouseEvent<HTMLElement, MouseEvent> , media_type: string | boolean, id: string) => {
@@ -197,7 +198,6 @@ export const useClickHandlers = () => {
         searchParams !== "1" && setShowVideo(false)
         searchParams !== "1" && setPause(true)
 
-
         searchParams === "1" ? navigate(`/browse/${media_type}?search=1&s=${sParam}&q=${id}`) : navigate(`/browse/${media_type}?q=${id}`)
         
         setVideoId(id)
@@ -209,7 +209,7 @@ export const useClickHandlers = () => {
       // Zustand States
       const { 
         setShowVideoItems, setIsMutedItems, setPause, setTriggerAnimItems, setShowVideoModal, currentSection,
-        setTrailerData, setVideoId, setShowDetails, setShowDetailsModal, setShowVideo, showDetailsModal
+        setTrailerData, setVideoId, setShowDetails, setShowVideo
       } = useAppStore.getState()
 
       // Get search value params

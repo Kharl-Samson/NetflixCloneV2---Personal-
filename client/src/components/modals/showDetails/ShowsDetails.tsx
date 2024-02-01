@@ -22,10 +22,10 @@ export const ShowsDetails = ({scrollToBottom, myRef} : showDetailsDataProps) => 
 
     // Params Url Getter
     const { params, categoryParams } = useRouteAndQueryParams()
-  
+
     // Getting Active Section
     const activeSections = getCurrentArticle(myRef)
-    const { currentArticle, setCurrentArticle, setShowVideoModal } = useAppStore()
+    const { currentArticle, setCurrentArticle, setShowVideoModal, setPauseModal } = useAppStore()
     useEffect(() => {
       setCurrentArticle(activeSections)
     }, [activeSections])
@@ -93,6 +93,27 @@ export const ShowsDetails = ({scrollToBottom, myRef} : showDetailsDataProps) => 
       setAge(ageArray[randomAge])
     },[])
 
+      // Set video status if user in changing tab
+  useEffect(() => {
+    // Handler to call on visibility change
+    const handleVisibilityChange1 = () => {
+      // For video player in item modal
+      if(currentArticle !== "detailsSection" && (categoryParams === "tv" || categoryParams === "movie") && (params || params !== "Default")){
+        if (document.hidden) { // Tab is inactive
+          setPauseModal(true)
+          setShowVideoModal(false)
+        }
+        else { // Tab is active
+          setShowVideoModal(true)
+          setPauseModal(false)
+        }
+      }
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange1)
+    // Clean up
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange1)
+  }, [params, categoryParams, currentArticle])
+  
   return (
   (isTrailerLoading && isCastsLoading && isShowDetailsLoading)  ? 
     <div className="h-[100dvh] w-full flex items-center justify-center">

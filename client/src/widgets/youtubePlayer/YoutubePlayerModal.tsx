@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useState } from "react"
 import "../youtubePlayer/YoutubePlayer.css"
 import YouTube, { YouTubeProps } from "react-youtube"
 import { useAppStore } from "../../store/ZustandStore"
@@ -9,7 +9,7 @@ export const YoutubePlayerModal = ({ id, videoId, duration, isFetchedTrailer } :
     const [video, setVideo] = useState<any>(null)
 
     // React Youtube State
-    const { setShowVideoModal, showVideoModal, isMutedModal, playAgainModal, currentArticle } = useAppStore()
+    const { setShowVideoModal, showVideoModal, isMutedModal, playAgainModal, currentArticle, pauseModal } = useAppStore()
 
     // Video Valid State
     const [videoValid, setVideoValid] = useState<boolean>(false)
@@ -49,13 +49,18 @@ export const YoutubePlayerModal = ({ id, videoId, duration, isFetchedTrailer } :
       if (video && videoValid && showVideoModal && video.g && video.g.src) {
         // Mute
         isMutedModal ? video.mute() : video.unMute()
-
         // // Play Again
         playAgainModal && video.playVideo()
       }
-    },[isMutedModal, playAgainModal, video, videoValid, showVideoModal])
-
+    },[isMutedModal, playAgainModal, video, videoValid, showVideoModal, pauseModal])
     
+    useEffect(() => {
+      if (video && videoValid && video.g && video.g.src && currentArticle !== "detailsSection") {
+        // Pause
+        pauseModal ? video.pauseVideo() : video.playVideo()   
+      }
+    },[pauseModal, document.hidden])
+
     useLayoutEffect(() => {
       // Pause if the user is not on hero section
       if (video && videoValid && video.g && video.g.src) {

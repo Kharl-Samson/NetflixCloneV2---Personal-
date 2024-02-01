@@ -57,7 +57,7 @@ export const BannerData = ({showDetailsData} : BannerDataProps) => {
         {showDetailsData?.title || showDetailsData?.name || showDetailsData?.original_title}
       </p>
 
-      <div className="mt-8 flex justify-between gap-x-[15px] disable-highlight">
+      <div className="mt-8 flex justify-between gap-x-[15px] ">
         {/* Play and Add */}
         <div className="flex items-center gap-x-[15px]">
           <button className="rounded flex items-center gap-x-[15px] py-[5px] px-[45px] transition duration-400 bg-white hover:opacity-80">

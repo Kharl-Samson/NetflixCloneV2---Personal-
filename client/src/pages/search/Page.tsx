@@ -107,7 +107,7 @@ export const Page = () => {
         </div>
       </div>
 
-      <div className="my-grid-search mt-5 w-full grid gap-x-3 gap-y-[4rem] disable-highlight">
+      <div className="my-grid-search mt-5 w-full grid gap-x-3 gap-y-[4rem] ">
         {data?.pages?.map((group, groupIndex) => (
             <React.Fragment key={groupIndex}>
               {group.results?.map((res : ItemType, index : number) => {

@@ -200,7 +200,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
             <p className="text-white text-xl">Season {showDetailsData?.number_of_seasons}</p>
             :
             // If more than 1 season
-            <div className="relative w-[11rem] disable-highlight" ref={dropDownRef}>
+            <div className="relative w-[11rem] " ref={dropDownRef}>
               <div 
                 className="rounded border border-[#424242] bg-[#242424] text-white py-2 px-4 cursor-pointer relative"
                 onClick={toggleSelect}
@@ -316,7 +316,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
 
           {/* See more episodes if episodes length is more than 10 */
           (episodeData?.episodes?.length > 10 && !isLoadingEpisode) &&
-            <div className="flex flex-col items-center justify-center disable-highlight">
+            <div className="flex flex-col items-center justify-center ">
               <div className="w-full h-[.2rem] bg-[#424242]"></div>
               <div 
                 className={`h-[2.5rem] w-[2.5rem] mt-[-1.30rem] bg-[#1d1d1db2] rounded-full border-[2px] 
@@ -398,7 +398,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
                       {/* Age */}
                       <div className="text-[#bcbcbc] float-left text-sm px-[5px] border border-[#bcbcbc]">{ageRandom1 && ageRandom1[index]}+</div>
                       {/* Release Date */}
-                      <p className="text-[#bcbcbc] font-medium disable-highlight">
+                      <p className="text-[#bcbcbc] font-medium ">
                         {new Date(res?.release_date || res?.last_air_date || res?.first_air_date || "2024-01-25").getFullYear()}
                       </p>
                     </div>
@@ -406,7 +406,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
 
                   {/* Add to Mylist */}
                   <LightTooltip title="Add to My List" arrow sx={{'& .MuiTooltip-arrow': {color: '#ffff',},}}>
-                    <div className="bg-[#232323] rounded-full h-11 w-11 flex items-center justify-center border-2 border-[#8b8b8b] cursor-pointer disable-highlight">
+                    <div className="bg-[#232323] rounded-full h-11 w-11 flex items-center justify-center border-2 border-[#8b8b8b] cursor-pointer ">
                       <img src={add} alt="Play Icon" className="h-5"/>
                     </div>
                   </LightTooltip>
@@ -485,7 +485,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
                     {/* Age */}
                     <div className="text-[#bcbcbc] float-left text-sm px-[5px] border border-[#bcbcbc]">{ageRandom2 && ageRandom2[index]}+</div>
                     {/* Release Date */}
-                    <p className="text-[#bcbcbc] font-medium disable-highlight">
+                    <p className="text-[#bcbcbc] font-medium ">
                       {new Date(res?.release_date || res?.last_air_date || res?.first_air_date || "2024-01-25").getFullYear()}
                     </p>
                   </div>
@@ -493,7 +493,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
 
                 {/* Add to Mylist */}
                 <LightTooltip title="Add to My List" arrow sx={{'& .MuiTooltip-arrow': {color: '#ffff',},}}>
-                  <div className="bg-[#232323] rounded-full h-11 w-11 flex items-center justify-center border-2 border-[#8b8b8b] cursor-pointer disable-highlight">
+                  <div className="bg-[#232323] rounded-full h-11 w-11 flex items-center justify-center border-2 border-[#8b8b8b] cursor-pointer ">
                     <img src={add} alt="Play Icon" className="h-5"/>
                   </div>
                 </LightTooltip>
@@ -512,7 +512,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
           (similarShowsData?.results?.length > 9) || 
           (similarShowsData?.results?.length === 0 && trendingShowsData?.results?.length > 9)
         ) &&
-          <div className="flex flex-col items-center justify-center disable-highlight">
+          <div className="flex flex-col items-center justify-center ">
             <div className="w-full h-[.2rem] bg-[#424242]"></div>
             <div 
               className={`h-[2.5rem] w-[2.5rem] mt-[-1.30rem] bg-[#1d1d1db2] rounded-full border-[2px] 
@@ -534,7 +534,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
       </div>
 
       {/* About this item section */}
-      <div className="mt-7 w-full disable-highlight">
+      <div className="mt-7 w-full ">
         <p className="mb-5 text-white text-2xl">About <span className="text-2xl font-bold tracking-wide">{showDetailsData?.title || showDetailsData?.name || showDetailsData?.original_title}</span></p>
 
         {/* Creators */

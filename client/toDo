@@ -10,8 +10,9 @@ Done : Add episode count in season dropdown
 Done : Add netflix logo if the show in produce by netflix in Item Modal
 Done : Fixed Modals in browse item - use dvh instead of screen and vh
 Done : Add play icon when the user is hovering the item for more like this or collection part in item modal
+Done : Add pause function when the user is scrolling down in item section
 
 Add share button in browse item phone
 Add no result found in search
 Add skeleton loading in home
-Add pause function when the user is scrolling down in item section
+

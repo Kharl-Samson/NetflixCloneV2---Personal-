@@ -14,7 +14,7 @@ export const SearchInput = () => {
     const navigate = useNavigate()
     
     // Zustand State
-    const { setPause, setShowVideo, isSearchClick, setSearchClick, searchValue, setSearchValue } = useAppStore()
+    const { setPause, setShowVideo, isSearchClick, setSearchClick, searchValue, setSearchValue, currentSection } = useAppStore()
 
     // Get search value params
     const urlParams = new URLSearchParams(window.location.search)
@@ -30,7 +30,7 @@ export const SearchInput = () => {
     const closeSearchInput = (event: MouseEvent) => {
         parentRef.current && !parentRef.current.contains(event.target as Node) && searchParams !== "1" && setSearchClick(false)       
     }
-
+    
     useEffect(() => {
         isSearchClick && inputRef?.current?.focus()
         isSearchClick ? document.addEventListener("mousedown", closeSearchInput) : document.removeEventListener("mousedown", closeSearchInput)
@@ -48,12 +48,13 @@ export const SearchInput = () => {
             setSearchValue("")
             navigate("/")
         }
-   
-       // searchValue !== "" ? navigate(`/?search=1&s=${searchValue}`) :  navigate("/")
-        searchValue !== "" ? setPause(true) : setPause(false)
-        searchValue !== "" ? setShowVideo(false) : setShowVideo(true)
+
+        if(currentSection !== "categorySection") {
+            searchValue !== "" ? setPause(true) : setPause(false)
+            searchValue !== "" ? setShowVideo(false) : setShowVideo(true)
+        }
         searchValue !== "" && setSearchClick(true)
-    },[searchValue, sParam, searchParams, isSearchClick])
+    },[searchValue, sParam, searchParams, isSearchClick, currentSection])
 
     useEffect(()=> {
       //  (!searchValue || searchValue === "") && navigate("/")
@@ -66,7 +67,7 @@ export const SearchInput = () => {
     <div ref={parentRef}>
         <div
             className = {
-                `flex h-10 border custom-transition-duration-3s cursor-pointer hover:opacity-80 disable-highlight
+                `flex h-10 border custom-transition-duration-3s cursor-pointer hover:opacity-80 
                 ${isSearchClick ? "bg-black bg-opacity-80 border-solid border-white" : "bg-transparent border-transparent"}`
             }
         >

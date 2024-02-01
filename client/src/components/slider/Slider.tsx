@@ -127,7 +127,7 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
         <div className="w-full flex items-center gap-x-1">
           <p className={`text-white text-base sm:text-2xl font-semibold sm:font-bold ${marginStyle}`}>{title}</p>
           <div 
-            className={`custom-transition-duration-10s hidden items-center disable-highlight text-[#54b9c5] text-base font-extrabold 
+            className={`custom-transition-duration-10s hidden items-center  text-[#54b9c5] text-base font-extrabold 
               mt-[.4rem] cursor-pointer ${deviceType === "Desktop" && sliderTitleHover && "sm:flex"} ${exploreHover && "pl-3"}`}
             onMouseOver={() => SetExploreHover(true)} 
             onMouseLeave={() => SetExploreHover(false)}

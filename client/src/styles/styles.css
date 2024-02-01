@@ -9,6 +9,11 @@
 /* Base CSS */
 * {
     font-size: 16px;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 body {
     font-family: netflix-regular;
@@ -59,15 +64,6 @@ button:hover {
 
 /* Custom CSS */
 @layer components {
-    /* Disable Highlighting */
-    .disable-highlight {
-      user-select: none;
-      -moz-user-select: none;
-      -webkit-user-drag: none;
-      -webkit-user-select: none;
-      -ms-user-select: none;
-    }
-
     /* Font Collections */
     .netflix-font-regular {
         font-family: netflix-regular;

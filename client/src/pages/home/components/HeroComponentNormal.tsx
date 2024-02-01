@@ -82,14 +82,14 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer} : H
                 src={`${myData?.backdrop_path && import.meta.env.VITE_BASE_IMAGE_URL}${myData?.backdrop_path}`}
                 alt="Movie Image"
                 className={`max-h-[90rem] hidden sm:block absolute top-0 max-w-[3000px] mx-auto w-full h-[45rem] 801size:h-[50rem]
-                    951size:h-[100dvh] object-center object-cover custom-transition-duration-10s z-10 disable-highlight
+                    951size:h-[100dvh] object-center object-cover custom-transition-duration-10s z-10 
                   bg-black bg-opacity-50 image-inline-shadow ${showVideo ? "opacity-0" : "opacity-100"}`}
             />
         }
 
         {/* Video Player */
         screenWidth >= 640 &&
-            <div className={`max-h-[90rem] hidden disable-highlight absolute max-w-[3000px] mx-auto top-0 w-full h-[45rem] 801size:h-[50rem] 951size:h-[100dvh] overflow-hidden z-0 ${showVideo && "sm:block"}`}>
+            <div className={`max-h-[90rem] hidden  absolute max-w-[3000px] mx-auto top-0 w-full h-[45rem] 801size:h-[50rem] 951size:h-[100dvh] overflow-hidden z-0 ${showVideo && "sm:block"}`}>
                 <YoutubePlayer
                     id = "youtubePlayer"
                     videoId = {trailerData} 
@@ -102,7 +102,7 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer} : H
         {/* Main Content */
         screenWidth >= 640 && 
             <div className="max-w-[3000px] max-h-[90rem] mx-auto z-20 absolute top-0 hidden sm:flex flex-col 
-                disable-highlight justify-end w-full h-[45rem] 801size:h-[50rem] 951size:h-[100dvh] px-7 951size:px-14"
+                 justify-end w-full h-[45rem] 801size:h-[50rem] 951size:h-[100dvh] px-7 951size:px-14"
                 style={{background: "linear-gradient(0deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.40) 100%)"}}
             >
                 <p 
@@ -142,7 +142,7 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer} : H
         {/* Age and Sounds Controller */
         screenWidth >= 640 &&
             <div className="hidden z-20 absolute max-w-[3000px] mx-auto right-0 text-white bottom-[20rem] 801size:bottom-[33rem] 
-                    951size:bottom-[17rem] 2xl:bottom-[15rem] sm:flex gap-5 items-center disable-highlight"
+                    951size:bottom-[17rem] 2xl:bottom-[15rem] sm:flex gap-5 items-center "
             >
                 <div 
                   className={`h-[50px] w-[50px] border border-solid border-white rounded-full items-center cursor-pointer

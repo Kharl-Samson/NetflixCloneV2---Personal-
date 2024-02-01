@@ -60,7 +60,7 @@ export const Page = () => {
       </div>
     </>
     :
-    <section className="disable-highlight">
+    <section className="">
       {/* Video Player */}
       <VideoSection
         isFetchedTrailer = {isFetchedTrailer}

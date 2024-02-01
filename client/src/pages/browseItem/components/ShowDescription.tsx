@@ -95,7 +95,7 @@ export const ShowDescription = ({castsData, showDetailsData} : ShowDescriptionPr
           </p>
 
           {/* HD */}
-          <div className="text-[#9b9b9b] rounded text-xs py-[1px] px-[4px] border-[2px] border-[#9b9b9b] disable-highlight">HD</div>
+          <div className="text-[#9b9b9b] rounded text-xs py-[1px] px-[4px] border-[2px] border-[#9b9b9b] ">HD</div>
         </div>
 
         {/* Play button */}
@@ -111,7 +111,7 @@ export const ShowDescription = ({castsData, showDetailsData} : ShowDescriptionPr
         </button>
 
         {/* Overview */}
-        <p className="mt-[1rem] text-sm font-thin text-[#ebebeb] clear-both disable-highlight">{showDetailsData?.overview}</p>
+        <p className="mt-[1rem] text-sm font-thin text-[#ebebeb] clear-both ">{showDetailsData?.overview}</p>
         
         {/* Cast */}
         <p className="mt-2 text-[#9b9b9b] text-sm">

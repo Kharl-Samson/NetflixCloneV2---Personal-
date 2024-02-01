@@ -34,13 +34,13 @@ export const ShowDescription = ({castsData, showDetailsData, match, age, scrollT
       <div className="grow">
         <div className="flex items-center gap-x-2">
           {/* Match Percentage */}
-          <p className="text-[#42c161] font-medium disable-highlight">{match}% Match</p>
+          <p className="text-[#42c161] font-medium ">{match}% Match</p>
 
           {/* Release Date */}
-          <p className="text-[#9b9b9b] font-medium disable-highlight">{ new Date(showDetailsData?.release_date || showDetailsData?.last_air_date || "2024-01-25").getFullYear() }</p>
+          <p className="text-[#9b9b9b] font-medium ">{ new Date(showDetailsData?.release_date || showDetailsData?.last_air_date || "2024-01-25").getFullYear() }</p>
 
           {/* Season Count or Episode Count or Movie length*/}
-          <p className="text-[#9b9b9b] font-medium disable-highlight">
+          <p className="text-[#9b9b9b] font-medium ">
             {
               !showDetailsData?.number_of_seasons ? // If movie -> Show the movie length
                 `${hours}h ${minutes}m`
@@ -53,18 +53,18 @@ export const ShowDescription = ({castsData, showDetailsData, match, age, scrollT
           </p>
 
           {/* HD */}
-          <div className="text-white rounded text-xs py-[1px] px-[4px] border border-[#9b9b9b] disable-highlight">HD</div>
+          <div className="text-white rounded text-xs py-[1px] px-[4px] border border-[#9b9b9b] ">HD</div>
         </div>
 
         {/* Age */}
         <div className="text-white float-left mt-2 text-sm py-[1px] px-[8px] border border-white">{age}+</div>
 
         {/* Overview */}
-        <p className="mt-[4rem] text-sm font-thin text-white clear-both disable-highlight">{showDetailsData?.overview}</p>
+        <p className="mt-[4rem] text-sm font-thin text-white clear-both ">{showDetailsData?.overview}</p>
       </div>
 
       {/* Casts, Genres and Tagline */}
-      <div className="min-w-[16rem] max-w-[16rem] h-[2rem] disable-highlight">
+      <div className="min-w-[16rem] max-w-[16rem] h-[2rem] ">
         {/* Cast */}
         <p className="text-[#9b9b9b] text-sm">
           Cast:&nbsp;

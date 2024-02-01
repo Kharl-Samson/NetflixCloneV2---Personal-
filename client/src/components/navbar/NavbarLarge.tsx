@@ -38,7 +38,7 @@ export const NavbarLarge = ( {scrollDirection, isAtTop, active} : NavbarProps ) 
             <img src={Logo} alt="Image Logo" className="h-7"/>
 
             {/* Menu */}
-            <ul className="flex gap-x-5 text-custom-light-2 disable-highlight">
+            <ul className="flex gap-x-5 text-custom-light-2 ">
               {// Links Mapping
                 arrayLink?.map((res: string) => (
                   <li 

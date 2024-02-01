@@ -4,6 +4,7 @@ import { YoutubePlayer } from "../../../widgets/youtubePlayer/YoutubePlayer"
 import play from "../../../assets/images/icons/play.png"
 import info from "../../../assets/images/icons/info.svg"
 import { useClickHandlers } from "../../../utils/itemsFunction"
+import Skeleton from "@mui/material/Skeleton"
 
 type HeroProps = {
     myData : {
@@ -15,9 +16,12 @@ type HeroProps = {
     }
     trailerData : string
     isFetchedTrailer : boolean
+    isDataLoading : boolean
+    isTrailerLoading : boolean
+    marginStyle : string
 }
 
-export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer} : HeroProps ) => {
+export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer, isDataLoading, isTrailerLoading, marginStyle} : HeroProps ) => {
     // State from zustand
     const {screenWidth} = useAppStore()
 
@@ -34,8 +38,8 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer} : H
     const toggleVideoSound = () => {
         searchParams !== "1" && setPlayAgain(false)
         searchParams !== "1" && setIsMuted(!isMuted)
+        setPause(false)
         if(searchParams !== "1" && videoEnded) {
-            setPause(false)
             setVideoEnded(false)
             setShowVideo(true)
             setIsMuted(true)
@@ -75,6 +79,15 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer} : H
     const { handleClickModal } = useClickHandlers()
 
   return (
+    (screenWidth >= 640 && myData?.id === "" && (isDataLoading || isTrailerLoading)) ?
+        <div className="absolute top-0 bg-[#181414] max-h-[90rem] h-[15rem] 801size:h-[50rem] 951size:h-[100dvh] w-full z-[10]">
+            <div className={`mt-[6rem] flex flex-wrap gap-3 ${marginStyle}`}>
+                {Array.from({ length: 3 }, (_, index) => (
+                      <Skeleton variant="rounded" animation="wave" sx={{width:"17rem"}} height={"10rem"} key={index}/>
+                ))}
+            </div>
+        </div>
+    :
     <>
         {/* Image Banner */
         screenWidth >= 640 && myData?.backdrop_path &&

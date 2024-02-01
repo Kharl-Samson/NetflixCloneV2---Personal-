@@ -32,13 +32,13 @@ export const Hero = () => {
     const [trailerData, setTrailerData] = useState<string>("")
 
     // Fetch data to be showned in hero section 
-    const { data, isFetched: isFetchedData, isError: isDataError } = useQuery(
+    const { data, isFetched: isFetchedData, isError: isDataError, isLoading: isDataLoading } = useQuery(
         ["heroKey", randomPageArray],
         () => getShowList("Hero", categoryArray[randomCategoryIndex], "en-US", 14, randomPageArray)
     )
 
     // Fetch trailer data
-    const { data : myTrailerData, isFetched: isFetchedTrailer, isError: isTrailerError } = useQuery(
+    const { data : myTrailerData, isFetched: isFetchedTrailer, isError: isTrailerError, isLoading: isTrailerLoading } = useQuery(
         ["trailerKey", myData],
         () => getShowTrailer(categoryArray[randomCategoryIndex], myData?.id)
     )
@@ -78,6 +78,13 @@ export const Hero = () => {
             myData = {myData}
             trailerData = {trailerData}
             isFetchedTrailer = {isFetchedTrailer}
+            isDataLoading = {isDataLoading}
+            isTrailerLoading = {isTrailerLoading}
+            marginStyle = { 
+              screenWidth < 640 ? "mx-5" : 
+              screenWidth <= 800 ? "mx-7" : 
+              screenWidth <= 950 ? "mx-7" : "mx-14"
+            }
         />
 
         {/* For shadowing */

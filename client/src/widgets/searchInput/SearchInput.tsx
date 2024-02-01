@@ -49,7 +49,7 @@ export const SearchInput = () => {
             navigate("/")
         }
 
-        if(currentSection !== "categorySection") {
+        if(currentSection !== "categorySection" && isSearchClick) {
             searchValue !== "" ? setPause(true) : setPause(false)
             searchValue !== "" ? setShowVideo(false) : setShowVideo(true)
         }

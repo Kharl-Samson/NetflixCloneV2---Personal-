@@ -10,16 +10,17 @@ import { useRouteAndQueryParams } from "../../../utils/itemsFunction"
 
 type EpisodeListsProps = {
     showDetailsData : {
-        name? : string
-        original_title? : string
-        id : string
-        number_of_seasons : number
-        seasons : {
-          season_number : number
-        }[]
-        belongs_to_collection? : {
-            id : string
-        }
+      title? : string
+      name? : string
+      original_title? : string
+      id : string
+      number_of_seasons : number
+      seasons : {
+        season_number : number
+      }[]
+      belongs_to_collection? : {
+          id : string
+      }
     }
 }
 
@@ -181,7 +182,9 @@ export const EpisodeLists = ({showDetailsData} : EpisodeListsProps) => {
                       <p className="text-2xl mt-[-1px]">&#215;</p>
                     </div>
                     {/* Title */}
-                    <p className="text-white text-xl font-bold text-center mt-[-1.50rem] mx-auto max-w-[75%]">{showDetailsData?.name || showDetailsData?.original_title}</p>
+                    <p className="text-white text-xl font-bold text-center mt-[-1.50rem] mx-auto max-w-[75%]">
+                      {showDetailsData?.title || showDetailsData?.name || showDetailsData?.original_title}
+                    </p>
                     {/* Season Number */}
                     <p className="mt-4 text-center mx-auto text-white">Season {selectedSeason}</p>
                     {/* Maturity Rating */}
@@ -264,12 +267,6 @@ export const EpisodeLists = ({showDetailsData} : EpisodeListsProps) => {
                     res : {
                       id: number, 
                       poster_path: string,
-                      name?: string,
-                      original_title?: string,
-                      release_date?: string,
-                      last_air_date?: string,
-                      first_air_date?: string,
-                      overview: string
                     }
                   ) => (
                     // Item Poster
@@ -299,12 +296,6 @@ export const EpisodeLists = ({showDetailsData} : EpisodeListsProps) => {
                 res : {
                   id: number, 
                   poster_path: string,
-                  name?: string,
-                  original_title?: string,
-                  release_date?: string,
-                  last_air_date?: string,
-                  first_air_date?: string,
-                  overview: string
                 }
               ) => (
                 // Item Poster

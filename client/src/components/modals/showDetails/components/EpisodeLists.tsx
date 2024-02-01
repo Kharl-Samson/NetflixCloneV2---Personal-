@@ -34,6 +34,7 @@ type EpisodeListsProps = {
     }
   }
   showDetailsData : {
+    title? : string
     original_title? : string
     name? : string
     id : string
@@ -346,6 +347,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
               res : {
                 id: number, 
                 backdrop_path: string,
+                title?: string,
                 name?: string,
                 original_title?: string,
                 release_date?: string,
@@ -372,7 +374,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
                 {/* Show name */}
                 <div className="w-full h-[8.5rem] mt-[-8.5rem] relative z-10 bg-[#02020249] flex items-end">
                   <p className="text-white movie-title-font-large max-w-[80%] leading-tight text-base capitalize tracking-wide ml-4 mb-4 [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)]">
-                    {res?.name || res?.original_title}
+                    {res?.title || res?.name || res?.original_title}
                   </p>
                 </div> 
 
@@ -432,6 +434,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
             res : {
               id: number, 
               backdrop_path: string,
+              title?: string,
               name?: string,
               original_title?: string,
               release_date?: string,
@@ -458,7 +461,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
               {/* Show name */}
               <div className="w-full h-[8.5rem] mt-[-8.5rem] relative z-10 bg-[#02020249] flex items-end">
                 <p className="text-white movie-title-font-large max-w-[80%] leading-tight text-base capitalize tracking-wide ml-4 mb-4 [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)]">
-                  {res?.name || res?.original_title}
+                  {res?.title || res?.name || res?.original_title}
                 </p>
               </div> 
 
@@ -532,7 +535,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
 
       {/* About this item section */}
       <div className="mt-7 w-full disable-highlight">
-        <p className="mb-5 text-white text-2xl">About <span className="text-2xl font-bold tracking-wide">{showDetailsData?.name || showDetailsData?.original_title}</span></p>
+        <p className="mb-5 text-white text-2xl">About <span className="text-2xl font-bold tracking-wide">{showDetailsData?.title || showDetailsData?.name || showDetailsData?.original_title}</span></p>
 
         {/* Creators */
         showDetailsData && showDetailsData.created_by && showDetailsData.created_by.length !== 0 &&

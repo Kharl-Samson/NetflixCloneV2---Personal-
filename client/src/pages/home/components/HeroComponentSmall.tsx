@@ -7,6 +7,7 @@ import { useEffect, useState } from "react"
 
 type HeroProps = {
     myData : {
+        title?: string
         original_title?: string
         backdrop_path?: string
         genre_ids?: number[]
@@ -45,8 +46,7 @@ export const HeroComponentSmall = ( {myData} : HeroProps ) => {
     },[])
 
     return (
-    <>
-    {/* Image Banner */
+    /* Image Banner */
     screenWidth < 640 && 
         <div className="sm:hidden pt-[12rem] 211size:pt-[9rem] 329size:pt-[6.5rem] sm:mt-4 w-full h-auto px-5" style={{ background : `linear-gradient(173deg, ${color} -40.63%, #181414 75.27%)`}}>
             <div 
@@ -56,7 +56,7 @@ export const HeroComponentSmall = ( {myData} : HeroProps ) => {
                 className="bg-custom-color-hero-1 w-full px-4 h-[30rem] rounded-xl bg-cover bg-top flex flex-col justify-end"
             >
                 {/* Show Title */}
-                <p className="mb-3 text-white text-center text-4xl sm:text-7xl movie-title-font-small">{myData?.original_title}</p>
+                <p className="mb-3 text-white text-center text-4xl sm:text-7xl movie-title-font-small">{myData?.title || myData?.original_title}</p>
 
                 {/* Genre */}
                 <div className="mb-3 flex flex-wrap justify-center gap-x-5 text-white">
@@ -83,7 +83,5 @@ export const HeroComponentSmall = ( {myData} : HeroProps ) => {
 
             </div>
         </div>
-    }
-    </>
   )
 }

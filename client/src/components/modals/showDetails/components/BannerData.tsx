@@ -21,6 +21,7 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
 
 type BannerDataProps = {
   showDetailsData : {
+    title? : string
     name? : string
     original_title? : string
     networks : {
@@ -53,7 +54,7 @@ export const BannerData = ({showDetailsData} : BannerDataProps) => {
           movie-title-font-large max-w-[40rem] xl:max-w-[80%] 
           leading-tight text-4xl capitalize"
       >
-        {showDetailsData?.name || showDetailsData?.original_title}
+        {showDetailsData?.title || showDetailsData?.name || showDetailsData?.original_title}
       </p>
 
       <div className="mt-8 flex justify-between gap-x-[15px] disable-highlight">

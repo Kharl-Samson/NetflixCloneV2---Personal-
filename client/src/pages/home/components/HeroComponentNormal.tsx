@@ -8,6 +8,7 @@ import { useClickHandlers } from "../../../utils/itemsFunction"
 type HeroProps = {
     myData : {
         backdrop_path?: string
+        title?: string
         original_title?: string
         overview?: string
         id: string
@@ -109,7 +110,7 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer} : H
                         movie-title-font-large max-w-[40rem] xl:max-w-[80%] 
                         leading-tight ${textAnim ? "text-4xl 801size:text-5xl xl:text-7xl" : "text-5xl 801size:text-7xl xl:text-8xl"}`}
                 >
-                    {myData?.original_title}
+                    {myData?.title || myData?.original_title}
                 </p>
                 <p 
                     className={`mt-4 text-white text-base xl:text-xl max-w-[70%] xl:max-w-[50%] custom-transition-duration-10s

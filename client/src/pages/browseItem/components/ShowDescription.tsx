@@ -12,6 +12,7 @@ type ShowDescriptionProps = {
       }[]
     }
     showDetailsData : {
+        title? : string
         name? : string
         original_title? : string
         overview : string
@@ -34,6 +35,7 @@ type ShowDescriptionProps = {
 }
 
 export const ShowDescription = ({castsData, showDetailsData} : ShowDescriptionProps ) => {
+
     // Random Array - [Match and Age]
     const matchArray : string[] = ["95", "96","97", "98"]
     const ageArray : string[] = ["10", "13", "16"]
@@ -52,6 +54,7 @@ export const ShowDescription = ({castsData, showDetailsData} : ShowDescriptionPr
 
     // Cast, Creator, Genres, and Tagline Modal Controller
     const [isMoreModalStatus, setMoreModalStatus] = useState<boolean>(false)
+    
   return (
     <div className="mx-2 mt-0">
         {/* If the item is produce by Netflix */
@@ -63,7 +66,7 @@ export const ShowDescription = ({castsData, showDetailsData} : ShowDescriptionPr
         }
 
         {/* Title */}
-        <p className="text-white text-lg font-bold">{showDetailsData?.name || showDetailsData?.original_title}</p>
+        <p className="text-white text-lg font-bold">{showDetailsData?.title || showDetailsData?.name || showDetailsData?.original_title}</p>
 
         {/* Match, Year, Age and Season or Episode count or Runtime */}
         <div className="mt-1 flex items-center flex-wrap gap-1">

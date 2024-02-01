@@ -39,7 +39,7 @@ export const Page = () => {
     // Setting Web Title
     useEffect(() => {
       if (isFetchedShowDetails && !isShowDetailsLoading) {
-        document.title = `${showDetailsData.name || showDetailsData.original_title} - Netflix Clone by Kharl`
+        document.title = `${showDetailsData.title || showDetailsData.name || showDetailsData.original_title} - Netflix Clone by Kharl`
       }
     },[showDetailsData])
 

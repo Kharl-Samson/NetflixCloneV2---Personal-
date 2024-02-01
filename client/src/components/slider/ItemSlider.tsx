@@ -52,8 +52,10 @@ export const ItemSlider = ({
           setSearchHoverStyle("search-hover-style-1580")
         }else if (screenWidth >= 1290) {
           setSearchHoverStyle("search-hover-style-1280")
-        } else if (screenWidth >= 1051) {
-          setSearchHoverStyle("search-hover-style-1051")
+        } else if (screenWidth >= 990) {
+          setSearchHoverStyle("search-hover-style-990")
+        } else if (screenWidth >= 640) {
+          setSearchHoverStyle("search-hover-style-640")
         }
       }
     },[screenWidth])

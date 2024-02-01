@@ -136,7 +136,7 @@ export const SliderTop10 = ({marginStyle, sliderStyle, title, queryType, queryKe
                         ${index === 0 && "ml-[-.5rem] sm:ml-0"} ${index === 9 && " mr-[7.7rem]"}`}
                       onMouseLeave={() => { deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
                       onClick={(event) => 
-                        deviceType === "Desktop" && screenWidth > 639  ? 
+                        screenWidth > 639  ? 
                           // In Desktop
                           handleClickModal(event, (res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id)
                           :
@@ -155,7 +155,7 @@ export const SliderTop10 = ({marginStyle, sliderStyle, title, queryType, queryKe
                           showDetails = {showDetails}
                           onMouseOver={() => { 
                             deviceType === "Desktop" && setItemHover(index) ; 
-                            handleHover((res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id) 
+                            deviceType === "Desktop" && handleHover((res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id) 
                           }}
                         />
                       }

@@ -205,7 +205,7 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
                     onMouseOver={() => { deviceType === "Desktop" && setItemHover(index) ; handleHover((res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id) }}
                     onMouseLeave={() =>{ deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
                     onClick={(event) =>  
-                      deviceType === "Desktop" && handleClickModal(event, (res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id)
+                      screenWidth > 639  && handleClickModal(event, (res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id)
                     }
                   >
                       <ItemSlider

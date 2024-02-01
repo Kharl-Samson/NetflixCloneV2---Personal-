@@ -56,8 +56,8 @@ export const Page = () => {
       if (node) observer.current.observe(node)
     }, [isFetchingNextPage, fetchNextPage, hasNextPage])
 
-    // React Youtube State
-    const { videoId, trailerData, showDetails } = useAppStore()
+    // Zustand States
+    const { videoId, trailerData, showDetails, screenWidth } = useAppStore()
 
     // Device Checker
     const [deviceType, setDeviceType] = useState<string | null>(null)
@@ -84,7 +84,10 @@ export const Page = () => {
     }, [itemHover, isFetchedTrailer, myTrailerData])
 
   return (
-    <section className="max-w-[3000px] mx-auto mt-[4.5rem] min-h-[100dvh] fixed inset-0 z-[49] bg-[#181414] overflow-y-scroll search-section px-14">
+    <section 
+      className="max-w-[3000px] mx-auto mt-[4.3rem] 1051size:mt-[4.5rem] min-h-[100dvh] fixed inset-0 
+        z-[49] bg-[#181414] overflow-y-scroll search-section px-7 1051size:px-14"
+    >
         
       {/* More related title */}
       <div className="mt-[6rem] flex gap-x-5">
@@ -100,14 +103,14 @@ export const Page = () => {
             .filter((res: { title:  string }) => res.title !== undefined)
             .map((res: {title : string}, index: number, array: {title: string}[]) => 
               <div key={res.title} className="flex items-center gap-x-3">
-                <p className="text-2xl">{res.title}</p>
+                <p className="text-2xl text-white">{res.title}</p>
                 {index !== array.length - 1 && <div className="h-[2.2rem] w-[1px] bg-[#cfcfcf]"></div>}
               </div>
           )}
         </div>
       </div>
 
-      <div className="my-grid-search mt-5 w-full grid gap-x-3 gap-y-[4rem] ">
+      <div className="my-grid-search mt-5 w-full">
         {data?.pages?.map((group, groupIndex) => (
             <React.Fragment key={groupIndex}>
               {group.results?.map((res : ItemType, index : number) => {
@@ -118,7 +121,7 @@ export const Page = () => {
                     onMouseOver={() => { deviceType === "Desktop" && setItemHover(index + parseInt(res.id) + parseInt(res?.vote_count)) ; handleHover(res?.media_type, res?.id) }}
                     onMouseLeave={() =>{ deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
                     onClick={(event) =>  
-                      deviceType === "Desktop" && handleClickModal(event, res?.media_type, res?.id)
+                      screenWidth > 639 && handleClickModal(event, res?.media_type, res?.id)
                     }
                   >
                     <ItemSlider

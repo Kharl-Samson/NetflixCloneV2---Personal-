@@ -10,16 +10,16 @@ export const SearchInput = () => {
     // Params Url Getter
     const { params, categoryParams } = useRouteAndQueryParams()
 
+    // Get search value params
+    const urlParams = new URLSearchParams(window.location.search)
+    const searchParams = urlParams.get("search")
+    const sParam = urlParams.get("s")
+
     // Navigate
     const navigate = useNavigate()
     
     // Zustand State
     const { setPause, setShowVideo, isSearchClick, setSearchClick, searchValue, setSearchValue, currentSection } = useAppStore()
-
-    // Get search value params
-    const urlParams = new URLSearchParams(window.location.search)
-    const searchParams = urlParams.get("search")
-    const sParam = urlParams.get("s")
 
     //Click Search Input
     const inputRef = useRef<HTMLInputElement>(null)
@@ -56,10 +56,6 @@ export const SearchInput = () => {
         searchValue !== "" && setSearchClick(true)
     },[searchValue, sParam, searchParams, isSearchClick, currentSection])
 
-    useEffect(()=> {
-      //  (!searchValue || searchValue === "") && navigate("/")
-    },[searchValue])
-  
     // Clear Search Input
     const clearSearchInput = () => setSearchValue("")
 

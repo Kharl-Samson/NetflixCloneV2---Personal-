@@ -156,10 +156,16 @@ button:hover {
     }
 
     /* Custom style in items in search section */
-    .my-grid-search > div:nth-child(3n+1) .search-hover-style-1051 {
+    .my-grid-search > div:nth-child(2n+1) .search-hover-style-640 {
         margin-left: 0;
     }
-    .my-grid-search > div:nth-child(3n+3) .search-hover-style-1051, .my-grid > div:nth-child(3n) .search-hover-style-1051 {
+    .my-grid-search > div:nth-child(2n+2) .search-hover-style-640, .my-grid > div:nth-child(2n) .search-hover-style-640 {
+        margin-left: -7rem;
+    }
+    .my-grid-search > div:nth-child(3n+1) .search-hover-style-990 {
+        margin-left: 0;
+    }
+    .my-grid-search > div:nth-child(3n+3) .search-hover-style-990, .my-grid > div:nth-child(3n) .search-hover-style-990 {
         margin-left: -7rem;
     }
     .my-grid-search > div:nth-child(4n+1) .search-hover-style-1280 {
@@ -181,27 +187,49 @@ button:hover {
         margin-left: -7rem;
     }
 
-    /* 1051px breakpoint styles */
-    @media (min-width: 1051px) {
+    /* 640px breakpoint styles */
+    @media (min-width: 640px) {
         .my-grid-search {
+            display: flex; 
+            justify-content: center;
+            flex-wrap: wrap;
+            column-gap: 1rem;
+            row-gap: 2rem
+        }
+    }
+    /* 990px breakpoint styles */
+    @media (min-width: 990px) {
+        .my-grid-search {
+            display: grid;
+            column-gap: 0.7rem;
+            row-gap: 4rem;
             grid-template-columns: repeat(3, minmax(0, 1fr));
         }
     }
     /* 1290px breakpoint styles */
     @media (min-width: 1290px) {
         .my-grid-search {
+            display: grid;
+            column-gap: 0.7rem;
+            row-gap: 4rem;
             grid-template-columns: repeat(4, minmax(0, 1fr));
         }
     }
     /* 1600px breakpoint styles */
     @media (min-width: 1600px) {
         .my-grid-search {
+            display: grid;
+            column-gap: 0.7rem;
+            row-gap: 4rem;
             grid-template-columns: repeat(5, minmax(0, 1fr));
         }
     }
     /* 1890px breakpoint styles */
     @media (min-width: 1890px) {
         .my-grid-search {
+            display: grid;
+            column-gap: 0.7rem;
+            row-gap: 4rem;
             grid-template-columns: repeat(6, minmax(0, 1fr));
         }
     }

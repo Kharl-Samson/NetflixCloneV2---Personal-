@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { RefObject, useEffect, useState } from "react"
 
 // Get current section
 export const getCurrentSection = () => {
@@ -29,6 +29,42 @@ export const getCurrentSection = () => {
     }, [])
   
     return currentSection
+}
+
+// Get current article
+export const getCurrentArticle = (scrollableArticleRef : RefObject<HTMLDivElement>) => {
+  const [currentArticle, setCurrentArticle] = useState<string | null>(null)
+
+  const handleScroll = () => {
+    // Ensure the ref is current and has a value
+    if (!scrollableArticleRef.current) {
+      return
+    }
+
+    const mainElements = document.querySelectorAll("article")
+    const scrollPosition = scrollableArticleRef.current.scrollTop + scrollableArticleRef.current.clientHeight / 2
+
+    for (const main of mainElements) {
+      const top = main.offsetTop - scrollableArticleRef.current.offsetTop
+      const height = main.offsetHeight;
+      if (scrollPosition >= top && scrollPosition <= top + height) {
+        setCurrentArticle(main.id)
+        return
+      }
+    }
+
+    setCurrentArticle(null)
+  }
+
+  useEffect(() => {
+    const scrollableDiv = scrollableArticleRef.current
+    if (scrollableDiv) {
+      scrollableDiv.addEventListener("scroll", handleScroll)
+      return () => scrollableDiv.removeEventListener("scroll", handleScroll)
+    }
+  }, [scrollableArticleRef])
+
+  return currentArticle
 }
 
 // Get Show runtime length if the category is movie

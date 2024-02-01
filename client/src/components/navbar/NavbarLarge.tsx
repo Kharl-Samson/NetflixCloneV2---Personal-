@@ -30,7 +30,7 @@ export const NavbarLarge = ( {scrollDirection, isAtTop, active} : NavbarProps ) 
   return (
     <nav 
       className={`w-full py-4 px-14 fixed max-w-[3000px] mx-auto top-0 flex justify-between items-center custom-transition-duration-3s
-        z-50 ${searchParams === "1" ? "bg-[#181414]" : scrollDirection === "down" || !isAtTop ? "bg-black" : "shadowing"}`
+        z-50 ${searchParams === "1" ? "bg-[#181414]" : scrollDirection === "down" || !isAtTop ? "bg-[#181414]" : "shadowing"}`
       }
     >
         {/* Logo and Menu */}

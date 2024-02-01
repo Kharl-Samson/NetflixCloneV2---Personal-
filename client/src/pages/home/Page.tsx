@@ -30,7 +30,6 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
     setCurrentSection(activeSections)
   }, [activeSections])
 
-
   // Closing Modal
   const modalRef = useRef<HTMLDivElement>(null)
   const { handleCloseModalOut } = useClickHandlers()
@@ -162,7 +161,7 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
       {/* Modals - [Larger Screens] */
       ((screenWidth >= 640 && showDetailsModal) || (params && (categoryParams === "tv" || categoryParams === "movie"))) &&
         <div className="min-h-[100dvh] w-full fixed z-[1000] modal-background inset-0 overflow-y-scroll hidden sm:block" ref={modalRef}>
-          <ShowsDetails scrollToBottom = {scrollToBottom}/>
+          <ShowsDetails scrollToBottom = {scrollToBottom} myRef = {modalRef}/>
         </div>
       }
     </section>

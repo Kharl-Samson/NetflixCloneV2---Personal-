@@ -9,7 +9,7 @@ export const YoutubePlayerModal = ({ id, videoId, duration, isFetchedTrailer } :
     const [video, setVideo] = useState<any>(null)
 
     // React Youtube State
-    const { setShowVideoModal, showVideoModal, isMutedModal, playAgainModal } = useAppStore()
+    const { setShowVideoModal, showVideoModal, isMutedModal, playAgainModal, currentArticle } = useAppStore()
 
     // Video Valid State
     const [videoValid, setVideoValid] = useState<boolean>(false)
@@ -56,6 +56,13 @@ export const YoutubePlayerModal = ({ id, videoId, duration, isFetchedTrailer } :
     },[isMutedModal, playAgainModal, video, videoValid, showVideoModal])
 
     
+    useLayoutEffect(() => {
+      // Pause if the user is not on hero section
+      if (video && videoValid && video.g && video.g.src) {
+        currentArticle === "detailsSection" ? video.pauseVideo() : video.playVideo()
+      }
+    }, [currentArticle])
+
   return (
     <YouTube  
       id = {id}

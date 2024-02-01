@@ -3,24 +3,44 @@ import { handleImageError } from "../../../types/errorTypes"
 import { YoutubePlayerModal } from "../../../widgets/youtubePlayer/YoutubePlayerModal"
 import { useQuery } from "react-query"
 import { getCasts, getShowDetails, getShowTrailer } from "../../../services/apiFetchShowList"
-import { useEffect, useState } from "react"
+import { RefObject, useEffect, useState } from "react"
 import { dataInEffect, useClickHandlers, useRouteAndQueryParams } from "../../../utils/itemsFunction"
 import CircularProgress from "@mui/material/CircularProgress"
 import { BannerData } from "./components/BannerData"
 import { ShowDescription } from "./components/ShowDescription"
 import { EpisodeLists } from "./components/EpisodeLists"
+import { getCurrentArticle } from "../../../utils/getCurrentSection"
 
 type showDetailsDataProps = {
   scrollToBottom: () => void
+  myRef: RefObject<HTMLDivElement>
 }
 
-export const ShowsDetails = ({scrollToBottom} : showDetailsDataProps) => {
+export const ShowsDetails = ({scrollToBottom, myRef} : showDetailsDataProps) => {
     const body = document.body
     body.style.overflowY = "hidden"
 
     // Params Url Getter
     const { params, categoryParams } = useRouteAndQueryParams()
   
+    // Getting Active Section
+    const activeSections = getCurrentArticle(myRef)
+    const { currentArticle, setCurrentArticle, setShowVideoModal } = useAppStore()
+    useEffect(() => {
+      setCurrentArticle(activeSections)
+    }, [activeSections])
+
+    // Render Hero Video Component if the user is in hero section
+    const [firstLoadStatus, setFirstLoadStatus] = useState<boolean>(true)
+    useEffect(() => {
+        if((params && (categoryParams === "tv" || categoryParams === "movie")) && currentArticle === "detailsSection") {
+            setShowVideoModal(false)
+            setFirstLoadStatus(false)
+        }     
+        ((params && (categoryParams === "tv" || categoryParams === "movie")) && currentArticle !== "detailsSection" && !firstLoadStatus) && setShowVideoModal(true)
+    }, [currentArticle])
+    
+
     // React Youtube State
     const { showVideoModal, trailerData } = useAppStore()
 
@@ -126,12 +146,14 @@ export const ShowsDetails = ({scrollToBottom} : showDetailsDataProps) => {
           scrollToBottom = {scrollToBottom}
         />
 
-        {/* Episodes - [If it is TV Show] */}
-        <EpisodeLists
-          castsData = {castsData}
-          showDetailsData = {showDetailsData}
-          age = {age}
-        />
+        <article id="detailsSection">
+          {/* Episodes - [If it is TV Show] */}
+          <EpisodeLists
+            castsData = {castsData}
+            showDetailsData = {showDetailsData}
+            age = {age}
+          />
+        </article>
     </div>
   )
 }

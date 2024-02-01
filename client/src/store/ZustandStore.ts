@@ -65,9 +65,11 @@ export const useAppStore = create<appStoreType>()(
     showDetails: "",
     setShowDetails: (value: any) => set({ showDetails: value }),
 
-    // Active Section State
+    // Active Section and Article State
     currentSection: "",
     setCurrentSection: (value: string | null) => set({ currentSection: value }),
+    currentArticle: "",
+    setCurrentArticle: (value: string | null) => set({ currentArticle: value }),
 
     // Modal States
     validModal: true,

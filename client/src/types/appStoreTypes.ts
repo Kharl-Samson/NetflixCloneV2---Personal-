@@ -54,9 +54,11 @@ export type appStoreType = {
     showDetails: any
     setShowDetails: (value: any ) => void
   
-    // Active Section State
+    // Active Section and Article State
     currentSection: string | null
     setCurrentSection: (value: string | null) => void
+    currentArticle: string | null
+    setCurrentArticle: (value: string | null) => void
   
     // Modal States
     validModal: boolean,

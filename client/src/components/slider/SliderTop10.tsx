@@ -39,7 +39,7 @@ export const SliderTop10 = ({marginStyle, sliderStyle, title, queryType, queryKe
     }
 
     // Fetch data to be showned in section
-    const { data } = useQuery(
+    const { data, isLoading } = useQuery(
       [`${queryKey}`, dataCategory],
       () => getShowList(queryType, dataCategory, "en-US", null, 1)
     )
@@ -88,7 +88,7 @@ export const SliderTop10 = ({marginStyle, sliderStyle, title, queryType, queryKe
           onMouseOut={() => deviceType === "Desktop" && setSwiperHover(false)}
         >
             {/* Swiper Controller */
-            screenWidth >= 640 &&
+            screenWidth >= 640 && !isLoading &&
             <div className="hidden sm:block">
               <div className={`cursor-pointer absolute h-[13rem] w-[3.75rem] bg-[hsla(0,0%,8%,.5)] text-white
                   z-20 items-center justify-center custom-transition-duration-3s rounded-r ${swiperHover && showLeftSwipe ? "flex" : "hidden"}`}
@@ -110,6 +110,14 @@ export const SliderTop10 = ({marginStyle, sliderStyle, title, queryType, queryKe
             }
 
             {/* Carousel Using React Swiper */
+            isLoading ?
+            <div className={`w-full h-[9rem] sm:h-[10rem] ${marginStyle} gap-x-2 flex`}>
+              {Array.from({ length: 10 }, (_, index) => (
+                <div key={index} className="rounded-md itemSkeleton min-w-[6.5rem] w-[6.5rem] sm:min-w-[18rem] sm:w-[18rem] h-[9rem] sm:h-[10rem]">
+                </div>
+              ))}
+            </div>
+            :
             data?.results?.length > 1 && 
               <Swiper
                 mousewheel={true}

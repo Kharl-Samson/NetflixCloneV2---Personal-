@@ -47,7 +47,7 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
     }
 
     // Fetch data to be showned in section -> First Data
-    const { data : data1, isFetched: isFetchedData1, isError: isDataError1 } = useQuery(
+    const { data : data1, isFetched: isFetchedData1, isError: isDataError1, isLoading : isDataLoading1 } = useQuery(
       [`${queryKey}1`, dataCategory1, dataCategory2],
       () => getShowList(
         queryType,                                                    // Query Type (ex. Hero, Romantic Movies, TV Action & Adventure, etc)
@@ -60,7 +60,7 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
     )
 
     // Fetch data to be showned in section -> Second Data
-    const { data : data2, isFetched: isFetchedData2, isError: isDataError2 } = useQuery(
+    const { data : data2, isFetched: isFetchedData2, isError: isDataError2, isLoading : isDataLoading2 } = useQuery(
       [`${queryKey}2`, dataCategory1, dataCategory2],
       () => getShowList(
         queryType,                                            // Query Type (ex. Hero, Romantic Movies, TV Action & Adventure, etc)
@@ -167,6 +167,14 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
           }
 
           {/* Carousel Using React Swiper */
+          (isDataLoading1 && isDataLoading2) ?
+          <div className={`w-full h-[9rem] sm:h-[10rem] ${marginStyle} gap-x-2 flex`}>
+            {Array.from({ length: 10 }, (_, index) => (
+              <div key={index} className="rounded-md itemSkeleton min-w-[6.5rem] w-[6.5rem] sm:min-w-[18rem] sm:w-[18rem] h-[9rem] sm:h-[10rem]">
+              </div>
+            ))}
+          </div>
+          :
           combinedData?.results?.length > 1 && 
             <Swiper
               mousewheel={true}

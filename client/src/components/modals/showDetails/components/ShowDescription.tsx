@@ -29,7 +29,7 @@ export const ShowDescription = ({castsData, showDetailsData, match, age, scrollT
     const { hours, minutes } = showRuntime || { hours: 0, minutes: 0 }
     
   return (
-    <div className="px-14 mt-[4.5rem] relative z-10 flex gap-x-12 justify-between">
+    <div className="px-11 mt-[4.5rem] relative z-10 flex gap-x-12 justify-between">
       {/* Description */}
       <div className="grow">
         <div className="flex items-center gap-x-2">
@@ -60,11 +60,11 @@ export const ShowDescription = ({castsData, showDetailsData, match, age, scrollT
         <div className="text-white float-left mt-2 text-sm py-[1px] px-[8px] border border-white">{age}+</div>
 
         {/* Overview */}
-        <p className="mt-[4rem] text-sm font-thin text-white clear-both ">{showDetailsData?.overview}</p>
+        <p className="mt-[4rem] text-sm font-thin text-white clear-both ">{showDetailsData?.overview || "No overview available."}</p>
       </div>
 
       {/* Casts, Genres and Tagline */}
-      <div className="min-w-[16rem] max-w-[16rem] h-[2rem] ">
+      <div className="min-w-[13rem] max-w-[13rem] 730size:min-w-[16rem] 730size:max-w-[16rem]">
         {/* Cast */
         castsData && castsData?.cast.length !== 0 &&
           <p className="text-[#9b9b9b] text-sm">

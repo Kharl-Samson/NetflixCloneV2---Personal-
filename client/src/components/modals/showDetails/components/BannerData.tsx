@@ -36,7 +36,7 @@ export const BannerData = ({showDetailsData} : BannerDataProps) => {
 
   return (
     <div 
-      className={`relative z-[5] px-14 
+      className={`relative z-[5] px-11 
       ${showDetailsData && showDetailsData.networks && showDetailsData.networks.some((network: {name : string}) => network.name === "Netflix") ? 
       "mt-[-18.8rem]" : "mt-[-17.5rem]"}`}
     >

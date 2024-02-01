@@ -185,7 +185,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
   
 
   return (
-    <div className="relative mt-10 px-14">
+    <div className="relative mt-10 px-11">
 
       {/*
         * If the item is TV Show
@@ -367,19 +367,19 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
                 <LazyLoadImage
                   alt="Show Image"
                   src={`${res?.backdrop_path && import.meta.env.VITE_BASE_IMAGE_URL}${res?.backdrop_path}`} 
-                  className="w-full h-[8.5rem]"
+                  className="w-full h-[7rem] 900size:h-[8.5rem]"
                   onError={handleImageError}
                 />
 
                 {/* Show name */}
-                <div className="w-full h-[8.5rem] mt-[-8.5rem] relative z-10 bg-[#02020249] flex items-end">
+                <div className="w-full h-[7rem] mt-[-7rem] 900size:h-[8.5rem] 900size:mt-[-8.5rem] relative z-10 bg-[#02020249] flex items-end">
                   <p className="text-white movie-title-font-large max-w-[80%] leading-tight text-base capitalize tracking-wide ml-4 mb-4 [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)]">
                     {res?.title || res?.name || res?.original_title}
                   </p>
                 </div> 
 
                 {/* Play Icon */}
-                <div className="w-full h-[8.5rem] mt-[-8.5rem] relative z-10 flex items-center justify-center">
+                <div className="w-full h-[7rem] mt-[-7rem] 900size:h-[8.5rem] 900size:mt-[-8.5rem] relative z-10 flex items-center justify-center">
                   <div 
                     className={`rounded-full h-[3rem] w-[3rem] modal-background border border-white flex items-center justify-center
                       opacity-0 custom-transition-duration-5s ${(hoverStatusCollection && hoverItemIndexCollection === res?.id) && "opacity-100" }`}
@@ -413,7 +413,9 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
                 </div>
 
                 {/* Overview */}
-                <p className="mt-4 text-sm text-[#d2d2d2] mx-3">{sentenceCutter(1, res?.overview).length <=10 ? sentenceCutter(2, res?.overview) : sentenceCutter(1, res?.overview)}</p>
+                <p className="mt-4 text-sm text-[#d2d2d2] mx-3">
+                  {res?.overview ? sentenceCutter(1, res?.overview).length <=10 ? sentenceCutter(2, res?.overview) : sentenceCutter(1, res?.overview) : "No overview available."}
+                </p>
               </div>
             ))
           }
@@ -454,19 +456,19 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
               <LazyLoadImage
                 alt="Show Image"
                 src={`${res?.backdrop_path && import.meta.env.VITE_BASE_IMAGE_URL}${res?.backdrop_path}`} 
-                className="w-full h-[8.5rem]"
+                className="w-full h-[7rem] 900size:h-[8.5rem]"
                 onError={handleImageError}
               />
 
               {/* Show name */}
-              <div className="w-full h-[8.5rem] mt-[-8.5rem] relative z-10 bg-[#02020249] flex items-end">
+              <div className="w-full h-[7rem] mt-[-7rem] 900size:h-[8.5rem] 900size:mt-[-8.5rem] relative z-10 bg-[#02020249] flex items-end">
                 <p className="text-white movie-title-font-large max-w-[80%] leading-tight text-base capitalize tracking-wide ml-4 mb-4 [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)]">
                   {res?.title || res?.name || res?.original_title}
                 </p>
               </div> 
 
               {/* Play Icon */}
-              <div className="w-full h-[8.5rem] mt-[-8.5rem] relative z-10 flex items-center justify-center">
+              <div className="w-full h-[7rem] mt-[-7rem] 900size:h-[8.5rem] 900size:mt-[-8.5rem] relative z-10 flex items-center justify-center">
                 <div 
                   className={`rounded-full h-[3rem] w-[3rem] modal-background border border-white flex items-center justify-center
                     opacity-0 custom-transition-duration-5s ${(hoverStatusLikeThis && hoverItemIndexLikeThis === res?.id) && "opacity-100" }`}
@@ -500,7 +502,9 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
               </div>
 
               {/* Overview */}
-              <p className="mt-4 text-sm text-[#d2d2d2] mx-3">{sentenceCutter(1, res?.overview).length <=10 ? sentenceCutter(2, res?.overview) : sentenceCutter(1, res?.overview)}</p>
+              <p className="mt-4 text-sm text-[#d2d2d2] mx-3">
+                {res?.overview ? sentenceCutter(1, res?.overview).length <=10 ? sentenceCutter(2, res?.overview) : sentenceCutter(1, res?.overview) : "No overview available."}
+              </p>
             </div>
           ))
         }

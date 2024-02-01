@@ -65,16 +65,19 @@ export const ShowDescription = ({castsData, showDetailsData, match, age, scrollT
 
       {/* Casts, Genres and Tagline */}
       <div className="min-w-[16rem] max-w-[16rem] h-[2rem] ">
-        {/* Cast */}
-        <p className="text-[#9b9b9b] text-sm">
-          Cast:&nbsp;
-          {/* Cast Mapping */
-          castsData && castsData.cast.slice(0, 4).map((res: { original_name: string }, index : number) => 
-              <span className="text-sm text-white" key={index}>{res?.original_name},&nbsp;</span>
-            )
-          }
-          <span className="text-sm text-white italic cursor-pointer hover:underline" onClick={scrollToBottom}>more</span>
-        </p>
+        {/* Cast */
+        castsData && castsData?.cast.length !== 0 &&
+          <p className="text-[#9b9b9b] text-sm">
+            Cast:&nbsp;
+            {/* Cast Mapping */
+            castsData.cast.slice(0, 4).map((res: { original_name: string }, index : number) => 
+                <span className="text-sm text-white" key={index}>{res?.original_name},&nbsp;</span>
+              )
+            }
+            <span className="text-sm text-white italic cursor-pointer hover:underline" onClick={scrollToBottom}>more</span>
+          </p>
+        }
+
         {/* Genres */}
         <p className="text-[#9b9b9b] text-sm mt-4">
           Genres:&nbsp;

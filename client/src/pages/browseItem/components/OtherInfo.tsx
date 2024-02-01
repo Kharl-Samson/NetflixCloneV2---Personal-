@@ -36,15 +36,18 @@ export const OtherInfo = ({isMoreModalStatus, castsData, showDetailsData, age, o
       <p className="text-white text-xl font-bold text-center mt-[-1.50rem] mx-auto max-w-[75%]">{showDetailsData?.title || showDetailsData?.name || showDetailsData?.original_title}</p>
 
       <div className="flex-grow mt-4 overflow-y-scroll mb-5">
-        {/* Cast */}
-        <p className="text-center mx-auto text-white font-bold">Cast</p>
+        {/* Cast */
+        castsData && castsData?.cast.length !== 0 && <p className="text-center mx-auto text-white font-bold">Cast</p>
+        }
         {/* Cast Mapping */
         castsData && castsData.cast.map((res: { original_name: string }) => 
           <p className="mt-4 text-sm text-center mx-auto text-white" key={res?.original_name}>{res?.original_name}</p>
         )}
 
-        {/* Creators */}
-        <p className="text-center mx-auto text-white font-bold mt-4">Creators</p>
+        {/* Creators */
+        showDetailsData && showDetailsData.created_by && showDetailsData.created_by.length !== 0 && 
+          <p className="text-center mx-auto text-white font-bold mt-4">Creators</p>
+        }
         {/* Creators Mapping */
         showDetailsData?.created_by?.map((res: { name: string }) => 
           <p className="mt-4 text-sm text-center mx-auto text-white" key={res?.name}>{res?.name}</p>

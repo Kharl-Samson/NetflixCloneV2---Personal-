@@ -115,12 +115,14 @@ export const ShowDescription = ({castsData, showDetailsData} : ShowDescriptionPr
         
         {/* Cast */}
         <p className="mt-2 text-[#9b9b9b] text-sm">
-          Cast:&nbsp;
+          {castsData && castsData?.cast.length !== 0 && `Cast:`}&nbsp;
           {/* Cast Mapping */
           castsData && castsData.cast.slice(0, 3).map((res: { original_name: string }) => 
               <span className="text-sm text-[#9b9b9b]" key={res?.original_name}>{res?.original_name},&nbsp;</span>
           )}
-          <span className="text-sm text-[#9b9b9b] font-bold whitespace-nowrap" onClick={() => setMoreModalStatus(true)}>... more</span>
+          <span className="text-sm text-[#9b9b9b] font-bold whitespace-nowrap" onClick={() => setMoreModalStatus(true)}>
+            {castsData && castsData?.cast.length !== 0 ? "... more" : "See more ..."}     
+          </span>
         </p>
 
         {/* Creators */

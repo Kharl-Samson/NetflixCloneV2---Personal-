@@ -551,17 +551,19 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
           </p>
         }
 
-        {/* Cast */}
-        <p className="text-[#9b9b9b] text-sm mt-[.50rem]">
-          Cast:&nbsp;
-          {// Creators mapping
-            castsData && castsData.cast.map((res: { original_name: string }, index: number) => 
-              <span className="text-sm text-white" key={index}>
-                {res?.original_name}{index < castsData.cast.length - 1 && ",\u00A0\u00A0"}
-              </span>
-            )
-          }
-        </p>
+        {/* Cast */
+        castsData && castsData?.cast.length !== 0 &&
+          <p className="text-[#9b9b9b] text-sm mt-[.50rem]">
+            Cast:&nbsp;
+            {// Creators mapping
+              castsData.cast.map((res: { original_name: string }, index: number) => 
+                <span className="text-sm text-white" key={index}>
+                  {res?.original_name}{index < castsData.cast.length - 1 && ",\u00A0\u00A0"}
+                </span>
+              )
+            }
+          </p>
+        }
 
         {/* Genres */}
         <p className="text-[#9b9b9b] text-sm mt-[.50rem]">

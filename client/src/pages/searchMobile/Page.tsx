@@ -32,9 +32,10 @@ export const Page = () => {
         <div className="mx-3 mt-1 h-[2remm]">
         { /* Show recommended items 
            * If no search value yet */
+        !sParam && 
            <>
             <p className="text-white text-base font-semibold">Recommended TV Shows & Movies</p>
-            
+
             {/* Items Container */}
             <div>
 

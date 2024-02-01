@@ -2,6 +2,7 @@ import { useMutation } from "react-query"
 import { getShowDetails } from "../services/apiFetchShowList"
 import { useAppStore } from "../store/ZustandStore"
 import { useNavigate, useParams, useLocation, Location } from "react-router-dom"
+import { ItemType } from "../types/itemTypes"
 
 /*
  * When the user swipe the slider to left
@@ -282,4 +283,17 @@ export function useRouteAndQueryParams(): RouteAndQueryParams {
   const location = useLocation()
   const params = useParams<{ category?: string }>()
   return getRouteAndQueryParams(location, params)
+}
+
+/*
+ * To shuffle arrays
+ * Shuffle tv shows and movie
+*/
+export const shuffleArray = (array: ItemType[] ) => {
+  let shuffledArray = [...array];
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+  }
+  return shuffledArray
 }

@@ -60,7 +60,7 @@ export const Page = () => {
       </div>
     </>
     :
-    <section className="">
+    <section>
       {/* Video Player */}
       <VideoSection
         isFetchedTrailer = {isFetchedTrailer}

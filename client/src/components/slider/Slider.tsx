@@ -13,7 +13,7 @@ import { useAppStore } from "../../store/ZustandStore"
 import { ItemSlider } from "./ItemSlider"
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight"
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft"
-import { dataInEffect, swipeLeft, swipeRight, useClickHandlers, useHoverHandlers } from "../../utils/itemsFunction"
+import { dataInEffect, shuffleArray, swipeLeft, swipeRight, useClickHandlers, useHoverHandlers } from "../../utils/itemsFunction"
 import { useNavigate } from "react-router-dom"
 
 type SliderProps = {
@@ -75,8 +75,9 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
     // Combining the results when both requests have been resolved
     const combinedData = useMemo(() => {
       if (isFetchedData1 && !isDataError1 && isFetchedData2 && !isDataError2) {
+        const resultsCombined = (data1?.results || []).concat(data2?.results || [])
         return {
-          results: (data1?.results || []).concat(data2?.results || []),
+          results: shuffleArray(resultsCombined)
         }
       }
       return null
@@ -175,7 +176,7 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
             ))}
           </div>
           :
-          combinedData?.results?.length > 1 && 
+          combinedData && combinedData?.results?.length > 1 && 
             <Swiper
               mousewheel={true}
               slidesPerView="auto"

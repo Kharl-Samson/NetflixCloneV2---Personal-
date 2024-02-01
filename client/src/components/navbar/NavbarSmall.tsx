@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom"
 import searchIcon from "../../assets/images/icons/search.png"
 
 type NavbarProps = {
@@ -6,8 +7,11 @@ type NavbarProps = {
 }
 
 export const NavbarSmall = ( {scrollDirection, isAtTop} : NavbarProps ) => {
+  // Navigate
+  const navigate = useNavigate()
+
   // Username
-  const userName : string = "Kharl"
+  const userName : string = "You"
 
   return (
     <nav className={`sm:hidden w-full py-4 px-5 fixed top-0 z-50 ${(scrollDirection === "down" || !isAtTop) && "navbar-glassmorphism"}`}>
@@ -15,7 +19,7 @@ export const NavbarSmall = ( {scrollDirection, isAtTop} : NavbarProps ) => {
       {/* Top Section */}
       <div className="flex justify-between items-center">
         <p className="text-white  font-semibold text-lg whitespace-nowrap overflow-hidden text-ellipsis">For {userName}</p>
-        <img src={searchIcon} alt="Search Image" className="h-6"/>
+        <img src={searchIcon} alt="Search Image" className="h-6" onClick={() => navigate("/search")}/>
       </div>
 
       {/* Bottom Section */}

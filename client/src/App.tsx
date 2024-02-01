@@ -4,6 +4,7 @@ import { Page as Browse } from "./pages/browseItem/Page"
 import { useAppStore } from "./store/ZustandStore"
 import { useEffect, useState } from "react"
 import { useRouteAndQueryParams } from "./utils/itemsFunction"
+import { Page as SearchMobile } from "./pages/searchMobile/Page"
 
 function App() {
   // Set Screen Width
@@ -72,6 +73,7 @@ function App() {
         {/* Main Pages */}
         <Route path="/" element={<Page scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>}/>
         <Route path="/browse/:category" element={screenWidth < 640 ? <Browse/> : <Page scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>}/>
+        <Route path="/search" element={<SearchMobile/>}/>
       </Routes>
     </>
   )

@@ -4,9 +4,11 @@ import add from "../../../assets/images/icons/add.png"
 import { getGenres } from "../../../services/apiFetchShowList"
 import { useQuery } from "react-query"
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 type HeroProps = {
   myData : {
+    id: string
     title?: string
     original_title?: string
     backdrop_path?: string
@@ -15,6 +17,9 @@ type HeroProps = {
 }
 
 export const HeroComponentSmall = ( {myData} : HeroProps ) => {
+    // Navigate
+    const navigate = useNavigate()
+
     // State from zustand
     const {screenWidth} = useAppStore()
 
@@ -55,6 +60,7 @@ export const HeroComponentSmall = ( {myData} : HeroProps ) => {
             url(${myData?.backdrop_path && import.meta.env.VITE_BASE_IMAGE_URL}${myData?.backdrop_path})`
         }}
         className="bg-custom-color-hero-1 w-full px-4 h-[30rem] rounded-xl bg-cover bg-top flex flex-col justify-end"
+        onClick={() => navigate(`/browse/movie?q=${myData?.id}`)}
       >
         {/* Show Title */}
         <p className="mb-3 text-white text-center text-4xl sm:text-7xl movie-title-font-small">{myData?.title || myData?.original_title}</p>

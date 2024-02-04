@@ -7,11 +7,15 @@ export const useAppStore = create<appStoreType>()(
   // Get search value params
   const urlParams = new URLSearchParams(window.location.search)
   const sParam = urlParams.get("s")
-
+  
   return ({
     // Screen size
     screenWidth: window.innerWidth,
     setScreenWidth: (value: number) => set({ screenWidth: value }),
+
+    // My data state
+    myData: { id: "" },
+    setMyData: (newData) => set(() => ({ myData: newData })),
 
     // React Youtube States -> Hero
     showVideo: false,

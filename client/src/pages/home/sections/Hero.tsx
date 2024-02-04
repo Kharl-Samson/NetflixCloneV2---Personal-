@@ -28,7 +28,7 @@ export const Hero = () => {
     },[])
 
     // Data states
-    const [myData, setMyData] = useState<MyData>({ id: "" })
+    const {myData, setMyData} = useAppStore()
     const [trailerData, setTrailerData] = useState<string>("")
 
     // Fetch data to be showned in hero section 

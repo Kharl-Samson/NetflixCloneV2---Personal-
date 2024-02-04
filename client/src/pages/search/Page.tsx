@@ -36,13 +36,13 @@ export const Page = () => {
 
     // Fetch show data with infinite scroll
     const {data, fetchNextPage, hasNextPage, isFetchingNextPage} = useInfiniteQuery(
-        ['searchDataKey', sParam],
-        ({ pageParam = 1 }) => sParam && getSearchQuery(sParam ? sParam : "", pageParam),
-        {
-          getNextPageParam: (lastPage) => {
-            return lastPage?.page < lastPage?.total_pages ? lastPage?.page + 1 : undefined
-          }
+      ['searchDataKey', sParam],
+      ({ pageParam = 1 }) => sParam && getSearchQuery(sParam ? sParam : "", pageParam),
+      {
+        getNextPageParam: (lastPage) => {
+          return lastPage?.page < lastPage?.total_pages ? lastPage?.page + 1 : undefined
         }
+      }
     )
 
     // Infinite scroll function

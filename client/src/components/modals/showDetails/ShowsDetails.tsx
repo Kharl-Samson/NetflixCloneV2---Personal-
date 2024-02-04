@@ -33,11 +33,11 @@ export const ShowsDetails = ({scrollToBottom, myRef} : showDetailsDataProps) => 
     // Render Hero Video Component if the user is in hero section
     const [firstLoadStatus, setFirstLoadStatus] = useState<boolean>(true)
     useEffect(() => {
-        if((params && (categoryParams === "tv" || categoryParams === "movie")) && currentArticle === "detailsSection") {
-            setShowVideoModal(false)
-            setFirstLoadStatus(false)
-        }     
-        ((params && (categoryParams === "tv" || categoryParams === "movie")) && currentArticle !== "detailsSection" && !firstLoadStatus) && setShowVideoModal(true)
+      if((params && (categoryParams === "tv" || categoryParams === "movie")) && currentArticle === "detailsSection") {
+        setShowVideoModal(false)
+        setFirstLoadStatus(false)
+      }     
+      ((params && (categoryParams === "tv" || categoryParams === "movie")) && currentArticle !== "detailsSection" && !firstLoadStatus) && setShowVideoModal(true)
     }, [currentArticle])
     
 
@@ -121,60 +121,60 @@ export const ShowsDetails = ({scrollToBottom, myRef} : showDetailsDataProps) => 
     </div>
     :
     <div className="min-h-[100dvh] w-[98%] 801size:w-[80%] max-w-[55rem] bg-[#181818] mx-auto mt-9 rounded-lg overflow-hidden pb-[2.5rem]">
-        {/* Image Banner */}
-        <img 
-            src={`${showDetailsData?.backdrop_path && import.meta.env.VITE_BASE_IMAGE_URL}${showDetailsData?.backdrop_path}`}
-            alt="Movie Image"
-            className={`custom-transition-duration-10s w-full h-[31rem] z-[1] relative object-cover 1051size:object-contain ${showVideoModal ? "opacity-0" : "opacity-100"}`}
-            onError={handleImageError}
+      {/* Image Banner */}
+      <img 
+        src={`${showDetailsData?.backdrop_path && import.meta.env.VITE_BASE_IMAGE_URL}${showDetailsData?.backdrop_path}`}
+        alt="Movie Image"
+        className={`custom-transition-duration-10s w-full h-[31rem] z-[1] relative object-cover 1051size:object-contain ${showVideoModal ? "opacity-0" : "opacity-100"}`}
+        onError={handleImageError}
+      />
+
+      {/* Video Player */}
+      <div className={`custom-transition-duration-10s max-w-[3000px] mx-auto top-0 w-full h-[31rem] overflow-hidden mt-[-31rem] z-[2] relative ${showVideoModal ? "opacity-100" : "opacity-0"}`} key={params}>
+        <YoutubePlayerModal
+          key={params}
+          id = "youtubePlayerModal"
+          videoId = {trailerData} 
+          duration = {2500}
+          isFetchedTrailer = {isFetchedTrailer}
         />
+      </div>
 
-        {/* Video Player */}
-        <div className={`custom-transition-duration-10s max-w-[3000px] mx-auto top-0 w-full h-[31rem] overflow-hidden mt-[-31rem] z-[2] relative ${showVideoModal ? "opacity-100" : "opacity-0"}`} key={params}>
-            <YoutubePlayerModal
-                key={params}
-                id = "youtubePlayerModal"
-                videoId = {trailerData} 
-                duration = {2500}
-                isFetchedTrailer = {isFetchedTrailer}
-            />
+      {/* Shadow Effects Cover */}
+      <div 
+        className="z-[3] hidden sm:flex mt-[-31rem] justify-end w-full h-[31rem] relative"
+        style={{background: "linear-gradient(0deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.40) 100%)"}}
+      > 
+        <div className="bg-[#181818] h-[2.3rem] w-[2.3rem] mt-5 mr-5 rounded-full flex items-center justify-center text-white cursor-pointer hover:opacity-90"
+          onClick={() =>  handleCloseModalOut()}
+        >
+          <p className="text-4xl mt-[-2px]">&#215;</p>
         </div>
+      </div>
 
-        {/* Shadow Effects Cover */}
-        <div className="z-[3] hidden sm:flex mt-[-31rem]
-            justify-end w-full h-[31rem] relative"
-            style = {{background: "linear-gradient(0deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.40) 100%)"}}
-        > 
-            <div className="bg-[#181818] h-[2.3rem] w-[2.3rem] mt-5 mr-5 rounded-full flex items-center justify-center text-white cursor-pointer hover:opacity-90"
-              onClick={() =>  handleCloseModalOut()}
-            >
-                <p className="text-4xl mt-[-2px]">&#215;</p>
-            </div>
-        </div>
+      {/* Shadowing */}
+      <div className="hidden sm:block z-[4] shadowing-hero-modal"></div>
 
-        {/* Shadowing */}
-        <div className="hidden sm:block z-[4] shadowing-hero-modal"></div>
+      {/* Banner Title and Buttons */}
+      <BannerData showDetailsData = {showDetailsData}/>
 
-        {/* Banner Title and Buttons */}
-        <BannerData showDetailsData = {showDetailsData}/>
+      {/* Details */}
+      <ShowDescription 
+        castsData = {castsData}
+        showDetailsData = {showDetailsData}
+        match = {match}
+        age = {age}
+        scrollToBottom = {scrollToBottom}
+      />
 
-        {/* Details */}
-        <ShowDescription 
+      <article id="detailsSection">
+        {/* Episodes - [If it is TV Show] */}
+        <EpisodeLists
           castsData = {castsData}
           showDetailsData = {showDetailsData}
-          match = {match}
           age = {age}
-          scrollToBottom = {scrollToBottom}
         />
-
-        <article id="detailsSection">
-          {/* Episodes - [If it is TV Show] */}
-          <EpisodeLists
-            castsData = {castsData}
-            showDetailsData = {showDetailsData}
-            age = {age}
-          />
-        </article>
+      </article>
     </div>
   )
 }

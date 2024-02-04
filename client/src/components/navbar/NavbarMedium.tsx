@@ -32,16 +32,16 @@ export const NavbarMedium = ( {scrollDirection, isAtTop} : NavbarProps ) => {
 
     useEffect(() => {
       if(searchValue !== "" && (!params || params === "Default")){
-          navigate(`/?search=1&s=${searchValue}`)
+        navigate(`/?search=1&s=${searchValue}`)
       }
       else if((categoryParams !== "tv" && categoryParams !== "movie" && !params) || (searchValue === "" && searchParams === "1")){
-          setSearchValue("")
-          navigate("/")
+        setSearchValue("")
+        navigate("/")
       }
 
       if(currentSection !== "categorySection") {
-          searchValue !== "" ? setPause(true) : setPause(false)
-          searchValue !== "" ? setShowVideo(false) : setShowVideo(true)
+        searchValue !== "" ? setPause(true) : setPause(false)
+        searchValue !== "" ? setShowVideo(false) : setShowVideo(true)
       }
       searchValue !== "" && setSearchClick(true)
     },[searchValue, sParam, searchParams, currentSection])
@@ -52,24 +52,24 @@ export const NavbarMedium = ( {scrollDirection, isAtTop} : NavbarProps ) => {
         z-50 ${searchParams === "1" ? "bg-[#181414]" : scrollDirection === "down" || !isAtTop ? "bg-black bg-opacity-70" : "bg-custom-dark-2"}`
       }
     >
-        {/* Logo and Menu */}
-        <div className="flex items-center gap-x-4">
-            <MenuIcon sx={{color:"#ffff", fontSize:'2.1rem'}}/>
-            <img src={Logo} alt="Image Logo" className="h-6"/>
-        </div>
+      {/* Logo and Menu */}
+      <div className="flex items-center gap-x-4">
+        <MenuIcon sx={{color:"#ffff", fontSize:'2.1rem'}}/>
+        <img src={Logo} alt="Image Logo" className="h-6"/>
+      </div>
 
-        {/* Search Input */}
-        <div className="flex items-center bg-[#1c1c1c] border-[1px] border-custom-light-2">
-            <img src={searchIcon} alt="Search Image" className="h-5 mx-3"/>
-            <input 
-                type="text" 
-                className="bg-transparent h-9 outline-none text-base  text-white w-64" 
-                placeholder="Titles, people, genres"
-                autoComplete="off"
-                value={searchValue}
-                onChange={handleChange}
-            />
-        </div>
+      {/* Search Input */}
+      <div className="flex items-center bg-[#1c1c1c] border-[1px] border-custom-light-2">
+        <img src={searchIcon} alt="Search Image" className="h-5 mx-3"/>
+        <input 
+          type="text" 
+          className="bg-transparent h-9 outline-none text-base  text-white w-64" 
+          placeholder="Titles, people, genres"
+          autoComplete="off"
+          value={searchValue}
+          onChange={handleChange}
+        />
+      </div>
 
       {/* Search Section */
         searchParams === "1" &&

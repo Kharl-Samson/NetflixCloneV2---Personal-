@@ -1,24 +1,24 @@
 type OtherInfoProps = {
-    isMoreModalStatus : boolean
-    castsData : {
-        cast : {
-          original_name : string
-        }[]
-    }
-    showDetailsData : {
-      title?: string
-      name? : string
-      original_title? : string
-      tagline? : string
-      genres : {
-          name : string
-      }[]
-      created_by : {
-          name : string
-      }[]
-    }
-    age : string
-    onClick : () => void
+  isMoreModalStatus : boolean
+  castsData : {
+    cast : {
+      original_name : string
+    }[]
+  }
+  showDetailsData : {
+    title?: string
+    name? : string
+    original_title? : string
+    tagline? : string
+    genres : {
+      name : string
+    }[]
+    created_by : {
+      name : string
+    }[]
+  }
+  age : string
+  onClick : () => void
 }
 
 export const OtherInfo = ({isMoreModalStatus, castsData, showDetailsData, age, onClick} : OtherInfoProps) => {
@@ -33,7 +33,9 @@ export const OtherInfo = ({isMoreModalStatus, castsData, showDetailsData, age, o
       </div>
 
       {/* Title */}
-      <p className="text-white text-xl font-bold text-center mt-[-1.50rem] mx-auto max-w-[75%]">{showDetailsData?.title || showDetailsData?.name || showDetailsData?.original_title}</p>
+      <p className="text-white text-xl font-bold text-center mt-[-1.50rem] mx-auto max-w-[75%]">
+        {showDetailsData?.title || showDetailsData?.name || showDetailsData?.original_title}
+      </p>
 
       <div className="flex-grow mt-4 overflow-y-scroll mb-5">
         {/* Cast */

@@ -125,105 +125,104 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
       onMouseOver={() => setSliderTitleHover(true)} 
       onMouseLeave={() => setSliderTitleHover(false)}
     >
-        <div className="w-full flex items-center gap-x-1">
-          <p className={`text-white text-base sm:text-2xl font-semibold sm:font-bold ${marginStyle}`}>{title}</p>
-          <div 
-            className={`custom-transition-duration-10s hidden items-center  text-[#54b9c5] text-base font-extrabold 
-              mt-[.4rem] cursor-pointer ${deviceType === "Desktop" && sliderTitleHover && "sm:flex"} ${exploreHover && "pl-3"}`}
-            onMouseOver={() => SetExploreHover(true)} 
-            onMouseLeave={() => SetExploreHover(false)}
-          > 
-            <p className={`custom-transition-duration-3s whitespace-nowrap overflow-hidden ${exploreHover ? "w-[5rem]" : "w-0"}`}>Explore All</p>
-            <div className={`custom-transition-duration-3s mt-[0rem] border-t-4 border-r-4 border-[#54b9c5] rotate-45 ${exploreHover ? "h-[10px] w-[10px]" : "h-[13px] w-[13px]"}`}></div>
-          </div>
-        </div>
-        
-    
-        {/* Slider Container */}
+      <div className="w-full flex items-center gap-x-1">
+        <p className={`text-white text-base sm:text-2xl font-semibold sm:font-bold ${marginStyle}`}>{title}</p>
         <div 
-          className="w-full h-auto mt-1 sm:mt-3" 
-          onMouseOver={() => deviceType === "Desktop" && setSwiperHover(true)} 
-          onMouseOut={() => deviceType === "Desktop" && setSwiperHover(false)}
-        >
-          {/* Swiper Controller */
-          screenWidth >= 640 &&
-            <div className="hidden sm:block">
-              <div className={`cursor-pointer absolute h-40 w-[3.75rem] bg-[hsla(0,0%,8%,.5)] text-white
-                  z-20 items-center justify-center custom-transition-duration-3s rounded-r ${swiperHover && showLeftSwipe ? "flex" : "hidden"}`}
-                onClick={() => swipeLeft(classCount)}  
-                onMouseOver={() => deviceType === "Desktop" && setLeftSwiperHover(true)}
-                onMouseOut={() => deviceType === "Desktop" && setLeftSwiperHover(false)}
-              >
-                <KeyboardArrowLeftIcon sx={{ fontSize: leftSwiperHover ? "5rem" : "3rem", fontWeight: "bold", transition : ".3s"}}/>
-              </div>
-              <div className={`cursor-pointer absolute h-40 w-[3.75rem] bg-[hsla(0,0%,8%,.5)] text-white right-0
-                  z-20 items-center justify-center custom-transition-duration-3s rounded-l ${swiperHover ? "flex" : "hidden"}`}
-                onClick={()=> { setShowLeftSwipe(true) ; swipeRight(classCount)}} 
-                onMouseOver={() => deviceType === "Desktop" && setRightSwiperHover(true)}
-                onMouseOut={() => deviceType === "Desktop" && setRightSwiperHover(false)}
-              >
-                <KeyboardArrowRightIcon sx={{ fontSize: rightSwiperHover ? "5rem" : "3rem", fontWeight: "bold", transition : ".3s"}}/>
-              </div>
-            </div>
-          }
-
-          {/* Carousel Using React Swiper */
-          (isDataLoading1 && isDataLoading2) ?
-          <div className={`w-full h-[9rem] sm:h-[10rem] ${marginStyle} gap-x-2 flex`}>
-            {Array.from({ length: 10 }, (_, index) => (
-              <div key={index} className="rounded-md itemSkeleton min-w-[6.5rem] w-[6.5rem] sm:min-w-[18rem] sm:w-[18rem] h-[9rem] sm:h-[10rem]">
-              </div>
-            ))}
-          </div>
-          :
-          combinedData && combinedData?.results?.length > 1 && 
-            <Swiper
-              mousewheel={true}
-              slidesPerView="auto"
-              spaceBetween={8}
-              grabCursor={false}
-              loop={true}
-              navigation={true}
-              modules={[Navigation]}
-              className={`w-full h-[9rem] sm:h-auto ${marginStyle} overflow-visible mySwiper`}
-            >
-              {
-              combinedData?.results?.map((res : ItemType, index : number) => (
-                screenWidth < 640 ?
-                  <SwiperSlide className="h-full swiperSlide" key={index}>
-                      <LazyLoadImage
-                        alt="Show Image"
-                        src={`${res?.poster_path && import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
-                        className="showSkeleton h-full w-full rounded"
-                        onError={handleImageError}
-                        onClick={() => navigate(`/browse/${res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"}?q=${res?.id}`)}
-                      />
-                  </SwiperSlide>
-                  :
-                  <SwiperSlide 
-                    className = "swiperSlide h-[10rem] cursor-pointer hover:cursor-pointer"
-                    key={index}
-                    onMouseOver={() => { deviceType === "Desktop" && setItemHover(index) ; handleHover((res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id) }}
-                    onMouseLeave={() =>{ deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
-                    onClick={(event) =>  
-                      screenWidth > 639  && handleClickModal(event, (res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id)
-                    }
-                  >
-                      <ItemSlider
-                        itemHover = {itemHover}
-                        index = {index}
-                        imageUrl = {res?.backdrop_path}
-                        trailerData = {trailerData}
-                        isFetchedTrailer = {isFetchedTrailer}
-                        mediaType = {res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"}
-                        showDetails = {showDetails}
-                      />
-                  </SwiperSlide>
-                ))
-              }
-            </Swiper>
-          }
+          className={`custom-transition-duration-10s hidden items-center  text-[#54b9c5] text-base font-extrabold 
+            mt-[.4rem] cursor-pointer ${deviceType === "Desktop" && sliderTitleHover && "sm:flex"} ${exploreHover && "pl-3"}`}
+          onMouseOver={() => SetExploreHover(true)} 
+          onMouseLeave={() => SetExploreHover(false)}
+        > 
+          <p className={`custom-transition-duration-3s whitespace-nowrap overflow-hidden ${exploreHover ? "w-[5rem]" : "w-0"}`}>Explore All</p>
+          <div className={`custom-transition-duration-3s mt-[0rem] border-t-4 border-r-4 border-[#54b9c5] rotate-45 ${exploreHover ? "h-[10px] w-[10px]" : "h-[13px] w-[13px]"}`}></div>
         </div>
+      </div>
+        
+      {/* Slider Container */}
+      <div 
+        className="w-full h-auto mt-1 sm:mt-3" 
+        onMouseOver={() => deviceType === "Desktop" && setSwiperHover(true)} 
+        onMouseOut={() => deviceType === "Desktop" && setSwiperHover(false)}
+      >
+        {/* Swiper Controller */
+        screenWidth >= 640 &&
+          <div className="hidden sm:block">
+            <div className={`cursor-pointer absolute h-40 w-[3.75rem] bg-[hsla(0,0%,8%,.5)] text-white
+                z-20 items-center justify-center custom-transition-duration-3s rounded-r ${swiperHover && showLeftSwipe ? "flex" : "hidden"}`}
+              onClick={() => swipeLeft(classCount)}  
+              onMouseOver={() => deviceType === "Desktop" && setLeftSwiperHover(true)}
+              onMouseOut={() => deviceType === "Desktop" && setLeftSwiperHover(false)}
+            >
+              <KeyboardArrowLeftIcon sx={{ fontSize: leftSwiperHover ? "5rem" : "3rem", fontWeight: "bold", transition : ".3s"}}/>
+            </div>
+            <div className={`cursor-pointer absolute h-40 w-[3.75rem] bg-[hsla(0,0%,8%,.5)] text-white right-0
+                z-20 items-center justify-center custom-transition-duration-3s rounded-l ${swiperHover ? "flex" : "hidden"}`}
+              onClick={()=> { setShowLeftSwipe(true) ; swipeRight(classCount)}} 
+              onMouseOver={() => deviceType === "Desktop" && setRightSwiperHover(true)}
+              onMouseOut={() => deviceType === "Desktop" && setRightSwiperHover(false)}
+            >
+              <KeyboardArrowRightIcon sx={{ fontSize: rightSwiperHover ? "5rem" : "3rem", fontWeight: "bold", transition : ".3s"}}/>
+            </div>
+          </div>
+        }
+
+        {/* Carousel Using React Swiper */
+        (isDataLoading1 && isDataLoading2) ?
+        <div className={`w-full h-[9rem] sm:h-[10rem] ${marginStyle} gap-x-2 flex`}>
+          {Array.from({ length: 10 }, (_, index) => (
+            <div key={index} className="rounded-md itemSkeleton min-w-[6.5rem] w-[6.5rem] sm:min-w-[18rem] sm:w-[18rem] h-[9rem] sm:h-[10rem]">
+            </div>
+          ))}
+        </div>
+        :
+        combinedData && combinedData?.results?.length > 1 && 
+          <Swiper
+            mousewheel={true}
+            slidesPerView="auto"
+            spaceBetween={8}
+            grabCursor={false}
+            loop={true}
+            navigation={true}
+            modules={[Navigation]}
+            className={`w-full h-[9rem] sm:h-auto ${marginStyle} overflow-visible mySwiper`}
+          >
+            {
+            combinedData?.results?.map((res : ItemType, index : number) => (
+              screenWidth < 640 ?
+                <SwiperSlide className="h-full swiperSlide" key={index}>
+                  <LazyLoadImage
+                    alt="Show Image"
+                    src={`${res?.poster_path && import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
+                    className="showSkeleton h-full w-full rounded"
+                    onError={handleImageError}
+                    onClick={() => navigate(`/browse/${res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"}?q=${res?.id}`)}
+                  />
+                </SwiperSlide>
+                :
+                <SwiperSlide 
+                  className = "swiperSlide h-[10rem] cursor-pointer hover:cursor-pointer"
+                  key={index}
+                  onMouseOver={() => { deviceType === "Desktop" && setItemHover(index) ; handleHover((res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id) }}
+                  onMouseLeave={() =>{ deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
+                  onClick={(event) =>  
+                    screenWidth > 639  && handleClickModal(event, (res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"), res?.id)
+                  }
+                >
+                  <ItemSlider
+                    itemHover = {itemHover}
+                    index = {index}
+                    imageUrl = {res?.backdrop_path}
+                    trailerData = {trailerData}
+                    isFetchedTrailer = {isFetchedTrailer}
+                    mediaType = {res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"}
+                    showDetails = {showDetails}
+                  />
+                </SwiperSlide>
+              ))
+            }
+          </Swiper>
+        }
+      </div>
     </div>
   )
 }

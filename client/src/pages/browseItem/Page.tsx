@@ -55,7 +55,7 @@ export const Page = () => {
       <Skeleton variant="rectangular" animation="wave" width={"100%"} height={screenWidth < 400 ? "13rem" : "17rem"}/>
       <div className="flex flex-col mt-2 mx-2 gap-y-2">
         {Array.from({ length: 3 }, (_, index) => (
-              <Skeleton variant="rounded" animation="wave" width={"100%"} height={"2rem"} key={index}/>
+          <Skeleton variant="rounded" animation="wave" width={"100%"} height={"2rem"} key={index}/>
         ))}
       </div>
     </>

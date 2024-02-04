@@ -1,6 +1,9 @@
 // Types for my Item Container
 export type ItemType = {
     id: string
+    title? : string
+    name? : string
+    original_title? : string
     poster_path: string
     backdrop_path: string
     media_type : string

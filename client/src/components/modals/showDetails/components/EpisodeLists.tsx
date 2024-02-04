@@ -254,7 +254,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
           isLoadingEpisode ?
             <div className="flex flex-col gap-y-2">
               {Array.from({ length: 10 }, (_, index) => (
-                  <Skeleton variant="rounded" animation="wave" width={"100%"} height={"8rem"} key={index}/>
+                <Skeleton variant="rounded" animation="wave" width={"100%"} height={"8rem"} key={index}/>
               ))}
             </div>
           :

@@ -6,10 +6,10 @@ import { useNavigate } from "react-router-dom"
 import { useAppStore } from "../../../store/ZustandStore"
 
 type VideoSectionProps = {
-    isFetchedTrailer : boolean
-    showDetailsData : {
-        backdrop_path: string
-    }
+  isFetchedTrailer : boolean
+  showDetailsData : {
+    backdrop_path: string
+  }
 }
 
 export const VideoSection = ({ isFetchedTrailer, showDetailsData } : VideoSectionProps) => {

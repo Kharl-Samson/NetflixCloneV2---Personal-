@@ -27,15 +27,15 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
 }))
 
 export const ItemSliderTop10 = ({
-        itemHover,
-        index,
-        imageUrl,
-        trailerData,
-        isFetchedTrailer,
-        mediaType,
-        showDetails,
-        onMouseOver
-    }: ItemSliderProps
+    itemHover,
+    index,
+    imageUrl,
+    trailerData,
+    isFetchedTrailer,
+    mediaType,
+    showDetails,
+    onMouseOver
+  }: ItemSliderProps
 ) => {
     // State from zustand
     const {screenWidth} = useAppStore()
@@ -66,8 +66,7 @@ export const ItemSliderTop10 = ({
   return (
     <div
       className = {`swiperSlideSmall cursor-pointer hover:cursor-pointer eachSwiper float-right sm:rounded overflow-hidden
-        custom-transition-duration-3s ${itemHover == index && triggerAnimItems && hoverStyle}`
-      } 
+        custom-transition-duration-3s ${itemHover == index && triggerAnimItems && hoverStyle}`} 
     >
       {/* Show Rankings */}
       <Rank index={index || 0} onMouseOver={onMouseOver}/>
@@ -88,11 +87,11 @@ export const ItemSliderTop10 = ({
         <div className={`w-full h-[14.063rem] mt-[-14.063rem] overflow-hidden cursor-pointer hover:cursor-pointer items-center justify-center relative none sm:flex
           ${showVideoItems && itemHover === index && triggerAnimItems ? "z-10" : "z-0"}`} key={trailerData}>
           <YoutubePlayerItem
-              key={trailerData}
-              id = "youtubePlayerItems"
-              videoId = {trailerData} 
-              duration = {1500}
-              isFetchedTrailer = {isFetchedTrailer}
+            key={trailerData}
+            id = "youtubePlayerItems"
+            videoId = {trailerData} 
+            duration = {1500}
+            isFetchedTrailer = {isFetchedTrailer}
           />
           {/* Sounds Controller */}
           <div 

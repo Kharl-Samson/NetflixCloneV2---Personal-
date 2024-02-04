@@ -103,11 +103,11 @@ export const ItemSlider = ({
         <div className={`w-full h-[14.063rem] mt-[-14.063rem] overflow-hidden flex items-center justify-center relative cursor-pointer hover:cursor-pointer
           ${showVideoItems && itemHover === index && triggerAnimItems ? "z-10" : "z-0"}`} key={trailerData}>
           <YoutubePlayerItem
-              key={trailerData}
-              id = "youtubePlayerItems"
-              videoId = {trailerData} 
-              duration = {1500}
-              isFetchedTrailer = {isFetchedTrailer}
+            key={trailerData}
+            id = "youtubePlayerItems"
+            videoId = {trailerData} 
+            duration = {1500}
+            isFetchedTrailer = {isFetchedTrailer}
           />
           {/* Sounds Controller */}
           <div 

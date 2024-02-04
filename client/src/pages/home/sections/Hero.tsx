@@ -5,11 +5,6 @@ import { HeroComponentNormal } from "../components/HeroComponentNormal"
 import { HeroComponentSmall } from "../components/HeroComponentSmall"
 import { useAppStore } from "../../../store/ZustandStore"
 
-type MyData = {
-  id: string
-  backdrop_path?: string
-}
-
 export const Hero = () => {
     // State from zustand
     const {screenWidth} = useAppStore()

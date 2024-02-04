@@ -93,26 +93,26 @@ export const ShowsDetails = ({scrollToBottom, myRef} : showDetailsDataProps) => 
       setAge(ageArray[randomAge])
     },[])
 
-      // Set video status if user in changing tab
-  useEffect(() => {
-    // Handler to call on visibility change
-    const handleVisibilityChange1 = () => {
-      // For video player in item modal
-      if(currentArticle !== "detailsSection" && (categoryParams === "tv" || categoryParams === "movie") && (params || params !== "Default")){
-        if (document.hidden) { // Tab is inactive
-          setPauseModal(true)
-          setShowVideoModal(false)
-        }
-        else { // Tab is active
-          setShowVideoModal(true)
-          setPauseModal(false)
+    // Set video status if user in changing tab
+    useEffect(() => {
+      // Handler to call on visibility change
+      const handleVisibilityChange1 = () => {
+        // For video player in item modal
+        if(currentArticle !== "detailsSection" && (categoryParams === "tv" || categoryParams === "movie") && (params || params !== "Default")){
+          if (document.hidden) { // Tab is inactive
+            setPauseModal(true)
+            setShowVideoModal(false)
+          }
+          else { // Tab is active
+            setShowVideoModal(true)
+            setPauseModal(false)
+          }
         }
       }
-    }
-    document.addEventListener('visibilitychange', handleVisibilityChange1)
-    // Clean up
-    return () => document.removeEventListener('visibilitychange', handleVisibilityChange1)
-  }, [params, categoryParams, currentArticle])
+      document.addEventListener('visibilitychange', handleVisibilityChange1)
+      // Clean up
+      return () => document.removeEventListener('visibilitychange', handleVisibilityChange1)
+    }, [params, categoryParams, currentArticle])
   
   return (
   (isTrailerLoading && isCastsLoading && isShowDetailsLoading)  ? 
@@ -130,9 +130,9 @@ export const ShowsDetails = ({scrollToBottom, myRef} : showDetailsDataProps) => 
         />
 
         {/* Video Player */}
-        <div className={`custom-transition-duration-10s max-w-[3000px] mx-auto top-0 w-full h-[31rem] overflow-hidden mt-[-31rem] z-[2] relative ${showVideoModal ? "opacity-100" : "opacity-0"}`} key={trailerData}>
+        <div className={`custom-transition-duration-10s max-w-[3000px] mx-auto top-0 w-full h-[31rem] overflow-hidden mt-[-31rem] z-[2] relative ${showVideoModal ? "opacity-100" : "opacity-0"}`} key={params}>
             <YoutubePlayerModal
-                key={trailerData}
+                key={params}
                 id = "youtubePlayerModal"
                 videoId = {trailerData} 
                 duration = {2500}

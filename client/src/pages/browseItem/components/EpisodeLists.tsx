@@ -22,9 +22,11 @@ type EpisodeListsProps = {
           id : string
       }
     }
+    isFetchedShowDetails : boolean
+    isShowDetailsLoading : boolean
 }
 
-export const EpisodeLists = ({showDetailsData} : EpisodeListsProps) => {
+export const EpisodeLists = ({showDetailsData, isFetchedShowDetails, isShowDetailsLoading} : EpisodeListsProps) => {
     // Params Url Getter
     const { params, categoryParams } = useRouteAndQueryParams()
 
@@ -52,7 +54,7 @@ export const EpisodeLists = ({showDetailsData} : EpisodeListsProps) => {
 
     // Fetch Episode Details
     const { data : episodeData, isLoading: isLoadingEpisode } = useQuery(
-        ["episodeKey", selectedSeason],
+        ["episodeKey", selectedSeason, showDetailsData, isFetchedShowDetails, isShowDetailsLoading],
         () => showDetailsData?.number_of_seasons && getEpisodeDetails(showDetailsData?.id, selectedSeason)
     )
 

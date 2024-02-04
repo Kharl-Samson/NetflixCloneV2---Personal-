@@ -76,6 +76,8 @@ export const Page = () => {
       {/* Episodes Section */}
       <EpisodeLists  
         showDetailsData = {showDetailsData}
+        isFetchedShowDetails = {isFetchedShowDetails}
+        isShowDetailsLoading = {isShowDetailsLoading}
       />
     </section>
   )

@@ -35,6 +35,7 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer, isD
     const urlParams = new URLSearchParams(window.location.search)
     const searchParams = urlParams.get("search")
 
+    // Sound Controller
     const toggleVideoSound = () => {
         searchParams !== "1" && setPlayAgain(false)
         searchParams !== "1" && setIsMuted(!isMuted)
@@ -121,12 +122,12 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer, isD
                 <p 
                     className={`text-white custom-transition-duration-10s
                         movie-title-font-large max-w-[40rem] xl:max-w-[80%] 
-                        leading-tight ${textAnim ? "text-4xl 801size:text-5xl xl:text-7xl" : "text-5xl 801size:text-7xl xl:text-8xl"}`}
+                        leading-tight ${textAnim ? "text-4xl 801size:text-5xl 2xl:text-7xl" : "text-5xl 801size:text-7xl 2xl:text-8xl"}`}
                 >
                     {myData?.title || myData?.original_title}
                 </p>
                 <p 
-                    className={`mt-4 text-white text-base xl:text-xl max-w-[70%] xl:max-w-[50%] custom-transition-duration-10s
+                    className={`mt-4 text-white text-base xl:text-xl max-w-[70%] 2xl:max-w-[50%] custom-transition-duration-10s
                         ${textAnim ? "hidden" : "block"}`}
                 >
                     {myData?.overview}

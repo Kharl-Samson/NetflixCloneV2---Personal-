@@ -5,6 +5,7 @@ import play from "../../../assets/images/icons/play.png"
 import info from "../../../assets/images/icons/info.svg"
 import { useClickHandlers } from "../../../utils/itemsFunction"
 import Skeleton from "@mui/material/Skeleton"
+import { useNavigate } from "react-router-dom"
 
 type HeroProps = {
   myData : {
@@ -22,6 +23,9 @@ type HeroProps = {
 }
 
 export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer, isDataLoading, isTrailerLoading, marginStyle} : HeroProps ) => {
+    // Navigate
+    const navigate = useNavigate()
+
     // State from zustand
     const {screenWidth} = useAppStore()
 
@@ -33,6 +37,7 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer, isD
   
     // Get search value params
     const urlParams = new URLSearchParams(window.location.search)
+    const sParam = urlParams.get("s")
     const searchParams = urlParams.get("search")
 
     // Sound Controller
@@ -78,6 +83,11 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer, isD
 
     // Items Functions Util
     const { handleClickModal } = useClickHandlers()
+
+    // Trigger search page based on screen size
+    useEffect(() => {
+      screenWidth < 640 && searchParams === "1" && sParam && navigate(`/search/?s=${sParam}`) 
+    },[screenWidth])
 
   return (
     (screenWidth >= 640 && myData?.id === "" && (isDataLoading || isTrailerLoading)) ?

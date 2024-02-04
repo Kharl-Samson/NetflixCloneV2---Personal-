@@ -23,7 +23,7 @@ export const Page = () => {
     const navigate = useNavigate()
 
     // Zustand State
-    const { searchValue, setSearchValue } = useAppStore()
+    const { searchValue, setSearchValue, screenWidth } = useAppStore()
 
     // Fetch data to be showned in section -> First Data
     const { data : data1, isFetched: isFetchedData1, isError: isDataError1, isLoading : isDataLoading1 } = useQuery(
@@ -95,6 +95,11 @@ export const Page = () => {
       })
       if (node) observer.current.observe(node)
     }, [isFetchingNextPage, fetchNextPage, hasNextPage])
+
+    // Trigger search page based on screen size
+    useEffect(() => {
+      screenWidth >= 640 && navigate(`/?search=1&s=${searchValue}`) 
+    },[screenWidth])
 
   return (
     <section className="w-full">
@@ -173,7 +178,7 @@ export const Page = () => {
                       key={index}
                       alt="Show Image"
                       src={`${res?.poster_path && import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
-                      className="showSkeleton w-full h-[11.5rem] rounded"
+                      className="showSkeleton w-full rounded"
                       onError={handleImageError}
                       onClick={() => navigate(`/browse/${res?.media_type}?q=${res?.id}`)}
                     />

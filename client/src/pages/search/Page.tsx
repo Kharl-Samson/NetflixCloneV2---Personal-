@@ -7,6 +7,7 @@ import { ItemSlider } from "../../components/slider/ItemSlider"
 import { useAppStore } from "../../store/ZustandStore"
 
 export const Page = () => {
+
     // Get search value params
     const urlParams = new URLSearchParams(window.location.search)
     const sParam = urlParams.get("s")

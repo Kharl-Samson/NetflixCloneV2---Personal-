@@ -7,6 +7,7 @@ import Skeleton from "@mui/material/Skeleton"
 import { handleImageError } from "../../../types/errorTypes"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import { useRouteAndQueryParams } from "../../../utils/itemsFunction"
+import { useNavigate } from "react-router-dom"
 
 type EpisodeListsProps = {
   showDetailsData : {
@@ -27,6 +28,9 @@ type EpisodeListsProps = {
 }
 
 export const EpisodeLists = ({showDetailsData, isFetchedShowDetails, isShowDetailsLoading} : EpisodeListsProps) => {
+    // Navigate
+    const navigate = useNavigate()
+
     // Params Url Getter
     const { params, categoryParams } = useRouteAndQueryParams()
 
@@ -270,6 +274,7 @@ export const EpisodeLists = ({showDetailsData, isFetchedShowDetails, isShowDetai
           res : {
             id: number, 
             poster_path: string,
+            media_type: string
           }
         ) => (
           // Item Poster
@@ -279,6 +284,7 @@ export const EpisodeLists = ({showDetailsData, isFetchedShowDetails, isShowDetai
             src={`${res?.poster_path && import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
             className="w-full h-[11rem] rounded"
             onError={handleImageError}
+            onClick={() => navigate(`/browse/${res?.media_type}?q=${res?.id}`)}
           />
         ))}
       </div>
@@ -298,6 +304,7 @@ export const EpisodeLists = ({showDetailsData, isFetchedShowDetails, isShowDetai
           res : {
             id: number, 
             poster_path: string,
+            media_type: string
           }
         ) => (
           // Item Poster
@@ -307,6 +314,7 @@ export const EpisodeLists = ({showDetailsData, isFetchedShowDetails, isShowDetai
             src={`${res?.poster_path && import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
             className="w-full h-[11rem] rounded"
             onError={handleImageError}
+            onClick={() => navigate(`/browse/${res?.media_type}?q=${res?.id}`)}
           />
         ))}
       </div>

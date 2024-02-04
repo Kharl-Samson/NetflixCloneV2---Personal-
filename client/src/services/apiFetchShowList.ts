@@ -23,6 +23,19 @@ export const getShowList = async(queryType: string, category : string | null, la
       url = `${import.meta.env.VITE_SERVER_URL}/${category}/popular`
       break
   
+    case "Top Rated Movies":
+    case "Popular On Netflix TV":
+      url = `${import.meta.env.VITE_SERVER_URL}/${category}/top_rated`
+      break
+
+    case "Documentaries TV":
+    case "Western TV Sci-Fi & Fantasy":
+    case "Exciting Western Movies":
+    case "Drama Movies":
+    case "Watch for a While TV":
+      url = `${import.meta.env.VITE_SERVER_URL}/discover/${category}`
+      break
+
     default:
       url = ""
       break

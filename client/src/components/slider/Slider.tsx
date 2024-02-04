@@ -52,9 +52,16 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
       () => getShowList(
         queryType,                                                    // Query Type (ex. Hero, Romantic Movies, TV Action & Adventure, etc)
         dataCategory1,                                                // Category (ex. tv or movie)
-        queryType === "Romantic Movies" ? null : "en-US",             // Language
-        queryType === "Romantic Movies" ? 
-        10749 : queryType === "TV Action & Adventure" ? 10759 : null, // Genre
+        queryType === "Romantic Movies" ? null :                      // Language
+          "en-US",  
+        queryType === "Romantic Movies" ? 10749 :                     // Genre
+          queryType === "TV Action & Adventure" ? 10759 :
+          queryType === "Documentaries TV" ? 99 :
+          queryType === "Western TV Sci-Fi & Fantasy" ? 10765 :
+          queryType === "Exciting Western Movies" ? 37 :
+          queryType === "Drama Movies" ? 18 :
+          queryType === "Watch for a While TV" ? 80 :
+          null,
         1                                                             // Page Number
       )
     )
@@ -65,9 +72,16 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
       () => getShowList(
         queryType,                                            // Query Type (ex. Hero, Romantic Movies, TV Action & Adventure, etc)
         dataCategory1,                                        // Category (ex. tv or movie)
-        queryType === "Romantic Movies" ? null : "en-US",     // Language
-        queryType === "Romantic Movies" ? 10749 : 
-        queryType === "TV Action & Adventure" ? 10759 : null, // Genre
+        queryType === "Romantic Movies" ? null :              // Language
+          "en-US",     
+        queryType === "Romantic Movies" ? 10749 :             // Genre
+          queryType === "TV Action & Adventure" ? 10759 :
+          queryType === "Documentaries TV" ? 99 :
+          queryType === "Western TV Sci-Fi & Fantasy" ? 10765 :
+          queryType === "Exciting Western Movies" ? 37 :
+          queryType === "Drama Movies" ? 18 :
+          queryType === "Watch for a While TV" ? 80 :
+          null,
         2                                                     // Page Number
       )
     )

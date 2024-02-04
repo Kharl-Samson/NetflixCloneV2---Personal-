@@ -74,13 +74,6 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer, isD
       (searchParams !== "1" && currentSection !== "categorySection" && !firstLoadStatus) && setShowVideo(true)
     }, [currentSection])
 
-    // Device Checker
-    const [deviceType, setDeviceType] = useState<string | null>(null)
-    useEffect(() => {
-      const userAgent = navigator.userAgent.toLowerCase()
-      userAgent.match(/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i) ? setDeviceType("Phone") : setDeviceType("Desktop")
-    },[deviceType])
-
     // Items Functions Util
     const { handleClickModal } = useClickHandlers()
 
@@ -149,7 +142,7 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer, isD
 
             <button 
               className="rounded-md flex items-center gap-x-[15px] font-netflix_regular py-[11px] px-[35px] transition duration-400 bg-[#857e7ea8] hover:opacity-80"
-              onClick={(event) => deviceType === "Desktop" && handleClickModal(event, "movie", myData?.id)}
+              onClick={(event) => handleClickModal(event, "movie", myData?.id)}
             >
               <img src={info} alt="Info Icon" className="h-[27px]"/>
               <span className="text-[1.4rem] text-white font-semibold">More Info</span>

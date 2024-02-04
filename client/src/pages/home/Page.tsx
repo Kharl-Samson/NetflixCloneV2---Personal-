@@ -156,6 +156,104 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
           queryKey = "tvActionAdventure"
           classCount = {5}
         />
+
+        {/* Top Rated */}
+        <Slider
+          marginStyle = { 
+            screenWidth < 640 ? "ml-5" : 
+            screenWidth <= 800 ? "ml-7" : 
+            screenWidth <= 950 ? "ml-7" : "ml-14"
+          }
+          sliderStyle = "sm:mt-14 sm:z-[34]"
+          title = "Top Rated"
+          queryType = "Top Rated Movies"
+          queryKey = "topRated"
+          classCount = {6}
+        />
+
+        {/* Popular on netflix */}
+        <Slider
+          marginStyle = { 
+            screenWidth < 640 ? "ml-5" : 
+            screenWidth <= 800 ? "ml-7" : 
+            screenWidth <= 950 ? "ml-7" : "ml-14"
+          }
+          sliderStyle = "sm:mt-14 sm:z-[33]"
+          title = "Popular on netflix"
+          queryType = "Popular On Netflix TV"
+          queryKey = "popularOnNetflix"
+          classCount = {7}
+        />
+
+        {/* Documentaries */}
+        <Slider
+          marginStyle = { 
+            screenWidth < 640 ? "ml-5" : 
+            screenWidth <= 800 ? "ml-7" : 
+            screenWidth <= 950 ? "ml-7" : "ml-14"
+          }
+          sliderStyle = "sm:mt-14 sm:z-[32]"
+          title = "Documentaries"
+          queryType = "Documentaries TV"
+          queryKey = "documentary"
+          classCount = {8}
+        />
+
+        {/* Western TV Sci-Fi & Fantasy */}
+        <Slider
+          marginStyle = { 
+            screenWidth < 640 ? "ml-5" : 
+            screenWidth <= 800 ? "ml-7" : 
+            screenWidth <= 950 ? "ml-7" : "ml-14"
+          }
+          sliderStyle = "sm:mt-14 sm:z-[31]"
+          title = "Western TV Sci-Fi & Fantasy"
+          queryType = "Western TV Sci-Fi & Fantasy"
+          queryKey = "westernTVSciFiFantasy"
+          classCount = {9}
+        />
+
+        {/* Exciting Western Movies */}
+        <Slider
+          marginStyle = { 
+            screenWidth < 640 ? "ml-5" : 
+            screenWidth <= 800 ? "ml-7" : 
+            screenWidth <= 950 ? "ml-7" : "ml-14"
+          }
+          sliderStyle = "sm:mt-14 sm:z-[30]"
+          title = "Exciting Western Movies"
+          queryType = "Exciting Western Movies"
+          queryKey = "excitingWesternMovies"
+          classCount = {10}
+        />
+
+        {/* Drama Movies */}
+        <Slider
+          marginStyle = { 
+            screenWidth < 640 ? "ml-5" : 
+            screenWidth <= 800 ? "ml-7" : 
+            screenWidth <= 950 ? "ml-7" : "ml-14"
+          }
+          sliderStyle = "sm:mt-14 sm:z-[29]"
+          title = "Drama Movies"
+          queryType = "Drama Movies"
+          queryKey = "dramaMovies"
+          classCount = {11}
+        />
+
+        {/* Watch For A While */}
+        <Slider
+          marginStyle = { 
+            screenWidth < 640 ? "ml-5" : 
+            screenWidth <= 800 ? "ml-7" : 
+            screenWidth <= 950 ? "ml-7" : "ml-14"
+          }
+          sliderStyle = "sm:mt-14 sm:z-[28]"
+          title = "Watch for a While"
+          queryType = "Watch for a While TV"
+          queryKey = "watchForaWhile"
+          classCount = {12}
+        />
       </main>
 
       {/* Modals - [Larger Screens] */

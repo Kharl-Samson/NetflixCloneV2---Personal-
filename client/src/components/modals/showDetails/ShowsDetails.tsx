@@ -131,8 +131,9 @@ export const ShowsDetails = ({scrollToBottom, myRef} : showDetailsDataProps) => 
       
 
       {/* Video Player */}
-      <div className={`custom-transition-duration-10s max-w-[3000px] mx-auto top-0 w-full h-[31rem] overflow-hidden mt-[-31rem] z-[2] relative ${showVideoModal ? "opacity-100" : "opacity-0"}`}>
+      <div className={`custom-transition-duration-10s max-w-[3000px] mx-auto top-0 w-full h-[31rem] overflow-hidden mt-[-31rem] z-[2] relative ${showVideoModal ? "opacity-100" : "opacity-0"}`} key={params}>
         <YoutubePlayerModal
+          key={params}
           id = "youtubePlayerModal"
           videoId = {trailerData} 
           duration = {2500}

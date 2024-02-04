@@ -78,7 +78,7 @@ img[alt]:after {
     line-height: 2;  
     text-align: center;
     content: attr(alt);
-  }
+}
 
 /* Custom CSS */
 @layer components {

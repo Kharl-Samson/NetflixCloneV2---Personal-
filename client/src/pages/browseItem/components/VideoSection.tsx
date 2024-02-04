@@ -32,13 +32,15 @@ export const VideoSection = ({ isFetchedTrailer, showDetailsData } : VideoSectio
         />
       </div>
 
-      {/* Items Poster */}
-      <LazyLoadImage
-        alt="Episode Banner Image"
-        src={`${showDetailsData?.backdrop_path && import.meta.env.VITE_BASE_IMAGE_URL}${showDetailsData?.backdrop_path}`} 
-        className={`custom-transition-duration-10s h-[13rem] 400size:h-[17rem] w-full mt-[-13rem] 400size:mt-[-17rem] relative z-10 object-cover object-center ${showVideoPhone ? "opacity-0" : "opacity-100"}`}
-        onError={handleImageError}
-      />
+      {/* Items Poster */
+      showDetailsData?.backdrop_path && 
+        <LazyLoadImage
+          alt="Episode Banner Image"
+          src={`${import.meta.env.VITE_BASE_IMAGE_URL}${showDetailsData?.backdrop_path}`} 
+          className={`custom-transition-duration-10s h-[13rem] 400size:h-[17rem] w-full mt-[-13rem] 400size:mt-[-17rem] relative z-10 object-cover object-center ${showVideoPhone ? "opacity-0" : "opacity-100"}`}
+          onError={handleImageError}
+        />
+      }
 
       {/* Video Player Controller */}
       <div 

@@ -273,13 +273,14 @@ export const EpisodeLists = ({showDetailsData, isFetchedShowDetails, isShowDetai
           }
         ) => (
           // Item Poster
-          <LazyLoadImage
-            key={res?.id}
-            alt="Show Image"
-            src={`${res?.poster_path && import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
-            className="w-full h-[11rem] rounded"
-            onError={handleImageError}
-          />
+          res?.poster_path && 
+            <LazyLoadImage
+              key={res?.id}
+              alt="Show Image"
+              src={`${import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
+              className="w-full h-[11rem] rounded"
+              onError={handleImageError}
+            />
         ))}
       </div>
       :
@@ -301,13 +302,14 @@ export const EpisodeLists = ({showDetailsData, isFetchedShowDetails, isShowDetai
           }
         ) => (
           // Item Poster
-          <LazyLoadImage
-            key={res?.id}
-            alt="Show Image"
-            src={`${res?.poster_path && import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
-            className="w-full h-[11rem] rounded"
-            onError={handleImageError}
-          />
+          res?.poster_path &&
+            <LazyLoadImage
+              key={res?.id}
+              alt="Show Image"
+              src={`${import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
+              className="w-full h-[11rem] rounded"
+              onError={handleImageError}
+            />
         ))}
       </div>
       }

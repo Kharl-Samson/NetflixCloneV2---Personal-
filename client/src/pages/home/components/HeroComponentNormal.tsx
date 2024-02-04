@@ -93,7 +93,7 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer, isD
       {/* Image Banner */
       screenWidth >= 640 && myData?.backdrop_path &&
         <img 
-          src={`${myData?.backdrop_path && import.meta.env.VITE_BASE_IMAGE_URL}${myData?.backdrop_path}`}
+          src={`${import.meta.env.VITE_BASE_IMAGE_URL}${myData?.backdrop_path}`}
           alt="Movie Image"
           className={`max-h-[90rem] hidden sm:block absolute top-0 max-w-[3000px] mx-auto w-full h-[45rem] 801size:h-[50rem]
             951size:h-[100dvh] object-center object-cover custom-transition-duration-10s z-10 

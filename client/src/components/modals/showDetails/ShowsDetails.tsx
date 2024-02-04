@@ -121,13 +121,15 @@ export const ShowsDetails = ({scrollToBottom, myRef} : showDetailsDataProps) => 
     </div>
     :
     <div className="min-h-[100dvh] w-[98%] 801size:w-[80%] max-w-[55rem] bg-[#181818] mx-auto mt-9 rounded-lg overflow-hidden pb-[2.5rem]">
-      {/* Image Banner */}
-      <img 
-        src={`${showDetailsData?.backdrop_path && import.meta.env.VITE_BASE_IMAGE_URL}${showDetailsData?.backdrop_path}`}
-        alt="Movie Image"
-        className={`custom-transition-duration-10s w-full h-[31rem] z-[1] relative object-cover 1051size:object-contain ${showVideoModal ? "opacity-0" : "opacity-100"}`}
-        onError={handleImageError}
-      />
+      {/* Image Banner */
+      showDetailsData?.backdrop_path && 
+        <img 
+          src={`${import.meta.env.VITE_BASE_IMAGE_URL}${showDetailsData?.backdrop_path}`}
+          alt="Movie Image"
+          className={`custom-transition-duration-10s w-full h-[31rem] z-[1] relative object-cover 1051size:object-contain ${showVideoModal ? "opacity-0" : "opacity-100"}`}
+          onError={handleImageError}
+        />
+      }
 
       {/* Video Player */}
       <div className={`custom-transition-duration-10s max-w-[3000px] mx-auto top-0 w-full h-[31rem] overflow-hidden mt-[-31rem] z-[2] relative ${showVideoModal ? "opacity-100" : "opacity-0"}`} key={params}>

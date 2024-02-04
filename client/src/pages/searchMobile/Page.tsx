@@ -12,6 +12,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component"
 import { handleImageError } from "../../types/errorTypes"
 import { useAppStore } from "../../store/ZustandStore"
 import React from "react"
+import { scrollToTop } from "../../utils/getCurrentSection"
 
 export const Page = () => {
     // Get search value params
@@ -99,7 +100,7 @@ export const Page = () => {
     <section className="w-full">
       {/* Back and search bar */}
       <div className="px-3 h-[3rem] flex items-center bg-[#181414] sticky top-0">
-        <ArrowBackIosNewIcon onClick={() => navigate(-1)} style={{marginLeft:"-.5rem", color:"white"}}/>
+        <ArrowBackIosNewIcon onClick={() => navigate("/")} style={{marginLeft:"-.5rem", color:"white"}}/>
         {/* Search input */}
         <div className="h-[2rem] ml-5 pr-1 bg-[#424242] flex-grow rounded flex items-center overflow-hidden">
           <SearchIcon style={{color:"#7c7c7c", fontSize:"1.75rem", margin:"0 .5rem"}}/>
@@ -112,7 +113,7 @@ export const Page = () => {
             value={searchValue}
             onChange={handleChange}
           />
-          <CancelIcon style={{color:"#7c7c7c", fontSize:"1.1rem"}} onClick={() => setSearchValue("")}/>
+          <CancelIcon style={{color:"#7c7c7c", fontSize:"1.1rem"}} onClick={() => {setSearchValue("") ; scrollToTop()}}/>
         </div>
       </div>
 
@@ -167,15 +168,14 @@ export const Page = () => {
               <React.Fragment key={groupIndex}>
                 {group.results?.map((res : ItemType, index : number) => {
                   return (
-                  res?.poster_path &&
-                    <LazyLoadImage
-                      key={index}
-                      alt="Show Image"
-                      src={`${import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
-                      className="showSkeleton w-full h-[11.5rem] rounded"
-                      onError={handleImageError}
-                      onClick={() => navigate(`/browse/${res?.media_type}?q=${res?.id}`)}
-                    />
+                  <LazyLoadImage
+                    key={index}
+                    alt="Show Image"
+                    src={`${res?.poster_path && import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
+                    className="showSkeleton w-full h-[11.5rem] rounded"
+                    onError={handleImageError}
+                    onClick={() => navigate(`/browse/${res?.media_type}?q=${res?.id}`)}
+                  />
                   )
                 })}
               </React.Fragment>

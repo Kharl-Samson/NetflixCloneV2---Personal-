@@ -77,3 +77,10 @@ export const convertToHoursAndMinutes = (minutes: number) => {
     minutes: remainingMinutes
   }
 }
+
+export const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  })
+}

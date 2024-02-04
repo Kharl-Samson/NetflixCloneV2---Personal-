@@ -363,15 +363,13 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
                 onMouseOver={() => hoverEpisodeItemCollection(res?.id)}
                 onMouseOut={hoverOutEpisodeItemCollection}
               >
-                {/* Poster */
-                res?.backdrop_path && 
-                  <LazyLoadImage
-                    alt="Show Image"
-                    src={`${import.meta.env.VITE_BASE_IMAGE_URL}${res?.backdrop_path}`} 
-                    className="w-full h-[7rem] 900size:h-[8.5rem]"
-                    onError={handleImageError}
-                  />
-                }
+                {/* Poster */}
+                <LazyLoadImage
+                  alt="Show Image"
+                  src={`${res?.backdrop_path && import.meta.env.VITE_BASE_IMAGE_URL}${res?.backdrop_path}`} 
+                  className="w-full h-[7rem] 900size:h-[8.5rem]"
+                  onError={handleImageError}
+                />
 
                 {/* Show name */}
                 <div className="w-full h-[7rem] mt-[-7rem] 900size:h-[8.5rem] 900size:mt-[-8.5rem] relative z-10 bg-[#02020249] flex items-end">
@@ -454,15 +452,13 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
               onMouseOver={() => hoverEpisodeItemLikeThis(res?.id)}
               onMouseOut={hoverOutEpisodeItemLikeThis}
             >
-              {/* Poster */
-              res?.backdrop_path && 
-                <LazyLoadImage
-                  alt="Show Image"
-                  src={`${import.meta.env.VITE_BASE_IMAGE_URL}${res?.backdrop_path}`} 
-                  className="w-full h-[7rem] 900size:h-[8.5rem]"
-                  onError={handleImageError}
-                />
-              }
+              {/* Poster */}
+              <LazyLoadImage
+                alt="Show Image"
+                src={`${res?.backdrop_path && import.meta.env.VITE_BASE_IMAGE_URL}${res?.backdrop_path}`} 
+                className="w-full h-[7rem] 900size:h-[8.5rem]"
+                onError={handleImageError}
+              />
 
               {/* Show name */}
               <div className="w-full h-[7rem] mt-[-7rem] 900size:h-[8.5rem] 900size:mt-[-8.5rem] relative z-10 bg-[#02020249] flex items-end">

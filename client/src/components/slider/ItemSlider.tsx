@@ -89,16 +89,14 @@ export const ItemSlider = ({
         rounded-md overflow-hidden custom-transition-duration-3s ${itemHover === index && triggerAnimItems && hoverStyle}`
       } 
     >
-      {/* Show Cover */
-      imageUrl &&
-        <LazyLoadImage
-          alt="Show Image"
-          src={`${import.meta.env.VITE_BASE_IMAGE_URL}${imageUrl}`} 
-          className={`w-full showSkeleton relative cursor-pointer hover:cursor-pointer ${itemHover !== index && triggerAnimItems && "rounded"}
-            custom-transition-duration-10s ${showVideoItems && itemHover === index && triggerAnimItems ? "opacity-0 z-0" : "opacity-100 z-10"}`}
-          onError={handleImageError}
-        />
-      }
+      {/* Show Cover */}
+      <LazyLoadImage
+        alt="Show Image"
+        src={`${imageUrl && import.meta.env.VITE_BASE_IMAGE_URL}${imageUrl}s`} 
+        className={`w-full showSkeleton relative cursor-pointer hover:cursor-pointer ${itemHover !== index && triggerAnimItems && "rounded"}
+          custom-transition-duration-10s ${showVideoItems && itemHover === index && triggerAnimItems ? "opacity-0 z-0" : "opacity-100 z-10"}`}
+        onError={handleImageError}
+      />
 
       { /* Show Trailer Video */
       itemHover === index && screenWidth >= 640 &&

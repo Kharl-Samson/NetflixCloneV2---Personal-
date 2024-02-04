@@ -188,11 +188,11 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
           >
             {
             combinedData?.results?.map((res : ItemType, index : number) => (
-              screenWidth < 640 && res?.poster_path ?
+              screenWidth < 640 ?
                 <SwiperSlide className="h-full swiperSlide" key={index}>
                   <LazyLoadImage
                     alt="Show Image"
-                    src={`${import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
+                    src={`${res?.poster_path && import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
                     className="showSkeleton h-full w-full rounded"
                     onError={handleImageError}
                     onClick={() => navigate(`/browse/${res?.media_type ? res?.media_type : queryType.includes("Movies") ? "movie" : "tv"}?q=${res?.id}`)}

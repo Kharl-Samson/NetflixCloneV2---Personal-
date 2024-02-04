@@ -100,7 +100,7 @@ export const Page = () => {
     <section className="w-full">
       {/* Back and search bar */}
       <div className="px-3 h-[3rem] flex items-center bg-[#181414] sticky top-0">
-        <ArrowBackIosNewIcon onClick={() => navigate("/")} style={{marginLeft:"-.5rem", color:"white"}}/>
+        <ArrowBackIosNewIcon onClick={() => {setSearchValue("") ; navigate("/")}} style={{marginLeft:"-.5rem", color:"white"}}/>
         {/* Search input */}
         <div className="h-[2rem] ml-5 pr-1 bg-[#424242] flex-grow rounded flex items-center overflow-hidden">
           <SearchIcon style={{color:"#7c7c7c", fontSize:"1.75rem", margin:"0 .5rem"}}/>
@@ -162,26 +162,33 @@ export const Page = () => {
         <>
           <p className="text-white text-base font-semibold fixed bg-[#181414] w-full h-[2rem] mt-[-.50rem] pt-2">Movies & TV</p>
 
-          {/* Items Container */}
-          <div className="pt-8 w-full gap-[.40rem] pb-[5rem] grid grid-cols-3">
-            {data?.pages?.map((group, groupIndex) => (
-              <React.Fragment key={groupIndex}>
-                {group.results?.map((res : ItemType, index : number) => {
-                  return (
-                  <LazyLoadImage
-                    key={index}
-                    alt="Show Image"
-                    src={`${res?.poster_path && import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
-                    className="showSkeleton w-full h-[11.5rem] rounded"
-                    onError={handleImageError}
-                    onClick={() => navigate(`/browse/${res?.media_type}?q=${res?.id}`)}
-                  />
-                  )
-                })}
-              </React.Fragment>
-            ))}
-            <div ref={hasNextPage ? lastElementRef : null} className={`${hasNextPage && "h-[30dvh]"} w-full`}/>
-          </div>
+          {/* Items Container */
+          data?.pages[0]?.total_results !== 0 ?
+            <div className="pt-8 w-full gap-[.40rem] pb-[5rem] grid grid-cols-3">
+              {data?.pages?.map((group, groupIndex) => (
+                <React.Fragment key={groupIndex}>
+                  {group.results?.map((res : ItemType, index : number) => {
+                    return (
+                    <LazyLoadImage
+                      key={index}
+                      alt="Show Image"
+                      src={`${res?.poster_path && import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
+                      className="showSkeleton w-full h-[11.5rem] rounded"
+                      onError={handleImageError}
+                      onClick={() => navigate(`/browse/${res?.media_type}?q=${res?.id}`)}
+                    />
+                    )
+                  })}
+                </React.Fragment>
+              ))}
+              <div ref={hasNextPage ? lastElementRef : null} className={`${hasNextPage && "h-[30dvh]"} w-full`}/>
+            </div>
+          :
+            <div className="pt-[10rem]">
+              <p className="text-center text-white mx-auto text-2xl font-bold max-w-[15rem]">Oh darn, We don't have that.</p>
+              <p className="text-center text-[#d6d6d6] mx-auto max-w-[80%] mt-1">Try searching for another movie, show, actor, director, or genre.</p>
+            </div>
+          }
         </>
       }
       </div>

@@ -89,29 +89,31 @@ export const Page = () => {
         z-[49] bg-[#181414] overflow-y-scroll search-section px-7 1051size:px-14"
     >
         
-      {/* More related title */}
-      <div className="mt-[6rem] flex gap-x-5">
-        <p className="text-2xl text-[#808080] whitespace-nowrap">More to explore: </p>
-        <div className="mt-[-2px] flex flex-wrap items-center gap-x-3">
-          {// Related title mapping
-          combinedData && combinedData?.results
-            .reduce((unique: {title: string}[], item: {title: string}) => {
-              !unique.some(obj => obj?.title?.toUpperCase() === item?.title?.toUpperCase()) && unique.push(item)
-              return unique
-            }, [])
-            .slice(0,9)
-            .filter((res: { title:  string }) => res.title !== undefined)
-            .map((res: {title : string}, index: number, array: {title: string}[]) => 
-              <div key={res.title} className="flex items-center gap-x-3">
-                <p className="text-2xl text-white">{res.title}</p>
-                {index !== array.length - 1 && <div className="h-[2.2rem] w-[1px] bg-[#cfcfcf]"></div>}
-              </div>
-          )}
+      {data?.pages[0]?.total_results !== 0 ?
+      <>
+        {/* More related title  */}
+        <div className="mt-[6rem] flex gap-x-5">
+          <p className="text-2xl text-[#808080] whitespace-nowrap">More to explore: </p>
+          <div className="mt-[-2px] flex flex-wrap items-center gap-x-3">
+            {// Related title mapping
+            combinedData && combinedData?.results
+              .reduce((unique: {title: string}[], item: {title: string}) => {
+                !unique.some(obj => obj?.title?.toUpperCase() === item?.title?.toUpperCase()) && unique.push(item)
+                return unique
+              }, [])
+              .slice(0,5)
+              .filter((res: { title:  string }) => res.title !== undefined)
+              .map((res: {title : string}, index: number, array: {title: string}[]) => 
+                <div key={res.title} className="flex items-center gap-x-3">
+                  <p className="text-2xl text-white">{res.title}</p>
+                  {index !== array.length - 1 && <div className="h-[2.2rem] w-[1px] bg-[#cfcfcf]"></div>}
+                </div>
+            )}
+          </div>
         </div>
-      </div>
 
-      <div className="my-grid-search mt-5 w-full">
-        {data?.pages?.map((group, groupIndex) => (
+        <div className="my-grid-search mt-5 w-full">
+          {data?.pages?.map((group, groupIndex) => (
             <React.Fragment key={groupIndex}>
               {group.results?.map((res : ItemType, index : number) => {
                 return (
@@ -137,10 +139,26 @@ export const Page = () => {
                 )
               })}
             </React.Fragment>
-        ))}
-        <div ref={hasNextPage ? lastElementRef : null} className={`${hasNextPage && "h-[30dvh]"} w-full`}/>
+          ))}
+          <div ref={hasNextPage ? lastElementRef : null} className={`${hasNextPage && "h-[30dvh]"} w-full`}/>
+        </div>
+        {isFetchingNextPage && <p className="my-2 text-center mx-auto">Loading more...</p>}
+      </>
+      :
+      <div className="mt-[5rem] flex justify-center">
+        <div className="mx-auto">
+          <p className="text-white text-sm">Your search for "{sParam}" did not have any matches.</p>
+          <p className="text-white text-sm mt-3">Suggestions:</p>
+          <ul className="list-disc ml-10 mt-3">
+            <li className="text-white text-sm">Try different keywords</li>
+            <li className="text-white text-sm">Looking for a movie or TV show?</li>
+            <li className="text-white text-sm">Try using a movie, TV show title, an actor or director</li>
+            <li className="text-white text-sm">Try a genre, like comedy, romance, sports, or drama</li>
+          </ul>
+        </div>
       </div>
-      {isFetchingNextPage && <p className="my-2 text-center mx-auto">Loading more...</p>}
+      }
+     
     </section>
   )
 }

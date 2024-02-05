@@ -18,6 +18,7 @@ export type ItemSliderProps = {
     isFetchedTrailer : boolean
     mediaType : string | boolean
     showDetails : {
+      id?: string
       runtime : number
       number_of_seasons : number
       number_of_episodes : number

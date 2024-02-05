@@ -61,8 +61,8 @@ export const ItemSlider = ({
     },[screenWidth])
 
     // Style when hover the item
-    const hoverStyle = `${searchParams === "1" && `search-hover-style ${searchHoverStyle}`} swiperSlideHover h-auto relative z-30 cursor-pointer 
-      hover:cursor-pointer overflow-auto item-shadow mt-[-6rem] rounded-lg ${(itemHover !== 0) && "ml-[-3.438rem]"}`
+    const hoverStyle = `${searchParams === "1" && `search-hover-style ${searchHoverStyle}`} swiperSlideHover h-auto relative 
+      z-30 cursor-pointer overflow-auto item-shadow mt-[-6rem] rounded-lg ${(itemHover !== 0) && "ml-[-3.438rem]"}`
 
     // React Youtube State
     const { showVideoItems, triggerAnimItems, isMutedItems, videoEndedItems } = useAppStore()
@@ -85,7 +85,7 @@ export const ItemSlider = ({
 
   return (
     <div
-      className = {`swiperSlide cursor-pointer hover:cursor-pointer bg-[#181818] h-[10rem] eachSwiper
+      className = {`swiperSlide bg-[#181818] h-[10rem] eachSwiper
         rounded-md overflow-hidden custom-transition-duration-3s ${itemHover === index && triggerAnimItems && hoverStyle}`
       } 
     >
@@ -93,14 +93,14 @@ export const ItemSlider = ({
       <LazyLoadImage
         alt="Show Image"
         src={`${imageUrl && import.meta.env.VITE_BASE_IMAGE_URL}${imageUrl}s`} 
-        className={`w-full showSkeleton relative cursor-pointer hover:cursor-pointer ${itemHover !== index && triggerAnimItems && "rounded"}
+        className={`w-full showSkeleton relative ${itemHover !== index && triggerAnimItems && "rounded"}
           custom-transition-duration-10s ${showVideoItems && itemHover === index && triggerAnimItems ? "opacity-0 z-0" : "opacity-100 z-10"}`}
         onError={handleImageError}
       />
 
       { /* Show Trailer Video */
       itemHover === index && screenWidth >= 640 &&
-        <div className={`w-full h-[14.063rem] mt-[-14.063rem] overflow-hidden flex items-center justify-center relative cursor-pointer hover:cursor-pointer
+        <div className={`w-full h-[14.063rem] mt-[-14.063rem] overflow-hidden flex items-center justify-center relative
           ${showVideoItems && itemHover === index && triggerAnimItems ? "z-10" : "z-0"}`} key={trailerData}>
           <YoutubePlayerItem
             key={trailerData}
@@ -111,7 +111,7 @@ export const ItemSlider = ({
           />
           {/* Sounds Controller */}
           <div 
-            className={`h-[44px] w-[44px] absolute z-0 border-[3px] border-solid border-[#767576] text-[#767576] rounded-full items-center cursor-pointer 
+            className={`h-[44px] w-[44px] absolute z-0 border-[3px] border-solid border-[#767576] text-[#767576] rounded-full items-center
               justify-center transition duration-400 hover:bg-gray-600 hover:bg-opacity-35 flex mr-[-20.5rem] mt-[10rem]`} 
             onClick={toggleVideoSound}
             id="notValidModal5"
@@ -125,7 +125,7 @@ export const ItemSlider = ({
 
       {/* Show when hover */
       itemHover === index && triggerAnimItems && 
-        <div className="p-4 cursor-pointer hover:cursor-pointer">
+        <div className="p-4">
           {/* Buttons */}
           <div className="flex items-center gap-x-2">
             {/* Play */}

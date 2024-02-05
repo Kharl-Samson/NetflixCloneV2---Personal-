@@ -41,7 +41,7 @@ export const ItemSliderTop10 = ({
     const {screenWidth} = useAppStore()
 
     // Style when hover the item
-    const hoverStyle = `swiperSlideHover sm:h-auto relative z-30 cursor-pointer hover:cursor-pointer overflow-auto 
+    const hoverStyle = `swiperSlideHover sm:h-auto relative z-30 overflow-auto cursor-pointer
       item-shadow mt-[-6rem] rounded-lg ${itemHover === 0 ? "mr-[-7rem]": "mr-[-5rem]"} ${itemHover === 9 && "mr-[1rem]"}`
 
     // React Youtube State
@@ -65,7 +65,7 @@ export const ItemSliderTop10 = ({
 
   return (
     <div
-      className = {`swiperSlideSmall cursor-pointer hover:cursor-pointer eachSwiper float-right sm:rounded overflow-hidden
+      className = {`swiperSlideSmall eachSwiper float-right sm:rounded overflow-hidden
         custom-transition-duration-3s ${itemHover == index && triggerAnimItems && hoverStyle}`} 
     >
       {/* Show Rankings */}
@@ -75,7 +75,7 @@ export const ItemSliderTop10 = ({
       <LazyLoadImage
         alt="Show Image"
         src={`${imageUrl && import.meta.env.VITE_BASE_IMAGE_URL}${imageUrl}`} 
-        className={`w-full h-[9rem] sm:h-[13rem] relative custom-transition-duration-10s bg-[#181818] rounded cursor-pointer hover:cursor-pointer
+        className={`w-full h-[9rem] sm:h-[13rem] relative custom-transition-duration-10s bg-[#181818] rounded
           ${itemHover !== index && triggerAnimItems && "sm:rounded"} ${itemHover === index && triggerAnimItems && "object-cover object-top"}
           ${showVideoItems && itemHover === index && triggerAnimItems ? "opacity-0 z-0" : "opacity-100 z-10"}`}  
         onError={handleImageError}
@@ -84,7 +84,7 @@ export const ItemSliderTop10 = ({
 
       { /* Show Trailer Video */
       itemHover === index && screenWidth >= 640 &&
-        <div className={`w-full h-[14.063rem] mt-[-14.063rem] overflow-hidden cursor-pointer hover:cursor-pointer items-center justify-center relative sm:flex
+        <div className={`w-full h-[14.063rem] mt-[-14.063rem] overflow-hidden items-center justify-center relative sm:flex
           ${showVideoItems && itemHover === index && triggerAnimItems ? "z-10" : "z-0"}`} key={trailerData}>
           <YoutubePlayerItem
             key={trailerData}
@@ -95,8 +95,8 @@ export const ItemSliderTop10 = ({
           />
           {/* Sounds Controller */}
           <div 
-            className={`h-[44px] w-[44px] absolute z-0 border-[3px] border-solid border-[#767576] text-[#767576] rounded-full items-center cursor-pointer 
-              justify-center transition duration-400 hover:bg-gray-600 hover:bg-opacity-35 flex mr-[-20.5rem] mt-[10rem] hover:cursor-pointer`} 
+            className={`h-[44px] w-[44px] absolute z-0 border-[3px] border-solid border-[#767576] text-[#767576] rounded-full items-center 
+              justify-center transition duration-400 hover:bg-gray-600 hover:bg-opacity-35 flex mr-[-20.5rem] mt-[10rem]`} 
             onClick={toggleVideoSound}
             id="notValidModal1"
           >
@@ -109,7 +109,7 @@ export const ItemSliderTop10 = ({
 
       {/* Show when hover */
       itemHover === index && triggerAnimItems && 
-        <div className="p-4 relative bg-[#181818] cursor-pointer hover:cursor-pointer">
+        <div className="p-4 relative bg-[#181818]">
           {/* Buttons */}
           <div className="flex items-center gap-x-2">
             {/* Play */}

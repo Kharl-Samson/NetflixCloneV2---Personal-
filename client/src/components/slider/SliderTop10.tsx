@@ -131,9 +131,8 @@ export const SliderTop10 = ({marginStyle, sliderStyle, title, queryType, queryKe
              data?.results?.length > 1 && data?.results?.map((res : ItemType, index : number) => (
               <SwiperSlide 
                 key={res?.id}
-                className = {`swiperSlideSmall2 h-[9rem] sm:h-[13rem] ${index >= 10 && "hidden"} hover:cursor-pointer
-                  cursor-pointer overflow-hidden ${itemHover === index && triggerAnimItems && "sm:overflow-visible"}
-                  ${index === 0 && "ml-[-.5rem] sm:ml-0"} ${index === 9 && " mr-[7.7rem]"}`}
+                className={`swiperSlideSmall2 h-[9rem] sm:h-[13rem] overflow-hidden ${itemHover === index && triggerAnimItems && "sm:overflow-visible"}
+                  ${index >= 10 && "hidden"} ${index === 0 && "ml-[-.5rem] sm:ml-0"} ${index === 9 && " mr-[7.7rem]"}`}
                 onMouseLeave={() => { deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
                 onClick={(event) => 
                   screenWidth > 639  ? 

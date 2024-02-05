@@ -83,17 +83,17 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
       <Hero/>
 
       <main id="categorySection">
-        {sliders.map((slider, index : number) => {
+        {sliders.map((slider) => {
           const CommonProps = {
             marginStyle: determineMarginStyle(screenWidth), 
-            sliderStyle: `${index === 0 ? "sm:mt-[-14rem]" : "sm:mt-14"} sm:z-[${40 - index}]`,
+            sliderStyle: slider.sliderStyle,
             title: slider.title,
             queryType: slider.queryType,
             queryKey: slider.queryKey,
             classCount: slider.classCount
           }
 
-          return slider.componentType === 'Slider' ? (
+          return slider.componentType === "Slider" ? (
             <Slider {...CommonProps} key={slider.queryKey} />
           ) : (
             <SliderTop10 {...CommonProps} key={slider.queryKey} />

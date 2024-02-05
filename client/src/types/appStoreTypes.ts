@@ -34,7 +34,7 @@ export type appStoreType = {
     setPlayAgainItems: (value: boolean) => void
     triggerAnimItems: boolean
     setTriggerAnimItems: (value: boolean) => void
-  
+
     // React Youtube States -> Modal
     showVideoModal: boolean
     setShowVideoModal: (value: boolean) => void

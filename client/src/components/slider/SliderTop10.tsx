@@ -6,7 +6,7 @@ import { Navigation }  from "swiper/modules"
 import { useQuery } from "react-query"
 import { getShowList, getShowTrailer } from "../../services/apiFetchShowList"
 import { useEffect, useState } from "react"
-import { ItemType } from "../../types/itemTypes"
+import { ItemType, SliderPropsType } from "../../types/itemTypes"
 import { useAppStore } from "../../store/ZustandStore"
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight"
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft"
@@ -14,16 +14,7 @@ import { ItemSliderTop10 } from "./ItemSliderTop10"
 import { dataInEffect, swipeLeft, swipeRight, useHoverHandlers, useClickHandlers } from "../../utils/itemsFunction"
 import { useNavigate } from "react-router-dom"
 
-type SliderProps = {
-  marginStyle : string
-  sliderStyle? : string
-  title : string
-  queryType : string
-  queryKey : string
-  classCount : number
-}
-
-export const SliderTop10 = ({marginStyle, sliderStyle, title, queryType, queryKey, classCount} : SliderProps) => {
+export const SliderTop10 = ({marginStyle, sliderStyle, title, queryType, queryKey, classCount} : SliderPropsType) => {
     // Navigate
     const navigate = useNavigate()
 

@@ -1,3 +1,13 @@
+// Types for my Slider
+export type SliderPropsType = {
+  marginStyle : string
+  sliderStyle? : string
+  title : string
+  queryType : string
+  queryKey : string
+  classCount : number
+}
+
 // Types for my Item Container
 export type ItemType = {
     id: string

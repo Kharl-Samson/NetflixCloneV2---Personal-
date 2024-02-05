@@ -6,7 +6,7 @@ import { Navigation }  from "swiper/modules"
 import { useQuery } from "react-query"
 import { getShowList, getShowTrailer } from "../../services/apiFetchShowList"
 import { useEffect, useMemo, useState } from "react"
-import { ItemType } from "../../types/itemTypes"
+import { ItemType, SliderPropsType } from "../../types/itemTypes"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import { handleImageError } from "../../types/errorTypes"
 import { useAppStore } from "../../store/ZustandStore"
@@ -16,16 +16,7 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft"
 import { dataInEffect, shuffleArray, swipeLeft, swipeRight, useClickHandlers, useHoverHandlers } from "../../utils/itemsFunction"
 import { useNavigate } from "react-router-dom"
 
-type SliderProps = {
-  marginStyle : string
-  sliderStyle? : string
-  title : string
-  queryType : string
-  queryKey : string
-  classCount : number
-}
-
-export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, classCount} : SliderProps) => {
+export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, classCount} : SliderPropsType) => {
     // Navigate
     const navigate = useNavigate()
 
@@ -144,12 +135,18 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
       onMouseLeave={() => setSliderTitleHover(false)}
     >
       <div className="w-full flex items-center gap-x-1">
-        <p className={`text-white text-base sm:text-2xl font-semibold sm:font-bold ${marginStyle}`}>{title}</p>
-        <div 
-          className={`custom-transition-duration-10s hidden items-center  text-[#54b9c5] text-base font-extrabold 
-            mt-[.4rem] cursor-pointer ${deviceType === "Desktop" && sliderTitleHover && "sm:flex"} ${exploreHover && "pl-3"}`}
+        <p 
+          className={`text-white text-base sm:text-2xl font-semibold sm:font-bold cursor-pointer ${marginStyle}`} 
           onMouseOver={() => SetExploreHover(true)} 
           onMouseLeave={() => SetExploreHover(false)}
+        >
+          {title}
+        </p>
+        <div 
+          className={`custom-transition-duration-3s flex items-center  text-[#54b9c5] text-base font-extrabold 
+            mt-[.4rem] cursor-pointer sm:opacity-0 ${deviceType === "Desktop" && sliderTitleHover && "sm:opacity-100"} ${exploreHover && "pl-3"}`}
+          onMouseOver={() => SetExploreHover(true)} 
+          onMouseLeave={() => SetExploreHover(false)} 
         > 
           <p className={`custom-transition-duration-3s whitespace-nowrap overflow-hidden ${exploreHover ? "w-[5rem]" : "w-0"}`}>Explore All</p>
           <div className={`custom-transition-duration-3s mt-[0rem] border-t-4 border-r-4 border-[#54b9c5] rotate-45 ${exploreHover ? "h-[10px] w-[10px]" : "h-[13px] w-[13px]"}`}></div>

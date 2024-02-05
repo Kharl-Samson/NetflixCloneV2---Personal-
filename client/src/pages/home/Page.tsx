@@ -10,6 +10,7 @@ import { getCurrentSection } from "../../utils/getCurrentSection"
 import { Hero } from "./sections/Hero"
 import { ShowsDetails } from "../../components/modals/showDetails/ShowsDetails"
 import { useClickHandlers, useRouteAndQueryParams } from "../../utils/itemsFunction"
+import { sliders } from "../../data/slidersData"
 
 type NavbarProps = {
   scrollDirection : string
@@ -53,6 +54,15 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
     }
   }
 
+  // Function to determine margin style based on screen width
+  const determineMarginStyle = (screenWidth: number) => {
+    if (screenWidth < 640) return "ml-5"
+    if (screenWidth <= 800) return "ml-7"
+    if (screenWidth <= 950) return "ml-7"
+    return "ml-14";
+  }
+
+
   return (
     <section className="bg-custom-color-hero-1 overflow-hidden h-auto pb-[20rem]">
         
@@ -73,187 +83,22 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
       <Hero/>
 
       <main id="categorySection">
-        {/* Top 10 TV Shows */}
-        <SliderTop10
-          marginStyle = { 
-            screenWidth < 640 ? "ml-5" : 
-            screenWidth <= 800 ? "ml-7" : 
-            screenWidth <= 950 ? "ml-7" : "ml-14"
+        {sliders.map((slider, index : number) => {
+          const CommonProps = {
+            marginStyle: determineMarginStyle(screenWidth), 
+            sliderStyle: `${index === 0 ? "sm:mt-[-14rem]" : "sm:mt-14"} sm:z-[${40 - index}]`,
+            title: slider.title,
+            queryType: slider.queryType,
+            queryKey: slider.queryKey,
+            classCount: slider.classCount
           }
-          sliderStyle = "sm:mt-[-14rem] sm:z-[40]"
-          title = "Top 10 TV Shows in the Philippines Today"
-          queryType = "Top 10 TV Shows"
-          queryKey = "top10TVshow"
-          classCount = {0}
-        />
 
-        {/* Trending Section */}
-        <Slider
-          marginStyle = { 
-            screenWidth < 640 ? "ml-5" : 
-            screenWidth <= 800 ? "ml-7" : 
-            screenWidth <= 950 ? "ml-7" : "ml-14"
-          }
-          sliderStyle = "sm:mt-14 sm:z-[39]"
-          title = "Trending Now"
-          queryType = "Trending Now"
-          queryKey = "trendingNow"
-          classCount = {1}
-        />
-
-        {/* US Movies */}
-        <Slider
-          marginStyle = { 
-            screenWidth < 640 ? "ml-5" : 
-            screenWidth <= 800 ? "ml-7" : 
-            screenWidth <= 950 ? "ml-7" : "ml-14"
-          }
-          sliderStyle = "sm:mt-14 sm:z-[38]"
-          title = "US Movies"
-          queryType = "US Movies"
-          queryKey = "usMovies"
-          classCount = {2}
-        />
-
-        {/* Top 10 Movies */}
-        <SliderTop10
-          marginStyle = { 
-            screenWidth < 640 ? "ml-5" : 
-            screenWidth <= 800 ? "ml-7" : 
-            screenWidth <= 950 ? "ml-7" : "ml-14"
-          }
-          sliderStyle = "sm:mt-14 sm:z-[37]"
-          title = "Top 10 Movies in the Philippines Today"
-          queryType = "Top 10 Movies"
-          queryKey = "top10Movies"
-          classCount = {3}
-        />
-
-        {/* Romantic Movies */}
-        <Slider
-          marginStyle = { 
-            screenWidth < 640 ? "ml-5" : 
-            screenWidth <= 800 ? "ml-7" : 
-            screenWidth <= 950 ? "ml-7" : "ml-14"
-          }
-          sliderStyle = "sm:mt-14 sm:z-[36]"
-          title = "Romantic Movies"
-          queryType = "Romantic Movies"
-          queryKey = "romanticMovies"
-          classCount = {4}
-        />
-
-        {/* Romantic Movies */}
-        <Slider
-          marginStyle = { 
-            screenWidth < 640 ? "ml-5" : 
-            screenWidth <= 800 ? "ml-7" : 
-            screenWidth <= 950 ? "ml-7" : "ml-14"
-          }
-          sliderStyle = "sm:mt-14 sm:z-[35]"
-          title = "TV Action & Adventure"
-          queryType = "TV Action & Adventure"
-          queryKey = "tvActionAdventure"
-          classCount = {5}
-        />
-
-        {/* Top Rated */}
-        <Slider
-          marginStyle = { 
-            screenWidth < 640 ? "ml-5" : 
-            screenWidth <= 800 ? "ml-7" : 
-            screenWidth <= 950 ? "ml-7" : "ml-14"
-          }
-          sliderStyle = "sm:mt-14 sm:z-[34]"
-          title = "Top Rated"
-          queryType = "Top Rated Movies"
-          queryKey = "topRated"
-          classCount = {6}
-        />
-
-        {/* Popular on netflix */}
-        <Slider
-          marginStyle = { 
-            screenWidth < 640 ? "ml-5" : 
-            screenWidth <= 800 ? "ml-7" : 
-            screenWidth <= 950 ? "ml-7" : "ml-14"
-          }
-          sliderStyle = "sm:mt-14 sm:z-[33]"
-          title = "Popular on netflix"
-          queryType = "Popular On Netflix TV"
-          queryKey = "popularOnNetflix"
-          classCount = {7}
-        />
-
-        {/* Documentaries */}
-        <Slider
-          marginStyle = { 
-            screenWidth < 640 ? "ml-5" : 
-            screenWidth <= 800 ? "ml-7" : 
-            screenWidth <= 950 ? "ml-7" : "ml-14"
-          }
-          sliderStyle = "sm:mt-14 sm:z-[32]"
-          title = "Documentaries"
-          queryType = "Documentaries TV"
-          queryKey = "documentary"
-          classCount = {8}
-        />
-
-        {/* Western TV Sci-Fi & Fantasy */}
-        <Slider
-          marginStyle = { 
-            screenWidth < 640 ? "ml-5" : 
-            screenWidth <= 800 ? "ml-7" : 
-            screenWidth <= 950 ? "ml-7" : "ml-14"
-          }
-          sliderStyle = "sm:mt-14 sm:z-[31]"
-          title = "Western TV Sci-Fi & Fantasy"
-          queryType = "Western TV Sci-Fi & Fantasy"
-          queryKey = "westernTVSciFiFantasy"
-          classCount = {9}
-        />
-
-        {/* Exciting Western Movies */}
-        <Slider
-          marginStyle = { 
-            screenWidth < 640 ? "ml-5" : 
-            screenWidth <= 800 ? "ml-7" : 
-            screenWidth <= 950 ? "ml-7" : "ml-14"
-          }
-          sliderStyle = "sm:mt-14 sm:z-[30]"
-          title = "Exciting Western Movies"
-          queryType = "Exciting Western Movies"
-          queryKey = "excitingWesternMovies"
-          classCount = {10}
-        />
-
-        {/* Drama Movies */}
-        <Slider
-          marginStyle = { 
-            screenWidth < 640 ? "ml-5" : 
-            screenWidth <= 800 ? "ml-7" : 
-            screenWidth <= 950 ? "ml-7" : "ml-14"
-          }
-          sliderStyle = "sm:mt-14 sm:z-[29]"
-          title = "Drama Movies"
-          queryType = "Drama Movies"
-          queryKey = "dramaMovies"
-          classCount = {11}
-        />
-
-        {/* Watch For A While */}
-        <Slider
-          marginStyle = { 
-            screenWidth < 640 ? "ml-5" : 
-            screenWidth <= 800 ? "ml-7" : 
-            screenWidth <= 950 ? "ml-7" : "ml-14"
-          }
-          sliderStyle = "sm:mt-14 sm:z-[28]"
-          title = "Watch for a While"
-          queryType = "Watch for a While TV"
-          queryKey = "watchForaWhile"
-          classCount = {12}
-        />
+          return slider.componentType === 'Slider' ? (
+            <Slider {...CommonProps} key={slider.queryKey} />
+          ) : (
+            <SliderTop10 {...CommonProps} key={slider.queryKey} />
+          )
+        })}
       </main>
 
       {/* Modals - [Larger Screens] */

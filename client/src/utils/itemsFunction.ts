@@ -105,7 +105,6 @@ export const toggleVideoSoundPhone = () => {
  * Custom hook for item hover
  * Includes onMouseOver and onMouseOut
 */
-type GetShowDetailsResponse = string
 export const useHoverHandlers = () => {
     const { 
         setShowVideoItems, setIsMutedItems, setPause, setTriggerAnimItems, setTrailerData,
@@ -113,7 +112,7 @@ export const useHoverHandlers = () => {
     } = useAppStore.getState()
 
     // fetch show details when hover
-    const mutation = useMutation<GetShowDetailsResponse, Error, { category: string, trailerId: string | number, language?: string }>(
+    const mutation = useMutation<String, Error, { category: string, trailerId: string | number, language?: string }>(
       ({ category, trailerId, language }) => getShowDetails(category, trailerId, language),
       {
         onSuccess: (res) => {

@@ -11,10 +11,6 @@ export type appStoreType = {
         backdrop_path?: string;
     }) => void
 
-    // Item Hover State
-    itemHover: number | null
-    setItemHover: (value: number | null) => void
-
     // React Youtube States -> Hero
     showVideo: boolean
     setShowVideo: (value: boolean) => void

@@ -176,7 +176,7 @@ export const ItemSlider = ({
           {/* Genre */}
           <div className="mb-3 mt-4 flex flex-wrap gap-x-4 text-[#efefef]">
             {/* Genres Mapping */
-              showDetails?.genres?.map((res: {name : string}, index : number) => <p key={index}><b className="text-[#646464]">{index !== 0 && "●"}&nbsp;</b> {res?.name}</p> ) 
+              showDetails?.genres?.map((res: {name : string}, index : number) => <p key={index}><b className="text-[#646464]">{index !== 0 && "●"} </b> {res?.name}</p> ) 
             }
           </div>
         </div>

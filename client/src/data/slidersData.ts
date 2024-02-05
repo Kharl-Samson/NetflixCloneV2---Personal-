@@ -21,4 +21,6 @@ export const sliders: SliderInfo[] = [
     { componentType: "Slider", title: "Exciting Western Movies", queryType: "Exciting Western Movies", queryKey: "excitingWesternMovies", classCount: 10, sliderStyle: "sm:mt-14 z-[30]" },
     { componentType: "Slider", title: "Drama Movies", queryType: "Drama Movies", queryKey: "dramaMovies", classCount: 11, sliderStyle: "sm:mt-14 z-[29]" },
     { componentType: "Slider", title: "Watch for a While", queryType: "Watch for a While TV", queryKey: "watchForaWhile", classCount: 12, sliderStyle: "sm:mt-14 z-[28]" },
+    { componentType: "Slider", title: "Thrillers & Horror Movies", queryType: "Thrillers & Horror Movies", queryKey: "thrillersAndHorrorMovies", classCount: 13, sliderStyle: "sm:mt-14 z-[27]" },
+    { componentType: "Slider", title: "Award-winning Western TV Comedies", queryType: "Award-winning Western TV Comedies", queryKey: "awardWinningWesternTvComedies", classCount: 14, sliderStyle: "sm:mt-14 z-[26]" }
 ]

@@ -11,6 +11,7 @@ import { Hero } from "./sections/Hero"
 import { ShowsDetails } from "../../components/modals/showDetails/ShowsDetails"
 import { useClickHandlers, useRouteAndQueryParams } from "../../utils/itemsFunction"
 import { sliders } from "../../data/slidersData"
+import { Footer } from "../../components/footer/Footer"
 
 type NavbarProps = {
   scrollDirection : string
@@ -64,7 +65,7 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
 
 
   return (
-    <section className="bg-custom-color-hero-1 overflow-hidden h-auto pb-[20rem]">
+    <section className="bg-custom-color-hero-1 overflow-hidden h-auto">
         
       {// My Navigation
         screenWidth < 640 ?
@@ -100,6 +101,9 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
           )
         })}
       </main>
+
+      {/* Footer */}
+      <Footer/>
 
       {/* Modals - [Larger Screens] */
       ((screenWidth >= 640 && showDetailsModal) || (params && (categoryParams === "tv" || categoryParams === "movie"))) &&

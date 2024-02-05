@@ -61,6 +61,8 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
           queryType === "Exciting Western Movies" ? 37 :
           queryType === "Drama Movies" ? 18 :
           queryType === "Watch for a While TV" ? 80 :
+          queryType === "Thrillers & Horror Movies" ? 27 :
+          queryType === "Award-winning Western TV Comedies" ? 35 :
           null,
         1                                                             // Page Number
       )
@@ -81,6 +83,8 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
           queryType === "Exciting Western Movies" ? 37 :
           queryType === "Drama Movies" ? 18 :
           queryType === "Watch for a While TV" ? 80 :
+          queryType === "Thrillers & Horror Movies" ? 27 :
+          queryType === "Award-winning Western TV Comedies" ? 35 :
           null,
         2                                                     // Page Number
       )

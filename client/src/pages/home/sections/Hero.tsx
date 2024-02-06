@@ -5,18 +5,21 @@ import { HeroComponentNormal } from "../components/HeroComponentNormal"
 import { HeroComponentSmall } from "../components/HeroComponentSmall"
 import { useAppStore } from "../../../store/ZustandStore"
 
-export const Hero = () => {
+type HeroProps = {
+  category : string
+  genre : number
+}
+export const Hero = ({category, genre} : HeroProps) => {
     // State from zustand
     const {screenWidth} = useAppStore()
 
-    const categoryArray : string[] = ["movie"]
-    const randomCategoryIndex : number = Math.floor(Math.random() * categoryArray.length)
+    // Hero data randomizer
     const [randomPageArray, setRandomPageArray] = useState<number>(1)
     const [randomShowArray, setRandomShowArray] = useState<number>(1)
 
     // Randomize page number and show number
     useEffect(() => {
-      const randomNumber1 = Math.floor(Math.random() * 2) + 1
+      const randomNumber1 = Math.floor(Math.random() * 1) + 1
       const randomNumber2 = Math.floor(Math.random() * 15) + 1
       setRandomPageArray(randomNumber1)
       setRandomShowArray(randomNumber2)
@@ -29,13 +32,13 @@ export const Hero = () => {
     // Fetch data to be showned in hero section 
     const { data, isFetched: isFetchedData, isError: isDataError, isLoading: isDataLoading } = useQuery(
       ["heroKey", randomPageArray],
-      () => getShowList("Hero", categoryArray[randomCategoryIndex], "en-US", 14, randomPageArray)
+      () => getShowList("Hero", category, "en-US", genre, randomPageArray)
     )
 
     // Fetch trailer data
     const { data : myTrailerData, isFetched: isFetchedTrailer, isError: isTrailerError, isLoading: isTrailerLoading } = useQuery(
       ["trailerKey", myData],
-      () => getShowTrailer(categoryArray[randomCategoryIndex], myData?.id)
+      () => getShowTrailer(category, myData?.id)
     )
 
     // When done querying put the data in states variable

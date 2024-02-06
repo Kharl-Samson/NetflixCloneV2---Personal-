@@ -49,12 +49,12 @@ export const SearchInput = () => {
         navigate("/")
       }
 
-      if(currentSection !== "categorySection" && isSearchClick) {
+      if(currentSection !== "categorySection" && isSearchClick && !location.pathname.includes("/browse/m/genre/")) {
         searchValue !== "" ? setPause(true) : setPause(false)
         searchValue !== "" ? setShowVideo(false) : setShowVideo(true)
       }
       searchValue !== "" && setSearchClick(true)
-    },[searchValue, sParam, searchParams, isSearchClick, currentSection])
+    },[searchValue, sParam, searchParams, isSearchClick, currentSection, location.pathname])
 
     // Clear Search Input
     const clearSearchInput = () => setSearchValue("")

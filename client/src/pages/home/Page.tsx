@@ -12,7 +12,7 @@ import { ShowsDetails } from "../../components/modals/showDetails/ShowsDetails"
 import { useClickHandlers, useRouteAndQueryParams } from "../../utils/itemsFunction"
 import { sliders } from "../../data/slidersData"
 import { Footer } from "../../components/footer/Footer"
-import { useLocation, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { ListByGenre } from "../../components/modals/listByGenre/ListByGenre"
 
 type NavbarProps = {
@@ -26,8 +26,7 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
 
   // Get params to be use in genre modal
   const { genreId } = useParams<{genreId : string}>()
-  const location = useLocation()
-
+ 
   // State from zustand
   const {screenWidth} = useAppStore()
 
@@ -94,7 +93,10 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
       }
 
       {/* Hero Section */}
-      <Hero/>
+      <Hero 
+        category = "movie"
+        genre = {16}
+      />
 
       {/* Category Mapping */}
       <main id="categorySection">

@@ -183,7 +183,7 @@ export const useClickHandlers = () => {
     const handleClickModal = (event: React.MouseEvent<HTMLElement, MouseEvent> , media_type: string | boolean, id: string) => {
       if (!((event.target as HTMLElement).id.includes("notValidModal"))) {
         // Zustand States
-        const { setPause, setShowVideoModal, setVideoId, setShowVideo} = useAppStore.getState()
+        const { setShowVideoModal, setVideoId} = useAppStore.getState()
 
         // Get search value params
         const urlParams = new URLSearchParams(window.location.search)
@@ -191,9 +191,6 @@ export const useClickHandlers = () => {
         const sParam = urlParams.get("s")
 
         setShowVideoModal(false)
-        searchParams !== "1" && setShowVideo(false)
-        searchParams !== "1" && setPause(true)
-
         searchParams === "1" ? navigate(`/browse/${media_type}?search=1&s=${sParam}&q=${id}`) : navigate(`/browse/${media_type}?q=${id}`)
         
         setVideoId(id)

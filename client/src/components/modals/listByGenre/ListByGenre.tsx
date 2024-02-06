@@ -30,7 +30,7 @@ export const ListByGenre = () => {
     const navigate = useNavigate()
 
     // Zustand States
-    const { videoId, trailerData, showDetails, screenWidth } = useAppStore()
+    const { videoId, trailerData, showDetails, screenWidth, setPause, setShowVideo, showVideo } = useAppStore()
 
     const body = document.body
     body.style.overflowY = "hidden"
@@ -58,10 +58,21 @@ export const ListByGenre = () => {
 
     // Close modal function
     const closeModal = () => {
-      const body = document.body
-      body.style.overflowY = "scroll"
-      navigate("/")
+      if(screenWidth >= 640) {
+        const body = document.body
+        body.style.overflowY = "scroll"
+        navigate("/")
+
+        setShowVideo(true)
+        setPause(false)
+      }
     }
+
+    // Pause vide in hero when modal is open
+    useEffect(() => {
+      location.pathname.includes("/browse/m/genre/") && setShowVideo(false)
+      location.pathname.includes("/browse/m/genre/") && setPause(true)
+    },[isDataLoading, showVideo])
 
     // Season dropdown controller
     const dropdownArray : string[] = ["Suggestions For You", "Year Released", "A-Z", "Z-A"]

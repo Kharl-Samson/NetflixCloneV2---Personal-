@@ -25,7 +25,7 @@ export const ShowsDetails = ({scrollToBottom, myRef} : showDetailsDataProps) => 
 
     // Getting Active Section
     const activeSections = getCurrentArticle(myRef)
-    const { currentArticle, setCurrentArticle, setShowVideoModal, setPauseModal } = useAppStore()
+    const { currentArticle, setCurrentArticle, setShowVideoModal, setPauseModal, setShowVideo, setPause } = useAppStore()
     useEffect(() => {
       setCurrentArticle(activeSections)
     }, [activeSections])
@@ -42,7 +42,7 @@ export const ShowsDetails = ({scrollToBottom, myRef} : showDetailsDataProps) => 
     
 
     // React Youtube State
-    const { showVideoModal, trailerData } = useAppStore()
+    const { showVideoModal, trailerData, showVideo } = useAppStore()
 
     // Fetch show data 
     const { data : showDetailsData, isFetched: isFetchedShowDetails, isLoading: isShowDetailsLoading } = useQuery(
@@ -114,6 +114,15 @@ export const ShowsDetails = ({scrollToBottom, myRef} : showDetailsDataProps) => 
       return () => document.removeEventListener('visibilitychange', handleVisibilityChange1)
     }, [params, categoryParams, currentArticle])
   
+    const urlParams = new URLSearchParams(window.location.search)
+    const searchParams = urlParams.get("search")
+
+    // Pause vide in hero when modal is open
+    useEffect(() => {
+      searchParams !== "1" && setShowVideo(false)
+      searchParams !== "1" && setPause(true)
+    },[isTrailerLoading, isCastsLoading, isShowDetailsLoading, showVideo])
+
   return (
   (isTrailerLoading && isCastsLoading && isShowDetailsLoading)  ? 
     <div className="h-[100dvh] w-full flex items-center justify-center">
@@ -129,7 +138,6 @@ export const ShowsDetails = ({scrollToBottom, myRef} : showDetailsDataProps) => 
         onError={handleImageError}
       />
       
-
       {/* Video Player */}
       <div className={`custom-transition-duration-10s max-w-[3000px] mx-auto top-0 w-full h-[31rem] overflow-hidden mt-[-31rem] z-[2] relative ${showVideoModal ? "opacity-100" : "opacity-0"}`} key={params}>
         <YoutubePlayerModal

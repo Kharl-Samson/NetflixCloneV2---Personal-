@@ -126,7 +126,9 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
       <div className="w-full flex items-center gap-x-1">
         <p 
           className={`text-white text-base sm:text-2xl font-semibold sm:font-bold cursor-pointer ${marginStyle}`} 
-          onClick={() => navigate(`/browse/m/genre/${dataCategory1 !== null ? dataCategory1 : "g"}/${getGenreCode(queryType) !== null ? getGenreCode(queryType) : queryType}`)}
+          onClick={() => screenWidth >= 640 && 
+            navigate(`/browse/m/genre/${dataCategory1 !== null ? dataCategory1 : "g"}/${getGenreCode(queryType) !== null ? getGenreCode(queryType) : queryType}`)
+          }
           onMouseOver={() => SetExploreHover(true)} 
           onMouseLeave={() => SetExploreHover(false)}
         >
@@ -135,7 +137,9 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
         <div 
           className={`custom-transition-duration-5s hidden sm:flex items-center text-[#54b9c5] text-base font-extrabold 
             mt-[.4rem] cursor-pointer sm:opacity-0 ${deviceType === "Desktop" && sliderTitleHover && "sm:opacity-100"} ${exploreHover && "pl-3"}`}
-          onClick={() => navigate(`/browse/m/genre/${dataCategory1 !== null ? dataCategory1 : "g"}/${getGenreCode(queryType) !== null ? getGenreCode(queryType) : queryType}`)}
+          onClick={() => screenWidth >= 640 && 
+            navigate(`/browse/m/genre/${dataCategory1 !== null ? dataCategory1 : "g"}/${getGenreCode(queryType) !== null ? getGenreCode(queryType) : queryType}`)
+          }
           onMouseOver={() => SetExploreHover(true)} 
           onMouseLeave={() => SetExploreHover(false)} 
         > 

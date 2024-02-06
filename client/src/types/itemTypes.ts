@@ -18,6 +18,7 @@ export type ItemType = {
     backdrop_path: string
     media_type : string
     vote_count : string
+    release_date?: string
 }
 // Types for my Item Slider
 export type ItemSliderProps = {

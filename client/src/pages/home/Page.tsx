@@ -12,6 +12,8 @@ import { ShowsDetails } from "../../components/modals/showDetails/ShowsDetails"
 import { useClickHandlers, useRouteAndQueryParams } from "../../utils/itemsFunction"
 import { sliders } from "../../data/slidersData"
 import { Footer } from "../../components/footer/Footer"
+import { useLocation, useParams } from "react-router-dom"
+import { ListByGenre } from "../../components/modals/listByGenre/ListByGenre"
 
 type NavbarProps = {
   scrollDirection : string
@@ -22,12 +24,24 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
   // Params Url Getter
   const { params, categoryParams } = useRouteAndQueryParams()
 
+  // Get params to be use in genre modal
+  const { genreId } = useParams<{genreId : string}>()
+  const location = useLocation()
+
   // State from zustand
   const {screenWidth} = useAppStore()
 
+  // Show scroll everytime screen chage
+  useEffect(() => {
+    if(screenWidth >= 640){
+      const body = document.body
+      body.style.overflowY = "scroll"
+    }
+  },[screenWidth])
+
   // Getting Active Section
   const activeSections = getCurrentSection()
-  const { setCurrentSection, showDetailsModal } = useAppStore()
+  const { setCurrentSection } = useAppStore()
   useEffect(() => {
     setCurrentSection(activeSections)
   }, [activeSections])
@@ -63,7 +77,6 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
     return "ml-14";
   }
 
-
   return (
     <section className="bg-custom-color-hero-1 overflow-hidden h-auto">
         
@@ -83,6 +96,7 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
       {/* Hero Section */}
       <Hero/>
 
+      {/* Category Mapping */}
       <main id="categorySection">
         {sliders.map((slider) => {
           const CommonProps = {
@@ -105,10 +119,17 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
       {/* Footer */}
       <Footer/>
 
-      {/* Modals - [Larger Screens] */
-      ((screenWidth >= 640 && showDetailsModal) || (params && (categoryParams === "tv" || categoryParams === "movie"))) &&
+      {/* Item Modal - [Larger Screens] */
+      (screenWidth >= 640 && params !== "Default" && (categoryParams === "tv" || categoryParams === "movie")) &&
         <div className="min-h-[100dvh] w-full fixed z-[1000] modal-background inset-0 overflow-y-scroll hidden sm:block" ref={modalRef}>
           <ShowsDetails scrollToBottom = {scrollToBottom} myRef = {modalRef}/>
+        </div>
+      }
+
+      {/* Genre Modal - [Larger Screens] */
+      (screenWidth >= 640 && location.pathname.includes("/browse/m/genre/") && genreId) &&
+        <div className="min-h-[100dvh] w-full fixed z-[1000] modal-background inset-0 overflow-y-scroll hidden sm:block" ref={modalRef}>
+          <ListByGenre/>
         </div>
       }
     </section>

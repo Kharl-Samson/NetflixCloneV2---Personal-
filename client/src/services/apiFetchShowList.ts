@@ -35,6 +35,7 @@ export const getShowList = async(queryType: string, category : string | null, la
     case "Watch for a While TV":
     case "Thrillers & Horror Movies":
     case "Award-winning Western TV Comedies":
+    case "Discover":
       url = `${import.meta.env.VITE_SERVER_URL}/discover/${category}`
       break
 

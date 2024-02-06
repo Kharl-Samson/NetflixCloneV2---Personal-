@@ -15,6 +15,7 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight"
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft"
 import { dataInEffect, shuffleArray, swipeLeft, swipeRight, useClickHandlers, useHoverHandlers } from "../../utils/itemsFunction"
 import { useNavigate } from "react-router-dom"
+import { genreCodes } from "../../data/codeData"
 
 export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, classCount} : SliderPropsType) => {
     // Navigate
@@ -37,6 +38,11 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
       dataCategory2 = "tv"
     }
 
+    // Helper function to get the genre code based on the query type
+    const getGenreCode = (queryType : string) => {
+      return genreCodes[queryType] || null
+    }
+
     // Fetch data to be showned in section -> First Data
     const { data : data1, isFetched: isFetchedData1, isError: isDataError1, isLoading : isDataLoading1 } = useQuery(
       [`${queryKey}1`, dataCategory1, dataCategory2],
@@ -45,16 +51,7 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
         dataCategory1,                                                // Category (ex. tv or movie)
         queryType === "Romantic Movies" ? null :                      // Language
           "en-US",  
-        queryType === "Romantic Movies" ? 10749 :                     // Genre
-          queryType === "TV Action & Adventure" ? 10759 :
-          queryType === "Documentaries TV" ? 99 :
-          queryType === "Western TV Sci-Fi & Fantasy" ? 10765 :
-          queryType === "Exciting Western Movies" ? 37 :
-          queryType === "Drama Movies" ? 18 :
-          queryType === "Watch for a While TV" ? 80 :
-          queryType === "Thrillers & Horror Movies" ? 27 :
-          queryType === "Award-winning Western TV Comedies" ? 35 :
-          null,
+        getGenreCode(queryType),                                      // Genre
         1                                                             // Page Number
       )
     )
@@ -67,16 +64,7 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
         dataCategory1,                                        // Category (ex. tv or movie)
         queryType === "Romantic Movies" ? null :              // Language
           "en-US",     
-        queryType === "Romantic Movies" ? 10749 :             // Genre
-          queryType === "TV Action & Adventure" ? 10759 :
-          queryType === "Documentaries TV" ? 99 :
-          queryType === "Western TV Sci-Fi & Fantasy" ? 10765 :
-          queryType === "Exciting Western Movies" ? 37 :
-          queryType === "Drama Movies" ? 18 :
-          queryType === "Watch for a While TV" ? 80 :
-          queryType === "Thrillers & Horror Movies" ? 27 :
-          queryType === "Award-winning Western TV Comedies" ? 35 :
-          null,
+        getGenreCode(queryType),                              // Genre
         2                                                     // Page Number
       )
     )
@@ -134,17 +122,20 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
       onMouseOver={() => setSliderTitleHover(true)} 
       onMouseLeave={() => setSliderTitleHover(false)}
     >
+      {/* Category Title */}
       <div className="w-full flex items-center gap-x-1">
         <p 
           className={`text-white text-base sm:text-2xl font-semibold sm:font-bold cursor-pointer ${marginStyle}`} 
+          onClick={() => navigate(`/browse/m/genre/${dataCategory1 !== null ? dataCategory1 : "g"}/${getGenreCode(queryType) !== null ? getGenreCode(queryType) : queryType}`)}
           onMouseOver={() => SetExploreHover(true)} 
           onMouseLeave={() => SetExploreHover(false)}
         >
           {title}
         </p>
         <div 
-          className={`custom-transition-duration-3s flex items-center  text-[#54b9c5] text-base font-extrabold 
+          className={`custom-transition-duration-5s hidden sm:flex items-center text-[#54b9c5] text-base font-extrabold 
             mt-[.4rem] cursor-pointer sm:opacity-0 ${deviceType === "Desktop" && sliderTitleHover && "sm:opacity-100"} ${exploreHover && "pl-3"}`}
+          onClick={() => navigate(`/browse/m/genre/${dataCategory1 !== null ? dataCategory1 : "g"}/${getGenreCode(queryType) !== null ? getGenreCode(queryType) : queryType}`)}
           onMouseOver={() => SetExploreHover(true)} 
           onMouseLeave={() => SetExploreHover(false)} 
         > 

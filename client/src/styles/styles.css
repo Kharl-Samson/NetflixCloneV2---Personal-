@@ -252,6 +252,15 @@ img[alt]:after {
         }
     }
 
+    /* Custom style in items in genre modal section */
+    .my-grid-genre {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        column-gap: 2rem;
+        row-gap: 4rem;
+    }
+
     /* Custom Skeleton */
     .showSkeleton{
         transition: .2s;

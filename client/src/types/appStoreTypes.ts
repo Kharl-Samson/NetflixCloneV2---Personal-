@@ -74,8 +74,6 @@ export type appStoreType = {
     // Modal States
     validModal: boolean,
     setValidModal: (value: boolean) => void
-    showDetailsModal: boolean
-    setShowDetailsModal: (value: boolean) => void
   
     // Search Click State
     isSearchClick: boolean

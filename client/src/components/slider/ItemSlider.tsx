@@ -11,6 +11,7 @@ import { useEffect, useState } from "react"
 import { ItemSliderProps } from "../../types/itemTypes"
 import { toggleVideoSound } from "../../utils/itemsFunction"
 import { convertToHoursAndMinutes } from "../../utils/getCurrentSection"
+import { useParams } from "react-router-dom"
 
 const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
     <Tooltip {...props} classes={{ popper: className }} />
@@ -41,6 +42,7 @@ export const ItemSlider = ({
     // Get search value params
     const urlParams = new URLSearchParams(window.location.search)
     const searchParams = urlParams.get("search")
+    const { genreId } = useParams<{genreId : string}>()
 
     // Hover Style if search param is equals to 1
     const [searchHoverStyle, setSearchHoverStyle] = useState<string>("")
@@ -85,8 +87,9 @@ export const ItemSlider = ({
 
   return (
     <div
-      className = {`swiperSlide bg-[#181818] h-[10rem] eachSwiper
-        rounded-md overflow-hidden custom-transition-duration-3s ${itemHover === index && triggerAnimItems && hoverStyle}`
+      className = {`swiperSlide bg-[#181818] h-[10rem] eachSwiper rounded-md overflow-hidden
+        custom-transition-duration-3s ${itemHover === index && triggerAnimItems && hoverStyle}
+        ${location.pathname.includes("/browse/m/genre/") && genreId && "bg-[#303030]"}`
       } 
     >
       {/* Show Cover */}

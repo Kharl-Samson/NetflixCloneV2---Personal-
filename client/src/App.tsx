@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, useLocation, useParams } from "react-router-dom"
 import { Page } from "./pages/home/Page"
 import { Page as Browse } from "./pages/browseItem/Page"
 import { useAppStore } from "./store/ZustandStore"
@@ -8,7 +8,7 @@ import { Page as SearchMobile } from "./pages/searchMobile/Page"
 
 function App() {
   // Set Screen Width
-  const { setScreenWidth, screenWidth, setPause, showDetailsModal, currentSection, setShowVideo } = useAppStore()
+  const { setScreenWidth, screenWidth, setPause, currentSection, setShowVideo } = useAppStore()
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth)
     setScreenWidth(window.innerWidth)
@@ -65,7 +65,7 @@ function App() {
     document.addEventListener('visibilitychange', handleVisibilityChange)
     // Clean up
     return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
-  }, [params, categoryParams, searchParams, showDetailsModal, currentSection])
+  }, [params, categoryParams, searchParams, currentSection])
 
   return (
     <>
@@ -73,6 +73,9 @@ function App() {
         {/* Main Pages */}
         <Route path="/" element={<Page scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>}/>
         <Route path="/browse/:category" element={screenWidth < 640 ? <Browse/> : <Page scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>}/>
+        <Route path="/browse/m/genre/:categoryId/:genreId" element={screenWidth < 640 ? <Browse/> : <Page scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>}/>
+
+        {/* For Mobile */}
         <Route path="/search" element={<SearchMobile/>}/>
       </Routes>
     </>

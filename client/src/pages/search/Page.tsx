@@ -113,6 +113,7 @@ export const Page = () => {
           </div>
         </div>
 
+        {/* Items Container */}
         <div className="my-grid-search mt-5 w-full">
           {data?.pages?.map((group, groupIndex) => (
             <React.Fragment key={groupIndex}>
@@ -120,7 +121,7 @@ export const Page = () => {
                 return (
                   <div
                     key={index}
-                    className = "max-w-[17.5rem] h-[10rem] cursor-pointer hover:cursor-pointer"
+                    className = "max-w-[17.5rem] h-[10rem]"
                     onMouseOver={() => { deviceType === "Desktop" && setItemHover(index + parseInt(res.id) + parseInt(res?.vote_count)) ; handleHover(res?.media_type, res?.id) }}
                     onMouseLeave={() =>{ deviceType === "Desktop" && setItemHover(null) ; handleHoverOut() }}
                     onClick={(event) =>  

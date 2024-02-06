@@ -144,15 +144,15 @@ export const useHoverHandlers = () => {
   
     // Remove hover on show
     const handleHoverOut = () => {
-      const { showVideo, currentSection, showDetailsModal } = useAppStore.getState()
+      const { showVideo, currentSection } = useAppStore.getState()
 
       // Get search value params
       const urlParams = new URLSearchParams(window.location.search)
       const searchParams = urlParams.get("search")
 
       const timeOut = setTimeout(() => {
-        (!showDetailsModal && currentSection !== "categorySection" && searchParams !== "1") && setShowVideo(true); 
-        (!showDetailsModal && currentSection !== "categorySection" && searchParams !== "1") && setPause(false);
+        (currentSection !== "categorySection" && searchParams !== "1") && setShowVideo(true); 
+        (currentSection !== "categorySection" && searchParams !== "1") && setPause(false);
       }, 100)
       setTriggerAnimItems(false)
 
@@ -163,7 +163,7 @@ export const useHoverHandlers = () => {
 
       setVideoEndedItems(false)
       setIsMutedItems(true);
-      (!showDetailsModal && showVideo && searchParams !== "1") && setPause(false);
+      (showVideo && searchParams !== "1") && setPause(false);
       
       return () => clearTimeout(timeOut)
     }
@@ -179,14 +179,11 @@ export const useClickHandlers = () => {
     // Navigate
     const navigate = useNavigate()
 
-    // Zustand State
-    const { setShowDetailsModal, showDetailsModal} = useAppStore.getState()
-
     // Click Show
     const handleClickModal = (event: React.MouseEvent<HTMLElement, MouseEvent> , media_type: string | boolean, id: string) => {
       if (!((event.target as HTMLElement).id.includes("notValidModal"))) {
         // Zustand States
-        const { setPause, setShowVideoModal, setVideoId, setShowDetailsModal, setShowVideo} = useAppStore.getState()
+        const { setPause, setShowVideoModal, setVideoId, setShowVideo} = useAppStore.getState()
 
         // Get search value params
         const urlParams = new URLSearchParams(window.location.search)
@@ -194,7 +191,6 @@ export const useClickHandlers = () => {
         const sParam = urlParams.get("s")
 
         setShowVideoModal(false)
-        setShowDetailsModal(true)
         searchParams !== "1" && setShowVideo(false)
         searchParams !== "1" && setPause(true)
 
@@ -226,7 +222,6 @@ export const useClickHandlers = () => {
       setShowDetails("")
       setShowVideoModal(false)
       searchParams !== "1" && setShowVideo(true)
-      setShowDetailsModal(false)
       setTriggerAnimItems(false)
 
       setShowVideoItems(false)
@@ -234,7 +229,7 @@ export const useClickHandlers = () => {
       setVideoId("")
       setIsMutedItems(true);
 
-      (searchParams !== "1" && !showDetailsModal && currentSection !== "categorySection") && setPause(false);
+      (searchParams !== "1" && currentSection !== "categorySection") && setPause(false);
     }
   
     return { handleClickModal, handleCloseModalOut }

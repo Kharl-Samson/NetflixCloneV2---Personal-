@@ -80,8 +80,6 @@ export const useAppStore = create<appStoreType>()(
     // Modal States
     validModal: true,
     setValidModal: (value: boolean) => set({ validModal: value }),
-    showDetailsModal: false,
-    setShowDetailsModal: (value: boolean) => set({ showDetailsModal: value }),
 
     // Search Click State
     isSearchClick: false,

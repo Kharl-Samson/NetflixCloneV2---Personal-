@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation, useParams } from "react-router-dom"
+import { Routes, Route } from "react-router-dom"
 import { Page } from "./pages/home/Page"
 import { Page as Browse } from "./pages/browseItem/Page"
 import { useAppStore } from "./store/ZustandStore"

@@ -14,7 +14,7 @@ export const SubnavBar = ({isAtTop, category} : SubNavbarProps) => {
     const {currentPage} = useAppStore()
 
     // Get Genres
-    const { data : genreListData, isFetched: isFetchedDataGenre, isError: isDataErrorDataGenre } = useQuery(
+    const { data : genreListData} = useQuery(
       ["genreDataKey"],
       () => getGenres(category)
     )

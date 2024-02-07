@@ -89,7 +89,7 @@ export const ItemSlider = ({
     <div
       className = {`swiperSlide bg-[#181818] h-[10rem] eachSwiper rounded-md overflow-hidden
         custom-transition-duration-3s ${itemHover === index && triggerAnimItems && hoverStyle}
-        ${location.pathname.includes("/browse/m/genre/") && genreId && "bg-[#303030]"}`
+        ${(location.pathname.includes("/browse/m/genre/") ||location.pathname.includes("/browse/t/genre/")) && genreId && "bg-[#303030]"}`
       } 
     >
       {/* Show Cover */}

@@ -20,9 +20,10 @@ type HeroProps = {
   isFetchedTrailer : boolean
   isDataLoading : boolean
   marginStyle : string
+  category : string
 }
 
-export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer, isDataLoading, marginStyle} : HeroProps ) => {
+export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer, isDataLoading, marginStyle, category} : HeroProps ) => {
     // Navigate
     const navigate = useNavigate()
 
@@ -142,7 +143,7 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer, isD
 
             <button 
               className="rounded-md flex items-center gap-x-[15px] font-netflix_regular py-[11px] px-[35px] transition duration-400 bg-[#857e7ea8] hover:opacity-80"
-              onClick={(event) => handleClickModal(event, "movie", myData?.id)}
+              onClick={(event) => handleClickModal(event, category, myData?.id)}
             >
               <img src={info} alt="Info Icon" className="h-[27px]"/>
               <span className="text-[1.4rem] text-white font-semibold">More Info</span>

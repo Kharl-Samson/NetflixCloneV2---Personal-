@@ -1,29 +1,38 @@
 import { useQuery } from "react-query"
-import { getShowList, getShowTrailer } from "../../../services/apiFetchShowList"
+import { getShowDetails, getShowTrailer } from "../../../services/apiFetchShowList"
 import { useEffect, useState } from "react"
 import { HeroComponentNormal } from "../components/HeroComponentNormal"
 import { HeroComponentSmall } from "../components/HeroComponentSmall"
 import { useAppStore } from "../../../store/ZustandStore"
 
-type HeroProps = {
-  category : string
-  genre : number
-}
-export const Hero = ({category, genre} : HeroProps) => {
+export const Hero = () => {
     // State from zustand
     const {screenWidth} = useAppStore()
 
     // Hero data randomizer
-    const [randomPageArray, setRandomPageArray] = useState<number>(1)
-    const [randomShowArray, setRandomShowArray] = useState<number>(1)
+    const showArray : number[] = [
+      1396,   // Breaking Bad
+      71446,  // Money Heist
+      76669,  // Elite
+      80307,  // Bodyguard
+      127532, // Solo Leveling
+      66732,  // Stranger Things
+    ]
 
-    // Randomize page number and show number
+    // Function to generate a pseudo-random number based on the current date
+    const generateDailyRandomIndex = (arrayLength: number): number => {
+      const today = new Date()
+      const dateString = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`
+      let seed = Array.from(dateString).reduce((acc, char) => acc + char.charCodeAt(0), 0)
+      return seed % arrayLength
+    }
+
+   // Set the random number once a day without dependencies in the array
+    const [randomNumber, setRandomNumber] = useState<number>(-1)
     useEffect(() => {
-      const randomNumber1 = Math.floor(Math.random() * 1) + 1
-      const randomNumber2 = Math.floor(Math.random() * 15) + 1
-      setRandomPageArray(randomNumber1)
-      setRandomShowArray(randomNumber2)
-    },[])
+      const dailyIndex = generateDailyRandomIndex(showArray.length);
+      setRandomNumber(dailyIndex)
+    }, [])
 
     // Data states
     const {myData, setMyData} = useAppStore()
@@ -31,25 +40,25 @@ export const Hero = ({category, genre} : HeroProps) => {
 
     // Fetch data to be showned in hero section 
     const { data, isFetched: isFetchedData, isError: isDataError, isLoading: isDataLoading } = useQuery(
-      ["tvheroKey", randomPageArray, myData],
-      () => getShowList("Hero", category, "en-US", genre, randomPageArray),
+      ["tvheroKey", randomNumber, myData],
+      () => randomNumber !== -1 && getShowDetails("tv", showArray[randomNumber], "en-US"),
       { cacheTime: 0 } // Remove caching to trigger every click
     )
 
     // Fetch trailer data
     const { data : myTrailerData, isFetched: isFetchedTrailer, isError: isTrailerError } = useQuery(
-      ["tvtrailerKey", myData],
-      () => getShowTrailer(category, myData?.id),
+      ["tvtrailerKey", randomNumber, myData],
+      () => randomNumber !== -1 && getShowTrailer("tv", myData?.id),
       { cacheTime: 0 } // Remove caching to trigger every click
     )
     
     // When done querying put the data in states variable
     useEffect(() => {
       // Data Query
-      isFetchedData && !isDataError && setMyData(data?.results[randomShowArray])
+      randomNumber !== -1 && isFetchedData && !isDataError && setMyData(data)
 
       // Trailer Data Query
-      if(isFetchedTrailer && !isTrailerError && myTrailerData?.results.length !== 0){
+      if(randomNumber !== -1 && isFetchedTrailer && !isTrailerError && myTrailerData?.results.length !== 0){
         for(var i : number = 0 ; i < myTrailerData?.results.length ; i++){
           if (myTrailerData?.results[i]?.name?.toUpperCase().indexOf("OFFICIAL TRAILER") > -1){
             setTrailerData(myTrailerData?.results[i].key)
@@ -71,7 +80,7 @@ export const Hero = ({category, genre} : HeroProps) => {
       {/* On Smaller Screens */}
       <HeroComponentSmall
         myData = {myData}
-        category = {category}
+        category = {"tv"}
       />
 
       {/* On Larger Screens */}
@@ -85,7 +94,7 @@ export const Hero = ({category, genre} : HeroProps) => {
           screenWidth <= 800 ? "mx-7" : 
           screenWidth <= 950 ? "mx-7" : "mx-14"
         }
-        category = {category}
+        category = {"tv"}
       />
 
       {/* For shadowing */

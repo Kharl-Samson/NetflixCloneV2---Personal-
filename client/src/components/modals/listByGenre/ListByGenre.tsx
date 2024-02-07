@@ -78,6 +78,8 @@ export const ListByGenre = () => {
     useEffect(() => {
       location.pathname.includes("/browse/m/genre/") && setShowVideo(false)
       location.pathname.includes("/browse/m/genre/") && setPause(true)
+      location.pathname.includes("/browse/t/genre/") && setShowVideo(false)
+      location.pathname.includes("/browse/t/genre/") && setPause(true)
     },[isDataLoading, showVideo])
 
     // Season dropdown controller

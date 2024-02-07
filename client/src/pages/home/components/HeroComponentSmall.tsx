@@ -1,8 +1,6 @@
 import { useAppStore } from "../../../store/ZustandStore"
 import play from "../../../assets/images/icons/play.png"
 import add from "../../../assets/images/icons/add.png"
-import { getGenres } from "../../../services/apiFetchShowList"
-import { useQuery } from "react-query"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
@@ -13,33 +11,19 @@ type HeroProps = {
     name?: string
     original_title?: string
     backdrop_path?: string
-    genre_ids?: number[]
+    genres: {
+      name: string
+    }[]
   }
+  category : string
 }
 
-export const HeroComponentSmall = ( {myData} : HeroProps ) => {
+export const HeroComponentSmall = ( {myData, category} : HeroProps ) => {
     // Navigate
     const navigate = useNavigate()
 
     // State from zustand
     const {screenWidth} = useAppStore()
-
-    // Get Genres -> Movie
-    const { data : genreListMovie, isFetched: isFetchedMovieGenre, isError: isDataErrorMovieGenre } = useQuery(
-      ["genreMovieKey"],
-      () => getGenres("movie")
-    )
-    // Get Genres Value
-    const getGenreNames = (): string[] | undefined => {
-        if (!genreListMovie || !myData.genre_ids) {
-          return [];
-        }
-
-        if(isFetchedMovieGenre && !isDataErrorMovieGenre) {
-            const selectedGenres = genreListMovie.genres.filter((genre : {id: number, name: string}) => myData.genre_ids?.includes(genre.id))
-            return selectedGenres.map((genre : {id: number, name: string}) => genre.name)
-        }
-    }
 
     // Random Color
     const colorsArray : string[] = ["#7A1E9A", "#153A70", "#2C3D2E", "#BF742E", "#37B19B", "#BF2E2E", "#636011", "#470A2B", "#03472F", "#053477"]
@@ -61,7 +45,7 @@ export const HeroComponentSmall = ( {myData} : HeroProps ) => {
             url(${myData?.backdrop_path && import.meta.env.VITE_BASE_IMAGE_URL}${myData?.backdrop_path})`
         }}
         className="bg-custom-color-hero-1 w-full px-4 h-[30rem] rounded-xl bg-cover bg-top flex flex-col justify-end"
-        onClick={() => navigate(`/browse/movie?q=${myData?.id}`)}
+        onClick={() => navigate(`/browse/${category}?q=${myData?.id}`)}
       >
         {/* Show Title */}
         <p className="mb-3 text-white text-center text-4xl sm:text-7xl movie-title-font-small">{myData?.title || myData?.name || myData?.original_title}</p>
@@ -69,7 +53,7 @@ export const HeroComponentSmall = ( {myData} : HeroProps ) => {
         {/* Genre */}
         <div className="mb-3 flex flex-wrap justify-center gap-x-5 text-white">
           {/* Genres Mapping */
-            getGenreNames()?.map((res: string, index: number) => <p key={index} >{index !== 0 && '•'} {res}</p>) 
+          myData?.genres?.map((res: {name : string}, index: number) => <p key={index} >{index !== 0 && '•'} {res.name}</p>) 
           }
         </div>
 

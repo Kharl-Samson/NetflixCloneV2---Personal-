@@ -1,8 +1,6 @@
 import { useAppStore } from "../../../store/ZustandStore"
 import play from "../../../assets/images/icons/play.png"
 import add from "../../../assets/images/icons/add.png"
-import { getGenres } from "../../../services/apiFetchShowList"
-import { useQuery } from "react-query"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
@@ -13,7 +11,9 @@ type HeroProps = {
     name? : string
     original_title?: string
     backdrop_path?: string
-    genre_ids?: number[]
+    genres: {
+      name: string
+    }[]
   }
   category : string
 }
@@ -24,23 +24,6 @@ export const HeroComponentSmall = ( {myData, category} : HeroProps ) => {
 
     // State from zustand
     const {screenWidth} = useAppStore()
-
-    // Get Genres
-    const { data : genreListData, isFetched: isFetchedDataGenre, isError: isDataErrorDataGenre } = useQuery(
-      ["genreDataKey"],
-      () => getGenres(category)
-    )
-    // Get Genres Value
-    const getGenreNames = (): string[] | undefined => {
-        if (!genreListData || !myData.genre_ids) {
-          return [];
-        }
-
-        if(isFetchedDataGenre && !isDataErrorDataGenre) {
-            const selectedGenres = genreListData.genres.filter((genre : {id: number, name: string}) => myData.genre_ids?.includes(genre.id))
-            return selectedGenres.map((genre : {id: number, name: string}) => genre.name)
-        }
-    }
 
     // Random Color
     const colorsArray : string[] = ["#7A1E9A", "#153A70", "#2C3D2E", "#BF742E", "#37B19B", "#BF2E2E", "#636011", "#470A2B", "#03472F", "#053477"]
@@ -70,7 +53,7 @@ export const HeroComponentSmall = ( {myData, category} : HeroProps ) => {
         {/* Genre */}
         <div className="mb-3 flex flex-wrap justify-center gap-x-5 text-white">
           {/* Genres Mapping */
-            getGenreNames()?.map((res: string, index: number) => <p key={index} >{index !== 0 && '•'} {res}</p>) 
+          myData?.genres?.map((res: {name : string}, index: number) => <p key={index} >{index !== 0 && '•'} {res.name}</p>) 
           }
         </div>
 

@@ -95,10 +95,7 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
       }
 
       {/* Hero Section */}
-      <Hero 
-        category = "movie"
-        genre = {16}
-      />
+      <Hero/>
 
       {/* Category Mapping */}
       <main id="categorySection">

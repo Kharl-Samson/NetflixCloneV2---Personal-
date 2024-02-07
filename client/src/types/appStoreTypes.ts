@@ -8,6 +8,9 @@ export type appStoreType = {
     myData: {
         id: string;
         backdrop_path?: string;
+        genres: {
+            name: string
+        }[]
     }
     setMyData: (newData: {
         id: string;

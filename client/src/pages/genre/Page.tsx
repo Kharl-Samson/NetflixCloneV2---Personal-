@@ -10,10 +10,11 @@ import { getCurrentSection } from "../../utils/getCurrentSection"
 import { Hero } from "./sections/Hero"
 import { ShowsDetails } from "../../components/modals/showDetails/ShowsDetails"
 import { useClickHandlers, useRouteAndQueryParams } from "../../utils/itemsFunction"
-import { sliders } from "../../data/slidersData"
+import { slidersTV } from "../../data/slidersData"
 import { Footer } from "../../components/footer/Footer"
-import { useParams } from "react-router-dom"
 import { ListByGenre } from "../../components/modals/listByGenre/ListByGenre"
+import { SubnavBar } from "../../components/subNavbar/SubnavBar"
+import { useParams } from "react-router-dom"
 
 type NavbarProps = {
   scrollDirection : string
@@ -23,17 +24,17 @@ type NavbarProps = {
 export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
   // Params Url Getter
   const { params, categoryParams } = useRouteAndQueryParams()
-
-  // Get params to be use in genre modal
+  const urlParams = new URLSearchParams(window.location.search)
+  const searchParams = urlParams.get("search")
   const { genreId } = useParams<{genreId : string}>()
- 
+
   // State from zustand
   const {screenWidth, setCurrentPage} = useAppStore()
 
   // Show scroll everytime screen chage
   useEffect(() => {
-    setCurrentPage("Home")
-    document.title = "Netflix Clone by Kharl"
+    setCurrentPage("TV Shows")
+    document.title = "TV Shows - Netflix Clone by Kharl"
     if(screenWidth >= 640){
       const body = document.body
       body.style.overflowY = "scroll"
@@ -91,21 +92,26 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
         screenWidth <= 1050 ?
           <NavbarNormal scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>
         :
-          <NavbarLarge scrollDirection = {scrollDirection} isAtTop = {isAtTop} active = "Home"/>
+          <NavbarLarge scrollDirection = {scrollDirection} isAtTop = {isAtTop} active = "TV Shows"/>
+      }
+
+      {/* Subnavbar for genre  */
+      searchParams !== "1" &&  screenWidth >= 640 &&
+        <SubnavBar isAtTop = {isAtTop} category = "tv"/>
       }
 
       {/* Hero Section */}
       <Hero 
-        category = "movie"
+        category = "tv"
         genre = {16}
       />
 
       {/* Category Mapping */}
       <main id="categorySection">
-        {sliders.map((slider) => {
+        {slidersTV.map((slider, index) => {
           const CommonProps = {
             marginStyle: determineMarginStyle(screenWidth), 
-            sliderStyle: slider.sliderStyle,
+            sliderStyle: index === 0 ? "sm:mt-[-8.7rem] z-[40]" : slider.sliderStyle,
             title: slider.title,
             queryType: slider.queryType,
             queryKey: slider.queryKey,
@@ -132,7 +138,7 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
       }
 
       {/* Genre Modal - [Larger Screens] */
-      (screenWidth >= 640 && location.pathname.includes("/browse/m/genre/") && genreId) &&
+      (screenWidth >= 640 && location.pathname.includes("/browse/t/genre/") && genreId) &&
         <div className="min-h-[100dvh] w-full fixed z-[1000] modal-background inset-0 overflow-y-scroll hidden sm:block" ref={modalRef}>
           <ListByGenre/>
         </div>

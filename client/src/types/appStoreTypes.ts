@@ -1,7 +1,10 @@
 export type appStoreType = {
     screenWidth: number
     setScreenWidth: (value: number) => void
-  
+
+    currentPage: string
+    setCurrentPage: (value: string) => void
+
     myData: {
         id: string;
         backdrop_path?: string;

@@ -10,33 +10,34 @@ type HeroProps = {
   myData : {
     id: string
     title?: string
-    name?: string
+    name? : string
     original_title?: string
     backdrop_path?: string
     genre_ids?: number[]
   }
+  category : string
 }
 
-export const HeroComponentSmall = ( {myData} : HeroProps ) => {
+export const HeroComponentSmall = ( {myData, category} : HeroProps ) => {
     // Navigate
     const navigate = useNavigate()
 
     // State from zustand
     const {screenWidth} = useAppStore()
 
-    // Get Genres -> Movie
-    const { data : genreListMovie, isFetched: isFetchedMovieGenre, isError: isDataErrorMovieGenre } = useQuery(
-      ["genreMovieKey"],
-      () => getGenres("movie")
+    // Get Genres
+    const { data : genreListData, isFetched: isFetchedDataGenre, isError: isDataErrorDataGenre } = useQuery(
+      ["genreDataKey"],
+      () => getGenres(category)
     )
     // Get Genres Value
     const getGenreNames = (): string[] | undefined => {
-        if (!genreListMovie || !myData.genre_ids) {
+        if (!genreListData || !myData.genre_ids) {
           return [];
         }
 
-        if(isFetchedMovieGenre && !isDataErrorMovieGenre) {
-            const selectedGenres = genreListMovie.genres.filter((genre : {id: number, name: string}) => myData.genre_ids?.includes(genre.id))
+        if(isFetchedDataGenre && !isDataErrorDataGenre) {
+            const selectedGenres = genreListData.genres.filter((genre : {id: number, name: string}) => myData.genre_ids?.includes(genre.id))
             return selectedGenres.map((genre : {id: number, name: string}) => genre.name)
         }
     }
@@ -61,7 +62,7 @@ export const HeroComponentSmall = ( {myData} : HeroProps ) => {
             url(${myData?.backdrop_path && import.meta.env.VITE_BASE_IMAGE_URL}${myData?.backdrop_path})`
         }}
         className="bg-custom-color-hero-1 w-full px-4 h-[30rem] rounded-xl bg-cover bg-top flex flex-col justify-end"
-        onClick={() => navigate(`/browse/movie?q=${myData?.id}`)}
+        onClick={() => navigate(`/browse/${category}?q=${myData?.id}`)}
       >
         {/* Show Title */}
         <p className="mb-3 text-white text-center text-4xl sm:text-7xl movie-title-font-small">{myData?.title || myData?.name || myData?.original_title}</p>

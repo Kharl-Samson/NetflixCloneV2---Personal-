@@ -31,18 +31,18 @@ export const Hero = ({category, genre} : HeroProps) => {
 
     // Fetch data to be showned in hero section 
     const { data, isFetched: isFetchedData, isError: isDataError, isLoading: isDataLoading } = useQuery(
-      ["heroKey", randomPageArray, myData],
+      ["tvheroKey", randomPageArray, myData],
       () => getShowList("Hero", category, "en-US", genre, randomPageArray),
       { cacheTime: 0 } // Remove caching to trigger every click
     )
 
     // Fetch trailer data
     const { data : myTrailerData, isFetched: isFetchedTrailer, isError: isTrailerError, isLoading: isTrailerLoading } = useQuery(
-      ["trailerKey", myData],
+      ["tvtrailerKey", myData],
       () => getShowTrailer(category, myData?.id),
       { cacheTime: 0 } // Remove caching to trigger every click
     )
-
+    
     // When done querying put the data in states variable
     useEffect(() => {
       // Data Query
@@ -65,12 +65,13 @@ export const Hero = ({category, genre} : HeroProps) => {
         }
       }
     }, [isFetchedData, data, myData, isFetchedTrailer, myTrailerData])
-
+ 
   return (
     <section className="w-full"> 
       {/* On Smaller Screens */}
       <HeroComponentSmall
         myData = {myData}
+        category = {category}
       />
 
       {/* On Larger Screens */}
@@ -85,6 +86,7 @@ export const Hero = ({category, genre} : HeroProps) => {
           screenWidth <= 800 ? "mx-7" : 
           screenWidth <= 950 ? "mx-7" : "mx-14"
         }
+        category = {category}
       />
 
       {/* For shadowing */

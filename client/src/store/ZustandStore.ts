@@ -13,6 +13,10 @@ export const useAppStore = create<appStoreType>()(
     screenWidth: window.innerWidth,
     setScreenWidth: (value: number) => set({ screenWidth: value }),
 
+    // Current page state
+    currentPage: "",
+    setCurrentPage: (value: string) => set({ currentPage: value }),
+
     // My data state
     myData: { id: "" },
     setMyData: (newData) => set(() => ({ myData: newData })),

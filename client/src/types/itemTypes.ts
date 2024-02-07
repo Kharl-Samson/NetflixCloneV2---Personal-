@@ -6,6 +6,7 @@ export type SliderPropsType = {
   queryType : string
   queryKey : string
   classCount : number
+  genre?: number | null
 }
 
 // Types for my Item Container

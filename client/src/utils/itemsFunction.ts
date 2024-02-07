@@ -183,7 +183,7 @@ export const useClickHandlers = () => {
     const handleClickModal = (event: React.MouseEvent<HTMLElement, MouseEvent> , media_type: string | boolean, id: string) => {
       if (!((event.target as HTMLElement).id.includes("notValidModal"))) {
         // Zustand States
-        const { setShowVideoModal, setVideoId} = useAppStore.getState()
+        const { setShowVideoModal, setVideoId, currentPage} = useAppStore.getState()
 
         // Get search value params
         const urlParams = new URLSearchParams(window.location.search)
@@ -191,8 +191,13 @@ export const useClickHandlers = () => {
         const sParam = urlParams.get("s")
 
         setShowVideoModal(false)
-        searchParams === "1" ? navigate(`/browse/${media_type}?search=1&s=${sParam}&q=${id}`) : navigate(`/browse/${media_type}?q=${id}`)
-        
+        if(currentPage === "Home"){
+          searchParams === "1" ? navigate(`/browse/${media_type}?search=1&s=${sParam}&q=${id}`) : navigate(`/browse/${media_type}?q=${id}`)
+        }
+        else if(currentPage === "TV Shows"){
+          searchParams === "1" ? navigate(`/browse/genre/${media_type}?search=1&s=${sParam}&q=${id}`) : navigate(`/browse/genre/${media_type}?q=${id}`)
+        }
+      
         setVideoId(id)
       }
     }
@@ -202,7 +207,7 @@ export const useClickHandlers = () => {
       // Zustand States
       const { 
         setShowVideoItems, setIsMutedItems, setPause, setTriggerAnimItems, setShowVideoModal, currentSection,
-        setTrailerData, setVideoId, setShowDetails, setShowVideo
+        setTrailerData, setVideoId, setShowDetails, setShowVideo, currentPage
       } = useAppStore.getState()
 
       // Get search value params
@@ -210,7 +215,12 @@ export const useClickHandlers = () => {
       const searchParams = urlParams.get("search")
       const sParam = urlParams.get("s")
 
-      searchParams === "1" ? navigate(`/?search=1&s=${sParam}`) : navigate("/")
+      if(currentPage === "Home"){
+        searchParams === "1" ? navigate(`/?search=1&s=${sParam}`) : navigate("/")
+      }
+      else if(currentPage === "TV Shows"){
+        searchParams === "1" ? navigate(`/browse/genre/t0?search=1&s=${sParam}`) : navigate(`/browse/genre/t0`)
+      }
 
       document.title = "Netflix Clone by Kharl"
       const body = document.body

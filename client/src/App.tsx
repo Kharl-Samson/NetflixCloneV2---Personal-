@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom"
 import { Page } from "./pages/home/Page"
 import { Page as Browse } from "./pages/browseItem/Page"
+import { Page as Genre } from "./pages/genre/Page"
 import { useAppStore } from "./store/ZustandStore"
 import { useEffect, useState } from "react"
 import { useRouteAndQueryParams } from "./utils/itemsFunction"
@@ -70,10 +71,25 @@ function App() {
   return (
     <>
       <Routes>
-        {/* Main Pages */}
+        {/* 
+          * Main Page
+          * Home Page
+          */}
         <Route path="/" element={<Page scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>}/>
+        {/* Item Modal */}
         <Route path="/browse/:category" element={screenWidth < 640 ? <Browse/> : <Page scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>}/>
+        {/* Title Modal */}
         <Route path="/browse/m/genre/:categoryId/:genreId" element={screenWidth < 640 ? <Browse/> : <Page scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>}/>
+
+        {/* 
+          * Main Page
+          * TV Show if t0 or Movie if m0
+          */}
+        <Route path="/browse/genre/:category" element={<Genre scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>}/>
+        {/* Item Modal */}
+        <Route path="/browse/genre/:category" element={screenWidth < 640 ? <Browse/> : <Genre scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>}/>
+        {/* Title Modal */}
+        <Route path="/browse/t/genre/:categoryId/:genreId" element={screenWidth < 640 ? <Browse/> : <Genre scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>}/>
 
         {/* For Mobile */}
         <Route path="/search" element={<SearchMobile/>}/>

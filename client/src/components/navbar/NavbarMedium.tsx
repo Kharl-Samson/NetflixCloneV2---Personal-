@@ -48,7 +48,7 @@ export const NavbarMedium = ( {scrollDirection, isAtTop} : NavbarProps ) => {
 
   return (
     <nav 
-      className={`801size:hidden w-full py-4 px-7 top-0  fixed flex justify-between items-center custom-transition-duration-3s
+      className={`801size:hidden w-full py-[1.1rem] px-7 top-0  fixed flex justify-between items-center custom-transition-duration-3s
         z-50 ${searchParams === "1" ? "bg-[#181414]" : scrollDirection === "down" || !isAtTop ? "bg-black bg-opacity-70" : "bg-custom-dark-2"}`
       }
     >

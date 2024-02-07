@@ -30,7 +30,7 @@ export const ListByGenre = () => {
     const navigate = useNavigate()
 
     // Zustand States
-    const { videoId, trailerData, showDetails, screenWidth, setPause, setShowVideo, showVideo } = useAppStore()
+    const { videoId, trailerData, showDetails, screenWidth, setPause, setShowVideo, showVideo, currentPage } = useAppStore()
 
     const body = document.body
     body.style.overflowY = "hidden"
@@ -43,7 +43,7 @@ export const ListByGenre = () => {
     const getQueryCode = (queryType : string ) => {
       return queryTypeValues[queryType] || ""
     }
-  
+
     // Fetch data to be showned in section -> First Data
     const { data : data, isLoading : isDataLoading } = useQuery(
         ["itemsByGenreKey"],
@@ -51,7 +51,7 @@ export const ListByGenre = () => {
           getQueryCode(genreId || ""),                    // Query Type (ex. Hero, Romantic Movies, TV Action & Adventure, etc)
           categoryId ? categoryId : null,                 // Category (ex. tv or movie)
           genreId === "Romantic Movies" ? null : "en-US", // Language
-					genreId ? parseInt(genreId) : null,             // Genre
+					genreId ? !Number.isNaN(parseInt(genreId || "")) ? parseInt(genreId) : null  : null,             // Genre
           1                                               // Page Number
         )
     )
@@ -61,8 +61,14 @@ export const ListByGenre = () => {
       if(screenWidth >= 640) {
         const body = document.body
         body.style.overflowY = "scroll"
-        navigate("/")
 
+        if(currentPage === "Home"){
+          navigate("/")
+        }
+        else if(currentPage === "TV Shows"){
+          navigate("/browse/genre/t0")
+        }
+  
         setShowVideo(true)
         setPause(false)
       }
@@ -167,6 +173,7 @@ export const ListByGenre = () => {
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-name="List" aria-hidden="true"><path fillRule="evenodd" clipRule="evenodd" d="M24 6H0V4H24V6ZM24 18V20H0V18H24ZM0 13H12V11H0V13Z" fill="currentColor"></path></svg>
           </button>
 
+          {/* Dropdown */}
           <div className={`relative ${closeFilter ? "w-auto" : "w-[19rem]"}`} ref={dropDownRef}>
             <div 
               className={`h-[2rem] border text-sm px-4 cursor-pointer relative flex items-center gap-x-4 hover:text-white hover:border-white

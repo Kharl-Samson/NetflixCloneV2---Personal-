@@ -15,14 +15,13 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight"
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft"
 import { dataInEffect, shuffleArray, swipeLeft, swipeRight, useClickHandlers, useHoverHandlers } from "../../utils/itemsFunction"
 import { useNavigate } from "react-router-dom"
-import { genreCodes } from "../../data/codeData"
 
-export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, classCount} : SliderPropsType) => {
+export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, classCount, genre} : SliderPropsType) => {
     // Navigate
     const navigate = useNavigate()
-
+  
     // State from zustand
-    const {screenWidth} = useAppStore()
+    const {screenWidth, currentPage} = useAppStore()
 
     let dataCategory1 : string | null = null, dataCategory2 : string | null = null
     if(queryType === "Trending Now"){
@@ -38,11 +37,7 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
       dataCategory2 = "tv"
     }
 
-    // Helper function to get the genre code based on the query type
-    const getGenreCode = (queryType : string) => {
-      return genreCodes[queryType] || null
-    }
-
+    
     // Fetch data to be showned in section -> First Data
     const { data : data1, isFetched: isFetchedData1, isError: isDataError1, isLoading : isDataLoading1 } = useQuery(
       [`${queryKey}1`, dataCategory1, dataCategory2],
@@ -51,7 +46,7 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
         dataCategory1,                                                // Category (ex. tv or movie)
         queryType === "Romantic Movies" ? null :                      // Language
           "en-US",  
-        getGenreCode(queryType),                                      // Genre
+        genre,                                                        // Genre
         1                                                             // Page Number
       )
     )
@@ -64,7 +59,7 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
         dataCategory1,                                        // Category (ex. tv or movie)
         queryType === "Romantic Movies" ? null :              // Language
           "en-US",     
-        getGenreCode(queryType),                              // Genre
+        genre,                                                // Genre
         2                                                     // Page Number
       )
     )
@@ -126,9 +121,12 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
       <div className="w-full flex items-center gap-x-1">
         <p 
           className={`text-white text-base sm:text-2xl font-semibold sm:font-bold cursor-pointer ${marginStyle}`} 
-          onClick={() => screenWidth >= 640 && 
-            navigate(`/browse/m/genre/${dataCategory1 !== null ? dataCategory1 : "g"}/${getGenreCode(queryType) !== null ? getGenreCode(queryType) : queryType}`)
-          }
+          onClick={() => screenWidth >= 640 && (
+            currentPage === "Home" ?
+              navigate(`/browse/m/genre/${dataCategory1 !== null ? dataCategory1 : "g"}/${genre !== null ? genre : queryType}`) :
+            currentPage === "TV Shows" &&
+              navigate(`/browse/t/genre/${dataCategory1 !== null ? dataCategory1 : "g"}/${genre !== null ? genre : queryType}`)
+          )}
           onMouseOver={() => SetExploreHover(true)} 
           onMouseLeave={() => SetExploreHover(false)}
         >
@@ -137,9 +135,12 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
         <div 
           className={`custom-transition-duration-5s hidden sm:flex items-center text-[#54b9c5] text-base font-extrabold 
             mt-[.4rem] cursor-pointer sm:opacity-0 ${deviceType === "Desktop" && sliderTitleHover && "sm:opacity-100"} ${exploreHover && "pl-3"}`}
-          onClick={() => screenWidth >= 640 && 
-            navigate(`/browse/m/genre/${dataCategory1 !== null ? dataCategory1 : "g"}/${getGenreCode(queryType) !== null ? getGenreCode(queryType) : queryType}`)
-          }
+          onClick={() => screenWidth >= 640 && (
+            currentPage === "Home" ?
+              navigate(`/browse/m/genre/${dataCategory1 !== null ? dataCategory1 : "g"}/${genre !== null ? genre : queryType}`) :
+            currentPage === "TV Shows" &&
+              navigate(`/browse/t/genre/${dataCategory1 !== null ? dataCategory1 : "g"}/${genre !== null ? genre : queryType}`)
+          )}
           onMouseOver={() => SetExploreHover(true)} 
           onMouseLeave={() => SetExploreHover(false)} 
         > 

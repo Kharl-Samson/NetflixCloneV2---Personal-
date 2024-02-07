@@ -42,11 +42,11 @@ export const SearchInput = () => {
 
     useEffect(() => {
       if(searchValue !== "" && (!params || params === "Default")){
-        navigate(`/?search=1&s=${searchValue}`)
+        navigate(`${location.pathname}?search=1&s=${searchValue}`)
       }
       else if((categoryParams !== "tv" && categoryParams !== "movie" && !params) || (searchValue === "" && searchParams === "1")){
         setSearchValue("")
-        navigate("/")
+        navigate(location.pathname)
       }
 
       if(currentSection !== "categorySection" && isSearchClick && !location.pathname.includes("/browse/m/genre/")) {

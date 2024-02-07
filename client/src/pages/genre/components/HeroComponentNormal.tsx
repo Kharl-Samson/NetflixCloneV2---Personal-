@@ -21,9 +21,10 @@ type HeroProps = {
   isDataLoading : boolean
   isTrailerLoading : boolean
   marginStyle : string
+  category : string
 }
 
-export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer, isDataLoading, isTrailerLoading, marginStyle} : HeroProps ) => {
+export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer, isDataLoading, isTrailerLoading, marginStyle, category} : HeroProps ) => {
     // Navigate
     const navigate = useNavigate()
 
@@ -85,7 +86,7 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer, isD
 
   return (
     (screenWidth >= 640 && myData?.id === "" && isDataLoading) ?
-      <div className="absolute top-0 bg-[#181414] max-h-[90rem] h-[15rem] 801size:h-[50rem] 951size:h-[100dvh] w-full z-[10]">
+      <div className="absolute top-[4.5rem] bg-[#181414] max-h-[90rem] h-[15rem] 801size:h-[50rem] 951size:h-[100dvh] w-full z-[10]">
         <div className={`mt-[6rem] flex flex-wrap gap-3 ${marginStyle}`}>
           {Array.from({ length: 3 }, (_, index) => (
             <Skeleton variant="rounded" animation="wave" sx={{width:"17rem"}} height={"10rem"} key={index}/>
@@ -99,7 +100,7 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer, isD
         <img 
           src={`${import.meta.env.VITE_BASE_IMAGE_URL}${myData?.backdrop_path}`}
           alt="Movie Image"
-          className={`max-h-[90rem] hidden sm:block absolute top-0 max-w-[3000px] mx-auto w-full h-[45rem] 801size:h-[50rem]
+          className={`max-h-[90rem] hidden sm:block absolute top-[4.5rem] max-w-[3000px] mx-auto w-full h-[45rem] 801size:h-[50rem]
             951size:h-[100dvh] object-center object-cover custom-transition-duration-10s z-10 
           bg-black bg-opacity-50 image-inline-shadow ${showVideo ? "opacity-0" : "opacity-100"}`}
         />
@@ -107,7 +108,10 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer, isD
 
       {/* Video Player */
       screenWidth >= 640 &&
-        <div className={`max-h-[90rem] hidden  absolute max-w-[3000px] mx-auto top-0 w-full h-[45rem] 801size:h-[50rem] 951size:h-[100dvh] overflow-hidden z-0 ${showVideo && "sm:block"}`}>
+        <div 
+          className={`max-h-[90rem] hidden absolute max-w-[3000px] mx-auto top-[4.5rem] w-full h-[45rem] 801size:h-[50rem] 
+            951size:h-[100dvh] overflow-hidden z-0 ${showVideo && "sm:block"}`}
+        >
           <YoutubePlayer
             id = "youtubePlayer"
             videoId = {trailerData} 
@@ -120,7 +124,7 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer, isD
       {/* Main Content */
       screenWidth >= 640 && 
         <div 
-          className="max-w-[3000px] max-h-[90rem] mx-auto z-20 absolute top-0 hidden sm:flex flex-col 
+          className="max-w-[3000px] max-h-[90rem] mx-auto z-20 absolute top-[4.5rem] hidden sm:flex flex-col 
             justify-end w-full h-[45rem] 801size:h-[50rem] 951size:h-[100dvh] px-7 951size:px-14"
           style={{background: "linear-gradient(0deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.40) 100%)"}}
         >
@@ -143,7 +147,7 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer, isD
 
             <button 
               className="rounded-md flex items-center gap-x-[15px] font-netflix_regular py-[11px] px-[35px] transition duration-400 bg-[#857e7ea8] hover:opacity-80"
-              onClick={(event) => handleClickModal(event, "movie", myData?.id)}
+              onClick={(event) => handleClickModal(event, category, myData?.id)}
             >
               <img src={info} alt="Info Icon" className="h-[27px]"/>
               <span className="text-[1.4rem] text-white font-semibold">More Info</span>

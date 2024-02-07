@@ -50,7 +50,7 @@ export const ShowsDetails = ({scrollToBottom, myRef} : showDetailsDataProps) => 
       () => getShowDetails(categoryParams, params, "en-US"),
       { cacheTime: 0 } // Remove caching to trigger every click
     )
-
+  
     // Fetch trailer data
     const { data : myTrailerData, isFetched: isFetchedTrailer, isError: isTrailerError , isLoading: isTrailerLoading } = useQuery(
       ["trailerModalKey", params],

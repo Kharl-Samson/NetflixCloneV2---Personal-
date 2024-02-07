@@ -5,6 +5,7 @@ import placeholderAvatar from "../../assets/images/placeholderAvatar.png"
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined'
 import { useState } from "react"
 import { useAppStore } from "../../store/ZustandStore"
+import { useNavigate } from "react-router-dom"
 
 type NavbarProps = {
     scrollDirection : string
@@ -14,23 +15,27 @@ type NavbarProps = {
   
 export const NavbarLarge = ( {scrollDirection, isAtTop, active} : NavbarProps ) => {
 
+    // Navigate
+    const navigate = useNavigate()
+
     // Get search value params
     const urlParams = new URLSearchParams(window.location.search)
     const searchParams = urlParams.get("search")
 
     // Data Links
     const arrayLink : string[] = ["Home", "TV Shows", "Movies", "New & Popular", "My List"]
+    const arrayUrl : string[] = ["/", "browse/genre/t0", "", "", ""]
 
     // Hover Avatar
     const [isAvatarHover, setAvatarHover] = useState<boolean>(false)
 
     // Zustand State
-    const { setSearchClick, setSearchValue } = useAppStore()
+    const { setMyData, setSearchClick, setShowVideo, setSearchValue, setIsMuted } = useAppStore()
 
   return (
     <nav 
-      className={`w-full py-4 px-14 fixed max-w-[3000px] mx-auto top-0 flex justify-between items-center custom-transition-duration-3s
-        z-50 ${searchParams === "1" ? "bg-[#181414]" : scrollDirection === "down" || !isAtTop ? "bg-[#181414]" : "shadowing"}`
+      className={`w-full py-4 px-14 fixed max-w-[3000px] mx-auto top-0 flex justify-between items-center custom-transition-duration-3s z-50 
+        ${searchParams === "1" || active === "TV Shows" ? "bg-[#181414]" : scrollDirection === "down" || !isAtTop ? "bg-[#181414]" : "shadowing"}`
       }
     >
       {/* Logo and Menu */}
@@ -40,12 +45,19 @@ export const NavbarLarge = ( {scrollDirection, isAtTop, active} : NavbarProps ) 
         {/* Menu */}
         <ul className="flex gap-x-5 text-custom-light-2 ">
           {// Links Mapping
-            arrayLink?.map((res: string) => (
+            arrayLink?.map((res: string, index: number) => (
               <li 
-                onClick={() => {setSearchClick(false) ; setSearchValue("")}}
+                onClick={() => {
+                  setMyData({id: ""}) ;
+                  setShowVideo(false) ; 
+                  setIsMuted(true) ; 
+                  setSearchClick(false) ; 
+                  setSearchValue(""); 
+                  navigate(arrayUrl[index])
+                }}
                 key={res} 
                 className={`text-sm cursor-pointer hover:opacity-80 custom-transition-duration-3s font-light
-                ${active === res ? "text-white " : ""}`}
+                ${active === res ? "text-white pointer-events-none" : "pointer-events-auto"}`}
               >
                 {res}
               </li>

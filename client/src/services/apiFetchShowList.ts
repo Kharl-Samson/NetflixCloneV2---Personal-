@@ -7,6 +7,15 @@ export const getShowList = async(queryType: string, category : string | null, la
     case "Hero":
     case "Romantic Movies":
     case "TV Action & Adventure":
+    case "Documentaries TV":
+    case "Western TV Sci-Fi & Fantasy":
+    case "Exciting Western Movies":
+    case "Drama Movies":
+    case "Watch for a While TV":
+    case "Thrillers & Horror Movies":
+    case "Award-winning Western TV Comedies":
+    case "Discover":
+    case "Discover TV":
       url = `${import.meta.env.VITE_SERVER_URL}/discover/${category}`
       break
   
@@ -25,18 +34,28 @@ export const getShowList = async(queryType: string, category : string | null, la
   
     case "Top Rated Movies":
     case "Popular On Netflix TV":
+    case "Discover TV - Casual Viewing":
       url = `${import.meta.env.VITE_SERVER_URL}/${category}/top_rated`
       break
 
-    case "Documentaries TV":
-    case "Western TV Sci-Fi & Fantasy":
-    case "Exciting Western Movies":
-    case "Drama Movies":
-    case "Watch for a While TV":
-    case "Thrillers & Horror Movies":
-    case "Award-winning Western TV Comedies":
-    case "Discover":
+    case "Discover TV - Recommendations":
+      url = `${import.meta.env.VITE_SERVER_URL}/${category}/121/recommendations`
+      break
+
+    case "Discover TV - Western TV Shows":
       url = `${import.meta.env.VITE_SERVER_URL}/discover/${category}`
+      break
+
+    case "Discover TV - New Releases":
+      url = `${import.meta.env.VITE_SERVER_URL}/discover/${category}?first_air_date_year=2024`
+      break
+
+    case "Discover TV - Filipino TV Show":
+      url = `${import.meta.env.VITE_SERVER_URL}/discover/${category}?with_origin_country=ph`
+      break
+
+    case "Discover TV - Korean TV Show":
+      url = `${import.meta.env.VITE_SERVER_URL}/discover/${category}?with_origin_country=kr`
       break
 
     default:

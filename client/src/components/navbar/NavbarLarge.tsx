@@ -48,7 +48,10 @@ export const NavbarLarge = ( {scrollDirection, isAtTop, active} : NavbarProps ) 
             arrayLink?.map((res: string, index: number) => (
               <li 
                 onClick={() => {
-                  setMyData({id: ""}) ;
+                  setMyData({
+                    id: "",
+                    genres: []
+                  }) ;
                   setShowVideo(false) ; 
                   setIsMuted(true) ; 
                   setSearchClick(false) ; 

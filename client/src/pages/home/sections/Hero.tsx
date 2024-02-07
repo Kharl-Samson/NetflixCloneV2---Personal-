@@ -37,7 +37,7 @@ export const Hero = ({category, genre} : HeroProps) => {
     )
 
     // Fetch trailer data
-    const { data : myTrailerData, isFetched: isFetchedTrailer, isError: isTrailerError, isLoading: isTrailerLoading } = useQuery(
+    const { data : myTrailerData, isFetched: isFetchedTrailer, isError: isTrailerError } = useQuery(
       ["trailerKey", myData],
       () => getShowTrailer(category, myData?.id),
       { cacheTime: 0 } // Remove caching to trigger every click
@@ -79,7 +79,6 @@ export const Hero = ({category, genre} : HeroProps) => {
         trailerData = {trailerData}
         isFetchedTrailer = {isFetchedTrailer}
         isDataLoading = {isDataLoading}
-        isTrailerLoading = {isTrailerLoading}
         marginStyle = { 
           screenWidth < 640 ? "mx-5" : 
           screenWidth <= 800 ? "mx-7" : 

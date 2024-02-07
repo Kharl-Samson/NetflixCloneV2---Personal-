@@ -6,16 +6,21 @@ export type appStoreType = {
     setCurrentPage: (value: string) => void
 
     myData: {
-        id: string;
-        backdrop_path?: string;
+        id: string
+        backdrop_path?: string
         genres: {
             name: string
         }[]
     }
-    setMyData: (newData: {
-        id: string;
-        backdrop_path?: string;
-    }) => void
+    setMyData: (
+        newData: {
+            id: string;
+            backdrop_path?: string
+            genres: {
+                name: string
+            }[]
+        }
+    ) => void
 
     // React Youtube States -> Hero
     showVideo: boolean

@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import searchIcon from "../../assets/images/icons/search.png"
+import { useRouteAndQueryParams } from "../../utils/itemsFunction"
 
 type NavbarProps = {
   scrollDirection : string
@@ -7,6 +8,9 @@ type NavbarProps = {
 }
 
 export const NavbarSmall = ( {scrollDirection, isAtTop} : NavbarProps ) => {
+  // Params Url Getter
+  const { categoryParams } = useRouteAndQueryParams()
+
   // Navigate
   const navigate = useNavigate()
 
@@ -27,8 +31,29 @@ export const NavbarSmall = ( {scrollDirection, isAtTop} : NavbarProps ) => {
         className={`flex flex-wrap gap-x-2 gap-y-3 text-custom-light-2 overflow-hidden
           custom-transition-duration-3s ${scrollDirection === "down" ? "h-0" : "mt-4 h-auto"}`}
       >
-        <div className="text-sm text-nowrap  py-1 px-3 rounded-full border-[1px] border-custom-light-2 active:scale-[.98]">TV Shows</div>
-        <div className="text-sm text-nowrap  py-1 px-3 rounded-full border-[1px] border-custom-light-2 active:scale-[.98]">Movies</div>
+
+        {/* Close */}
+        <div 
+          className="h-[1.9rem] w-[1.9rem] rounded-full flex items-center justify-center border-[1px] border-custom-light-2 active:scale-[.98]"
+          onClick={() => navigate("/")}
+        >
+          <p className="text-2xl mt-[-1px]">&#215;</p>
+        </div>
+
+        {/* TV Shows */}
+        <div 
+          className={`text-sm text-nowrap  py-1 px-3 rounded-full border-[1px] border-custom-light-2 active:scale-[.98]
+            ${categoryParams === "t0" && "bg-[#868686] text-white pointer-events-none"}`} 
+          onClick={() => navigate("/browse/genre/t0")}
+        >
+          TV Shows
+        </div>
+       
+        {/* Movie */}
+        {!categoryParams && categoryParams !== "m0" &&
+          <div className="text-sm text-nowrap  py-1 px-3 rounded-full border-[1px] border-custom-light-2 active:scale-[.98]">Movies</div>
+        }
+        
         <div className="text-sm text-nowrap  py-1 px-3 rounded-full border-[1px] border-custom-light-2 active:scale-[.98]">Categories &nbsp;v</div>
       </div>
     </nav>

@@ -18,7 +18,15 @@ export const useAppStore = create<appStoreType>()(
     setCurrentPage: (value: string) => set({ currentPage: value }),
 
     // My data state
-    myData: { id: "" },
+    myData: { 
+      id: "",
+      backdrop_path: "",
+      genres: [
+        {
+          name: ""
+        }
+      ]
+    },
     setMyData: (newData) => set(() => ({ myData: newData })),
 
     // React Youtube States -> Hero

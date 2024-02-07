@@ -19,12 +19,11 @@ type HeroProps = {
   trailerData : string
   isFetchedTrailer : boolean
   isDataLoading : boolean
-  isTrailerLoading : boolean
   marginStyle : string
   category : string
 }
 
-export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer, isDataLoading, isTrailerLoading, marginStyle, category} : HeroProps ) => {
+export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer, isDataLoading, marginStyle, category} : HeroProps ) => {
     // Navigate
     const navigate = useNavigate()
 

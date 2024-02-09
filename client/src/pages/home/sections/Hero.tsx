@@ -51,6 +51,10 @@ export const Hero = () => {
    // Set the random number once a day without dependencies in the array
     const [randomNumber, setRandomNumber] = useState<number>(-1)
     useEffect(() => {
+      setMyData({
+        id: "",
+        genres: []
+      }) 
       const dailyIndex = generateSessionRandomIndex(showArray.length);
       setRandomNumber(dailyIndex)
     }, [])

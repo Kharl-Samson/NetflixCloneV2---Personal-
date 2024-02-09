@@ -31,8 +31,8 @@ export const HeroComponentSmall = ( {myData, category} : HeroProps ) => {
     
     // Generate random color
     useEffect(() => {
-        const randomIndex = Math.floor(Math.random() * colorsArray.length)
-        setColor(colorsArray[randomIndex])
+      const randomIndex = Math.floor(Math.random() * colorsArray.length)
+      setColor(colorsArray[randomIndex])
     },[])
 
   return (

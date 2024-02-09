@@ -83,7 +83,7 @@ export const getShowList = async(queryType: string, category : string | null, la
     })
     return response.data
   } catch (error : unknown | string) {
-    console.log(error)
+    //console.log(error)
   }
 }
 
@@ -101,7 +101,7 @@ export const getShowTrailer = async(category : string, trailerId: string | numbe
       })
       return response.data
     } catch (error : unknown | string) {
-      console.log(error)
+      //console.log(error)
     }
   }
 }
@@ -121,7 +121,7 @@ export const getShowDetails = async(category : string, trailerId: string | numbe
       })
       return response.data
     } catch (error : unknown | string) {
-      console.log(error)
+      //console.log(error)
     }
   }
 }
@@ -140,7 +140,7 @@ export const getEpisodeDetails = async(itemId: string, seasonNumber : number) =>
       })
       return response.data
     } catch (error : unknown | string) {
-      console.log(error)
+      //console.log(error)
     }
   }
 }
@@ -160,7 +160,7 @@ export const getSimilarShows = async(category : string | null, itemId: string, p
       })
       return response.data
     } catch (error : unknown | string) {
-      console.log(error)
+      //console.log(error)
     }
   }
 }
@@ -178,7 +178,7 @@ export const getCasts = async(category : string, id: string) => {
     })
     return response.data
   } catch (error : unknown | string) {
-    console.log(error)
+    //console.log(error)
   }
 }
 
@@ -195,7 +195,7 @@ export const getGenres = async(category : string | boolean) => {
     })
     return response.data
   } catch (error : unknown | string) {
-    console.log(error)
+    //console.log(error)
   }
 }
 
@@ -213,7 +213,7 @@ export const getCollections = async( collectionId: string) => {
       })
       return response.data
     } catch (error : unknown | string) {
-      console.log(error)
+      //console.log(error)
     }
   }
 }
@@ -234,7 +234,7 @@ export const getSearchQuery = async( seaarchParam: string, page? : number) => {
       })
       return response.data
     } catch (error : unknown | string) {
-      console.log(error)
+      //console.log(error)
     }
   }
 }

@@ -42,7 +42,8 @@ export const NavbarSmall = ( {scrollDirection, isAtTop} : NavbarProps ) => {
         </div>
         }
 
-        {/* TV Shows */}
+        {/* TV Shows */
+        (!categoryParams || categoryParams === "t0") &&
         <div 
           className={`text-sm text-nowrap  py-1 px-3 rounded-full border-[1px] border-custom-light-2 active:scale-[.98]
             ${categoryParams === "t0" && "bg-[#868686] text-white pointer-events-none"}`} 
@@ -50,9 +51,10 @@ export const NavbarSmall = ( {scrollDirection, isAtTop} : NavbarProps ) => {
         >
           TV Shows
         </div>
+        }
        
         {// Movie
-        !categoryParams && categoryParams !== "m0" &&
+        (!categoryParams || categoryParams === "m0") &&
         <div 
           className={`text-sm text-nowrap  py-1 px-3 rounded-full border-[1px] border-custom-light-2 active:scale-[.98]
             ${categoryParams === "m0" && "bg-[#868686] text-white pointer-events-none"}`} 

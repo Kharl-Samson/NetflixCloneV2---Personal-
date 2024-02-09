@@ -294,3 +294,59 @@ export const slidersMovies: SliderInfo[] = [
     genre: null
   },
 ]
+
+// For New & Popular Page
+export const slidersLatest: SliderInfo[] = [
+  { 
+    componentType: "SliderTop10", 
+    title: "Top 10 TV Shows in the Philippines Today", 
+    queryType: "Top 10 TV Shows", 
+    queryKey: "top10TVshow", 
+    classCount: 0, 
+    sliderStyle: "sm:mt-[7rem] z-[39]",
+  },
+  { 
+    componentType: "Slider", 
+    title: "New TV Shows on Netflix", 
+    queryType: "Discover TV - New Releases", 
+    queryKey: "newOnNetflixTv", 
+    classCount: 1, 
+    sliderStyle: "sm:mt-14 z-[39]",
+    genre: null
+  },
+  { 
+    componentType: "SliderTop10", 
+    title: "Top 10 Movies in the Philippines Today", 
+    queryType: "Top 10 Movies", 
+    queryKey: "top10Movies", 
+    classCount: 2, 
+    sliderStyle: "sm:mt-14 z-[38]" 
+  },
+  { 
+    componentType: "Slider", 
+    title: "New Movies on Netflix", 
+    queryType: "Discover Movies - New Releases", 
+    queryKey: "newOnNetflixMovies", 
+    classCount: 3, 
+    sliderStyle: "sm:mt-14 z-[37]",
+    genre: null 
+  },
+  { 
+    componentType: "Slider", 
+    title: "Watch for a While", 
+    queryType: "Discover TV - New Releases", 
+    queryKey: "watchForaWhileLatest", 
+    classCount: 4, 
+    sliderStyle: "sm:mt-14 z-[36]",
+    genre: 80 
+  },
+  { 
+    componentType: "Slider", 
+    title: "Bingeworthy TV Shows", 
+    queryType: "Discover TV - New Releases", 
+    queryKey: "tvActionAdventure", 
+    classCount: 5, 
+    sliderStyle: "sm:mt-14 z-[35]",
+    genre: 10759 
+  }
+]

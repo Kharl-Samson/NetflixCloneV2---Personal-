@@ -6,6 +6,7 @@ import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined
 import { useState } from "react"
 import { useAppStore } from "../../store/ZustandStore"
 import { useNavigate } from "react-router-dom"
+import { scrollToTop } from "../../utils/getCurrentSection"
 
 type NavbarProps = {
     scrollDirection : string
@@ -24,7 +25,7 @@ export const NavbarLarge = ( {scrollDirection, isAtTop, active} : NavbarProps ) 
 
     // Data Links
     const arrayLink : string[] = ["Home", "TV Shows", "Movies", "New & Popular", "My List"]
-    const arrayUrl : string[] = ["/", "/browse/genre/t0", "/browse/genre/m0", "", ""]
+    const arrayUrl : string[] = ["/", "/browse/genre/t0", "/browse/genre/m0", "/latest", ""]
 
     // Hover Avatar
     const [isAvatarHover, setAvatarHover] = useState<boolean>(false)
@@ -56,7 +57,8 @@ export const NavbarLarge = ( {scrollDirection, isAtTop, active} : NavbarProps ) 
                   setIsMuted(true) ; 
                   setSearchClick(false) ; 
                   setSearchValue(""); 
-                  navigate(arrayUrl[index])
+                  navigate(arrayUrl[index]);
+                  scrollToTop()
                 }}
                 key={res} 
                 className={`text-sm cursor-pointer hover:opacity-80 custom-transition-duration-3s font-light

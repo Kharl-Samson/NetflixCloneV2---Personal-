@@ -78,6 +78,7 @@ export const convertToHoursAndMinutes = (minutes: number) => {
   }
 }
 
+// Scroll to top
 export const scrollToTop = () => {
   window.scrollTo({
     top: 0,

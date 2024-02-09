@@ -71,7 +71,10 @@ export const ListByGenre = () => {
         else if(currentPage === "Movies" || location.pathname.includes("/browse/t/genre/movie")){
           navigate("/browse/genre/m0")
         }
-  
+        else if(location.pathname.includes("/latest")){
+          navigate("/latest")
+        }
+        
         setShowVideo(true)
         setPause(false)
       }

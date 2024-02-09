@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom"
 import { Page } from "./pages/home/Page"
 import { Page as Browse } from "./pages/browseItem/Page"
 import { Page as Genre } from "./pages/genre/Page"
+import { Page as Latest } from "./pages/latest/Page"
 import { useAppStore } from "./store/ZustandStore"
 import { useEffect, useState } from "react"
 import { useRouteAndQueryParams } from "./utils/itemsFunction"
@@ -90,6 +91,14 @@ function App() {
         <Route path="/browse/genre/:category" element={screenWidth < 640 ? <Browse/> : <Genre scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>}/>
         {/* Title Modal */}
         <Route path="/browse/t/genre/:categoryId/:genreId" element={screenWidth < 640 ? <Browse/> : <Genre scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>}/>
+
+        {/* 
+          * Latest Page
+          * New & Popular
+          */}
+        <Route path="/latest" element={<Latest scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>}/>
+        {/* Item Modal */}
+        <Route path="/browse/latest/:category" element={screenWidth < 640 ? <Browse/> : <Latest scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>}/>
 
         {/* For Mobile */}
         <Route path="/search" element={<SearchMobile/>}/>

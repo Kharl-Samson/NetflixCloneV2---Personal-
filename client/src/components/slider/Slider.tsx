@@ -113,21 +113,21 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
 
   return (
     <div className={`mt-3 sm:relative ${sliderStyle}`}
-      onMouseOver={() => setSliderTitleHover(true)} 
-      onMouseLeave={() => setSliderTitleHover(false)}
+      onMouseOver={() => !location.pathname.includes("/latest") && setSliderTitleHover(true)} 
+      onMouseLeave={() => !location.pathname.includes("/latest") && setSliderTitleHover(false)}
     >
       {/* Category Title */}
       <div className="w-full flex items-center gap-x-1">
         <p 
-          className={`text-white text-base sm:text-2xl font-semibold sm:font-bold cursor-pointer ${marginStyle}`} 
+          className={`text-white text-base sm:text-2xl font-semibold sm:font-bold ${!location.pathname.includes("/latest") && "cursor-pointer"} ${marginStyle}`} 
           onClick={() => screenWidth >= 640 && (
-            currentPage === "Home" ?
+            !location.pathname.includes("/latest") && currentPage === "Home" ?
               navigate(`/browse/m/genre/${dataCategory1 !== null ? dataCategory1 : "g"}/${genre !== null ? genre : queryType}`) :
-            (currentPage === "TV Shows" || currentPage === "Movies") &&
+            !location.pathname.includes("/latest") && (currentPage === "TV Shows" || currentPage === "Movies") &&
               navigate(`/browse/t/genre/${dataCategory1 !== null ? dataCategory1 : "g"}/${genre !== null ? genre : queryType}`)
           )}
-          onMouseOver={() => SetExploreHover(true)} 
-          onMouseLeave={() => SetExploreHover(false)}
+          onMouseOver={() => !location.pathname.includes("/latest") && SetExploreHover(true)} 
+          onMouseLeave={() => !location.pathname.includes("/latest") && SetExploreHover(false)}
         >
           {title}
         </p>

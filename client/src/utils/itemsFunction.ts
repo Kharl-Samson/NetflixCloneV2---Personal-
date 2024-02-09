@@ -189,13 +189,16 @@ export const useClickHandlers = () => {
         const urlParams = new URLSearchParams(window.location.search)
         const searchParams = urlParams.get("search")
         const sParam = urlParams.get("s")
-
+  
         setShowVideoModal(false)
         if(currentPage === "Home"){
           searchParams === "1" ? navigate(`/browse/${media_type}?search=1&s=${sParam}&q=${id}`) : navigate(`/browse/${media_type}?q=${id}`)
         }
         else if(currentPage === "TV Shows" || currentPage === "Movies"){
           searchParams === "1" ? navigate(`/browse/genre/${media_type}?search=1&s=${sParam}&q=${id}`) : navigate(`/browse/genre/${media_type}?q=${id}`)
+        }
+        else if(location.pathname.includes("/latest")){
+          searchParams === "1" ? navigate(`/browse/latest/${media_type}?search=1&s=${sParam}&q=${id}`) : navigate(`/browse/latest/${media_type}?q=${id}`)
         }
       
         setVideoId(id)
@@ -223,6 +226,9 @@ export const useClickHandlers = () => {
       }
       else if(currentPage === "Movies" || location.pathname.includes("/browse/t/genre/movie")){
         searchParams === "1" ? navigate(`/browse/genre/m0?search=1&s=${sParam}`) : navigate(`/browse/genre/m0`)
+      }
+      else if(location.pathname.includes("/latest")){
+        searchParams === "1" ? navigate(`/latest?search=1&s=${sParam}`) : navigate(`/latest`)
       }
 
       document.title = "Netflix Clone by Kharl"

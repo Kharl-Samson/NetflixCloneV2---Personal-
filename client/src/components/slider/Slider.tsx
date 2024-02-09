@@ -37,7 +37,6 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
       dataCategory2 = "tv"
     }
 
-    
     // Fetch data to be showned in section -> First Data
     const { data : data1, isFetched: isFetchedData1, isError: isDataError1, isLoading : isDataLoading1 } = useQuery(
       [`${queryKey}1`, dataCategory1, dataCategory2],
@@ -124,7 +123,7 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
           onClick={() => screenWidth >= 640 && (
             currentPage === "Home" ?
               navigate(`/browse/m/genre/${dataCategory1 !== null ? dataCategory1 : "g"}/${genre !== null ? genre : queryType}`) :
-            currentPage === "TV Shows" &&
+            (currentPage === "TV Shows" || currentPage === "Movies") &&
               navigate(`/browse/t/genre/${dataCategory1 !== null ? dataCategory1 : "g"}/${genre !== null ? genre : queryType}`)
           )}
           onMouseOver={() => SetExploreHover(true)} 
@@ -138,7 +137,7 @@ export const Slider = ({marginStyle, sliderStyle, title, queryType, queryKey, cl
           onClick={() => screenWidth >= 640 && (
             currentPage === "Home" ?
               navigate(`/browse/m/genre/${dataCategory1 !== null ? dataCategory1 : "g"}/${genre !== null ? genre : queryType}`) :
-            currentPage === "TV Shows" &&
+            (currentPage === "TV Shows" || currentPage === "Movies") &&
               navigate(`/browse/t/genre/${dataCategory1 !== null ? dataCategory1 : "g"}/${genre !== null ? genre : queryType}`)
           )}
           onMouseOver={() => SetExploreHover(true)} 

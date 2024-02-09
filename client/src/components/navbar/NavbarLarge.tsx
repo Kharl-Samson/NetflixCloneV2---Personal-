@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom"
 type NavbarProps = {
     scrollDirection : string
     isAtTop : boolean
-    active : string
+    active : string | boolean
 }
   
 export const NavbarLarge = ( {scrollDirection, isAtTop, active} : NavbarProps ) => {
@@ -24,7 +24,7 @@ export const NavbarLarge = ( {scrollDirection, isAtTop, active} : NavbarProps ) 
 
     // Data Links
     const arrayLink : string[] = ["Home", "TV Shows", "Movies", "New & Popular", "My List"]
-    const arrayUrl : string[] = ["/", "browse/genre/t0", "", "", ""]
+    const arrayUrl : string[] = ["/", "/browse/genre/t0", "/browse/genre/m0", "", ""]
 
     // Hover Avatar
     const [isAvatarHover, setAvatarHover] = useState<boolean>(false)
@@ -35,7 +35,7 @@ export const NavbarLarge = ( {scrollDirection, isAtTop, active} : NavbarProps ) 
   return (
     <nav 
       className={`w-full py-4 px-14 fixed max-w-[3000px] mx-auto top-0 flex justify-between items-center custom-transition-duration-3s z-50 
-        ${searchParams === "1" || active === "TV Shows" ? "bg-[#181414]" : scrollDirection === "down" || !isAtTop ? "bg-[#181414]" : "shadowing"}`
+        ${searchParams === "1" || active === "TV Shows" || active === "Movies" ? "bg-[#181414]" : scrollDirection === "down" || !isAtTop ? "bg-[#181414]" : "shadowing"}`
       }
     >
       {/* Logo and Menu */}

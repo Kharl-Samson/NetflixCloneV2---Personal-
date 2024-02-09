@@ -14,7 +14,7 @@ export const Footer = () => {
                 This site was developed by Kharl. It cannot and should not be reproduced in any forms or by any means without the consent from him.
             </p>
 
-            <p className="mt-3 text-sm text-[#979797]">{new Date().getFullYear()} - StreamHive. All rights reserved.</p>
+            <p className="mt-3 text-sm text-[#979797]">{new Date().getFullYear()} - Netflix Clone by Kharl. All rights reserved.</p>
         </div>
     </footer>
   )

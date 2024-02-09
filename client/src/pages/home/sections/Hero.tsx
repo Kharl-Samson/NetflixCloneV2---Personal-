@@ -18,6 +18,7 @@ export const Hero = () => {
       146176, // Berlin
       385687, // Fast X
     ]
+
     const categoryArray : string[] = [
       "movie", // Suits
       "tv",    // Blacklist
@@ -27,18 +28,30 @@ export const Hero = () => {
       "movie", // Fast X
     ]
 
-    // Function to generate a pseudo-random number based on the current date
-    const generateDailyRandomIndex = (arrayLength: number): number => {
-      const today = new Date()
-      const dateString = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`
-      let seed = Array.from(dateString).reduce((acc, char) => acc + char.charCodeAt(0), 0)
+    // Function to generate a pseudo-random number, changes when the website is closed and reopened
+    const generateSessionRandomIndex = (arrayLength: number): number => {
+      // Check if there's a timestamp in localStorage
+      let sessionTimestamp = localStorage.getItem("sessionTimestamp")
+    
+      // If no timestamp or session was not marked as active, create a new one
+      if (!sessionTimestamp || !sessionStorage.getItem("isActiveSession")) {
+        const now = new Date()
+        sessionTimestamp = `${now.getTime()}`
+        localStorage.setItem("sessionTimestamp", sessionTimestamp)
+      
+        // Mark the session as active
+        sessionStorage.setItem("isActiveSession", "true")
+      }
+    
+      // Use the sessionTimestamp as seed for random number generation
+      let seed = Array.from(sessionTimestamp).reduce((acc, char) => acc + char.charCodeAt(0), 0)
       return seed % arrayLength
     }
 
    // Set the random number once a day without dependencies in the array
     const [randomNumber, setRandomNumber] = useState<number>(-1)
     useEffect(() => {
-      const dailyIndex = generateDailyRandomIndex(showArray.length);
+      const dailyIndex = generateSessionRandomIndex(showArray.length);
       setRandomNumber(dailyIndex)
     }, [])
 

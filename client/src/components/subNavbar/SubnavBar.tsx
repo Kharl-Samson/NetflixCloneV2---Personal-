@@ -6,16 +6,17 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"
 
 type SubNavbarProps = {
     isAtTop : boolean
-    category : string
+    category : string | boolean
 }
 
 export const SubnavBar = ({isAtTop, category} : SubNavbarProps) => {
+
     // Zustand state
     const {currentPage} = useAppStore()
 
     // Get Genres
     const { data : genreListData} = useQuery(
-      ["genreDataKey"],
+      ["genreDataKey", currentPage],
       () => getGenres(category)
     )
 
@@ -26,6 +27,7 @@ export const SubnavBar = ({isAtTop, category} : SubNavbarProps) => {
       setCloseFilter(false)
       !closeFilter && setIsOpen(!isOpen)
     }
+
     const handleSelect = (option: string) => {
       setSelectedSeason(option)
       setIsOpen(false)

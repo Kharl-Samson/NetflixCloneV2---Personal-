@@ -194,7 +194,7 @@ export const useClickHandlers = () => {
         if(currentPage === "Home"){
           searchParams === "1" ? navigate(`/browse/${media_type}?search=1&s=${sParam}&q=${id}`) : navigate(`/browse/${media_type}?q=${id}`)
         }
-        else if(currentPage === "TV Shows"){
+        else if(currentPage === "TV Shows" || currentPage === "Movies"){
           searchParams === "1" ? navigate(`/browse/genre/${media_type}?search=1&s=${sParam}&q=${id}`) : navigate(`/browse/genre/${media_type}?q=${id}`)
         }
       
@@ -218,8 +218,11 @@ export const useClickHandlers = () => {
       if(currentPage === "Home"){
         searchParams === "1" ? navigate(`/?search=1&s=${sParam}`) : navigate("/")
       }
-      else if(currentPage === "TV Shows"){
+      else if(currentPage === "TV Shows" || location.pathname.includes("/browse/t/genre/tv")){
         searchParams === "1" ? navigate(`/browse/genre/t0?search=1&s=${sParam}`) : navigate(`/browse/genre/t0`)
+      }
+      else if(currentPage === "Movies" || location.pathname.includes("/browse/t/genre/movie")){
+        searchParams === "1" ? navigate(`/browse/genre/m0?search=1&s=${sParam}`) : navigate(`/browse/genre/m0`)
       }
 
       document.title = "Netflix Clone by Kharl"

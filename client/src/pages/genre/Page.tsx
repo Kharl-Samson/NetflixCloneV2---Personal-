@@ -10,7 +10,7 @@ import { getCurrentSection } from "../../utils/getCurrentSection"
 import { Hero } from "./sections/Hero"
 import { ShowsDetails } from "../../components/modals/showDetails/ShowsDetails"
 import { useClickHandlers, useRouteAndQueryParams } from "../../utils/itemsFunction"
-import { slidersTV } from "../../data/slidersData"
+import { slidersMovies, slidersTV } from "../../data/slidersData"
 import { Footer } from "../../components/footer/Footer"
 import { ListByGenre } from "../../components/modals/listByGenre/ListByGenre"
 import { SubnavBar } from "../../components/subNavbar/SubnavBar"
@@ -33,13 +33,20 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
 
   // Show scroll everytime screen chage
   useEffect(() => {
-    setCurrentPage("TV Shows")
-    document.title = "TV Shows - Netflix Clone by Kharl"
+    if(categoryParams === "t0" || categoryParams === "tv") {
+      setCurrentPage("TV Shows") 
+      document.title = "TV Shows - Netflix Clone by Kharl"
+    }
+    else if(categoryParams === "m0" || categoryParams === "movie") {
+      setCurrentPage("Movies")   
+      document.title = "Movies - Netflix Clone by Kharl"
+    }
+
     if(screenWidth >= 640){
       const body = document.body
       body.style.overflowY = "scroll"
     }
-  },[screenWidth])
+  },[screenWidth, categoryParams])
 
   // Getting Active Section
   const activeSections = getCurrentSection()
@@ -92,12 +99,12 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
         screenWidth <= 1050 ?
           <NavbarNormal scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>
         :
-          <NavbarLarge scrollDirection = {scrollDirection} isAtTop = {isAtTop} active = "TV Shows"/>
+          <NavbarLarge scrollDirection = {scrollDirection} isAtTop = {isAtTop} active = {categoryParams === "t0" ? "TV Shows" : categoryParams === "m0" && "Movies"}/>
       }
 
       {/* Subnavbar for genre  */
       searchParams !== "1" &&  screenWidth >= 640 &&
-        <SubnavBar isAtTop = {isAtTop} category = "tv"/>
+        <SubnavBar isAtTop = {isAtTop}  category = {categoryParams === "t0" ? "tv" : categoryParams === "m0" && "movie"}/>
       }
 
       {/* Hero Section */}
@@ -105,7 +112,7 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
 
       {/* Category Mapping */}
       <main id="categorySection">
-        {slidersTV.map((slider, index) => {
+        {(categoryParams === "t0" ? slidersTV : slidersMovies).map((slider, index) => {
           const CommonProps = {
             marginStyle: determineMarginStyle(screenWidth), 
             sliderStyle: index === 0 ? "sm:mt-[-8.7rem] z-[40]" : slider.sliderStyle,

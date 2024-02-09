@@ -35,26 +35,32 @@ export const getShowList = async(queryType: string, category : string | null, la
     case "Top Rated Movies":
     case "Popular On Netflix TV":
     case "Discover TV - Casual Viewing":
+    case "Discover Movies - Casual Viewing":
       url = `${import.meta.env.VITE_SERVER_URL}/${category}/top_rated`
       break
 
     case "Discover TV - Recommendations":
+    case "Discover Movies - Recommendations":
       url = `${import.meta.env.VITE_SERVER_URL}/${category}/121/recommendations`
       break
 
     case "Discover TV - Western TV Shows":
+    case "Discover Movies - Western Movie Shows":
       url = `${import.meta.env.VITE_SERVER_URL}/discover/${category}`
       break
 
     case "Discover TV - New Releases":
+    case "Discover Movies - New Releases":
       url = `${import.meta.env.VITE_SERVER_URL}/discover/${category}?first_air_date_year=2024`
       break
 
     case "Discover TV - Filipino TV Show":
+    case "Discover Movies - Filipino Movies":
       url = `${import.meta.env.VITE_SERVER_URL}/discover/${category}?with_origin_country=ph`
       break
 
     case "Discover TV - Korean TV Show":
+    case "Discover Movies - Korean Movies":
       url = `${import.meta.env.VITE_SERVER_URL}/discover/${category}?with_origin_country=kr`
       break
 
@@ -177,7 +183,7 @@ export const getCasts = async(category : string, id: string) => {
 }
 
 // Get Genres
-export const getGenres = async(category : string) => {
+export const getGenres = async(category : string | boolean) => {
   try {
     const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/genre/${category}/list`, {
       params: {

@@ -55,7 +55,7 @@ export const ListByGenre = () => {
           1                                               // Page Number
         )
     )
-
+      
     // Close modal function
     const closeModal = () => {
       if(screenWidth >= 640) {
@@ -65,8 +65,11 @@ export const ListByGenre = () => {
         if(currentPage === "Home"){
           navigate("/")
         }
-        else if(currentPage === "TV Shows"){
+        else if(currentPage === "TV Shows" || location.pathname.includes("/browse/t/genre/tv")){
           navigate("/browse/genre/t0")
+        }
+        else if(currentPage === "Movies" || location.pathname.includes("/browse/t/genre/movie")){
+          navigate("/browse/genre/m0")
         }
   
         setShowVideo(true)
@@ -90,6 +93,7 @@ export const ListByGenre = () => {
       setCloseFilter(false)
       !closeFilter && setIsOpen(!isOpen)
     }
+    
     const handleSelect = (option: string) => {
       setSelectedSeason(option)
       setIsOpen(false)

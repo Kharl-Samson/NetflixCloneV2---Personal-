@@ -219,3 +219,78 @@ export const slidersTV: SliderInfo[] = [
     genre: null
   },
 ]
+
+// For Movies Page
+export const slidersMovies: SliderInfo[] = [
+  { 
+    componentType: "Slider", 
+    title: "Trending Now", 
+    queryType: "Top 10 Movies", 
+    queryKey: "trendingNowMovie", 
+    classCount: 0, 
+    sliderStyle: "sm:mt-14 z-[40]",
+    genre: null
+  },
+  { 
+    componentType: "Slider", 
+    title: "Bingeworthy Movies", 
+    queryType: "Discover Movies - Recommendations", 
+    queryKey: "bingeWorthyMovies", 
+    classCount: 1, 
+    sliderStyle: "sm:mt-14 z-[39]",
+    genre: null
+  },
+  { 
+    componentType: "Slider", 
+    title: "Casual Viewing", 
+    queryType: "Discover Movies - Casual Viewing", 
+    queryKey: "casualViewing", 
+    classCount: 2, 
+    sliderStyle: "sm:mt-14 z-[38]",
+    genre: null
+  },
+  { 
+    componentType: "Slider", 
+    title: "Western Movies", 
+    queryType: "Discover Movies - Western Movie Shows", 
+    queryKey: "westernMoviesShows", 
+    classCount: 3, 
+    sliderStyle: "sm:mt-14 z-[37]",
+    genre: null
+  },
+  { 
+    componentType: "SliderTop10", 
+    title: "Top 10 Movies in the Philippines Today", 
+    queryType: "Top 10 Movies", 
+    queryKey: "top10Movies", 
+    classCount: 4, 
+    sliderStyle: "sm:mt-14 z-[36]",
+  },
+  { 
+    componentType: "Slider", 
+    title: "New Releases", 
+    queryType: "Discover Movies - New Releases", 
+    queryKey: "newReleases", 
+    classCount: 5, 
+    sliderStyle: "sm:mt-14 z-[35]",
+    genre: null
+  },
+  { 
+    componentType: "Slider", 
+    title: "Filipino Movies", 
+    queryType: "Discover Movies - Filipino Movies", 
+    queryKey: "filipinoMovies", 
+    classCount: 6, 
+    sliderStyle: "sm:mt-14 z-[34]",
+    genre: null
+  },
+  { 
+    componentType: "Slider", 
+    title: "Korean Movies", 
+    queryType: "Discover Movies - Korean Movies", 
+    queryKey: "koreanMovies", 
+    classCount: 7, 
+    sliderStyle: "sm:mt-14 z-[33]",
+    genre: null
+  },
+]

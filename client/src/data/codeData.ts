@@ -26,7 +26,16 @@ export const queryTypeValues: QueryCodes = {
     "Discover TV - Western TV Shows": "Discover TV - Western TV Shows",
     "Discover TV - New Releases": "Discover TV - New Releases",
     "Discover TV - Filipino TV Show": "Discover TV - Filipino TV Show",
-    "Discover TV - Korean TV Show": "Discover TV - Korean TV Show"
+    "Discover TV - Korean TV Show": "Discover TV - Korean TV Show",
+
+    // For Movie Page
+    "Top 10 Movies": "Top 10 Movies",
+    "Discover Movies - Recommendations": "Discover Movies - Recommendations",
+    "Discover Movies - Casual Viewing": "Discover Movies - Casual Viewing",
+    "Discover Movies - Western Movie Shows": "Discover Movies - Western Movie Shows",
+    "Discover Movies - New Releases": "Discover Movies - New Releases",
+    "Discover Movies - Filipino Movies": "Discover Movies - Filipino Movies",
+    "Discover Movies - Korean Movies": "Discover TV - Korean Movies"
 }
 
 // Query Type values in genre modal for title
@@ -53,5 +62,14 @@ export const queryTypeValuesTitle: QueryCodes = {
     "Discover TV - Western TV Shows": "Western TV Shows",
     "Discover TV - New Releases": "New Releases",
     "Discover TV - Filipino TV Show": "Filipino TV Shows",
-    "Discover TV - Korean TV Show": "Korean TV Shows"
+    "Discover TV - Korean TV Show": "Korean TV Shows",
+
+    // For Movie Page
+    "Top 10 Movies": "Trending Now",
+    "Discover Movies - Recommendations": "Bingeworthy Movies",
+    "Discover Movies - Casual Viewing": "Casual Viewing",
+    "Discover Movies - Western Movie Shows": "Western Movies",
+    "Discover Movies - New Releases": "New Releases",
+    "Discover Movies - Filipino Movies": "Filipino Movies",
+    "Discover Movies - Korean Movies": "Korean Movies"
 }

@@ -4,13 +4,17 @@ import { useEffect, useState } from "react"
 import { HeroComponentNormal } from "../components/HeroComponentNormal"
 import { HeroComponentSmall } from "../components/HeroComponentSmall"
 import { useAppStore } from "../../../store/ZustandStore"
+import { useRouteAndQueryParams } from "../../../utils/itemsFunction"
 
 export const Hero = () => {
+    // Params Url Getter
+    const { categoryParams } = useRouteAndQueryParams()
+
     // State from zustand
     const {screenWidth} = useAppStore()
 
     // Hero data randomizer
-    const showArray : number[] = [
+    const showArrayTv : number[] = [
       1396,   // Breaking Bad
       71446,  // Money Heist
       76669,  // Elite
@@ -19,18 +23,40 @@ export const Hero = () => {
       66732,  // Stranger Things
     ]
 
-    // Function to generate a pseudo-random number based on the current date
-    const generateDailyRandomIndex = (arrayLength: number): number => {
-      const today = new Date()
-      const dateString = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`
-      let seed = Array.from(dateString).reduce((acc, char) => acc + char.charCodeAt(0), 0)
+    // Hero data randomizer
+    const showArrayMovie : number[] = [
+      866398,   // Beekeper
+      537116,   // Tick Tick Boom
+      291805,   // Now You See Me 2
+      454983,   // The Kissing Booth
+      955916,   // Lift
+      509967,   // 6 Underground
+    ]
+
+    // Function to generate a pseudo-random number, changes when the website is closed and reopened
+    const generateSessionRandomIndex = (arrayLength: number): number => {
+      // Check if there's a timestamp in localStorage
+      let sessionTimestamp = localStorage.getItem("sessionTimestamp")
+    
+      // If no timestamp or session was not marked as active, create a new one
+      if (!sessionTimestamp || !sessionStorage.getItem("isActiveSession")) {
+        const now = new Date()
+        sessionTimestamp = `${now.getTime()}`
+        localStorage.setItem("sessionTimestamp", sessionTimestamp)
+      
+        // Mark the session as active
+        sessionStorage.setItem("isActiveSession", "true")
+      }
+    
+      // Use the sessionTimestamp as seed for random number generation
+      let seed = Array.from(sessionTimestamp).reduce((acc, char) => acc + char.charCodeAt(0), 0)
       return seed % arrayLength
     }
 
    // Set the random number once a day without dependencies in the array
     const [randomNumber, setRandomNumber] = useState<number>(-1)
     useEffect(() => {
-      const dailyIndex = generateDailyRandomIndex(showArray.length);
+      const dailyIndex = generateSessionRandomIndex(showArrayTv.length);
       setRandomNumber(dailyIndex)
     }, [])
 
@@ -40,15 +66,15 @@ export const Hero = () => {
 
     // Fetch data to be showned in hero section 
     const { data, isFetched: isFetchedData, isError: isDataError, isLoading: isDataLoading } = useQuery(
-      ["tvheroKey", randomNumber, myData],
-      () => randomNumber !== -1 && getShowDetails("tv", showArray[randomNumber], "en-US"),
+      ["tvOrMovieheroKey", randomNumber, myData],
+      () => randomNumber !== -1 && getShowDetails(categoryParams === "t0" ? "tv" :  "movie", categoryParams === "t0" ? showArrayTv[randomNumber] : showArrayMovie[randomNumber], "en-US"),
       { cacheTime: 0 } // Remove caching to trigger every click
     )
 
     // Fetch trailer data
     const { data : myTrailerData, isFetched: isFetchedTrailer, isError: isTrailerError } = useQuery(
-      ["tvtrailerKey", randomNumber, myData],
-      () => randomNumber !== -1 && getShowTrailer("tv", myData?.id),
+      ["tvOrMovietrailerKey", randomNumber, myData],
+      () => randomNumber !== -1 && getShowTrailer(categoryParams === "t0" ? "tv" :  "movie", myData?.id),
       { cacheTime: 0 } // Remove caching to trigger every click
     )
     
@@ -80,7 +106,7 @@ export const Hero = () => {
       {/* On Smaller Screens */}
       <HeroComponentSmall
         myData = {myData}
-        category = {"tv"}
+        category = {categoryParams === "t0" ? "tv" :  "movie"}
       />
 
       {/* On Larger Screens */}
@@ -94,7 +120,7 @@ export const Hero = () => {
           screenWidth <= 800 ? "mx-7" : 
           screenWidth <= 950 ? "mx-7" : "mx-14"
         }
-        category = {"tv"}
+        category = {categoryParams === "t0" ? "tv" :  "movie"}
       />
 
       {/* For shadowing */

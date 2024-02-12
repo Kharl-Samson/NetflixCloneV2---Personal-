@@ -23,7 +23,6 @@ export const Hero = () => {
       66732,  // Stranger Things
     ]
 
-    // Hero data randomizer
     const showArrayMovie : number[] = [
       866398,   // Beekeper
       537116,   // Tick Tick Boom
@@ -32,6 +31,7 @@ export const Hero = () => {
       955916,   // Lift
       509967,   // 6 Underground
     ]
+    const colorsArray : string[] = ["#2C3D2E", "#37B19B", "#BF2E2E", "#03472F", "#636011", "#470A2B", "#053477", "#7A1E9A", "#153A70", "#BF742E"]
 
     // Function to generate a pseudo-random number, changes when the website is closed and reopened
     const generateSessionRandomIndex = (arrayLength: number): number => {
@@ -55,13 +55,16 @@ export const Hero = () => {
 
    // Set the random number once a day without dependencies in the array
     const [randomNumber, setRandomNumber] = useState<number>(-1)
+    const [randomNumberColor, setRandomNumberColor] = useState<number>(-1)
     useEffect(() => {
       setMyData({
         id: "",
         genres: []
       }) 
-      const dailyIndex = generateSessionRandomIndex(showArrayTv.length);
+      const dailyIndex = generateSessionRandomIndex(showArrayTv.length)
+      const dailyIndexColor = generateSessionRandomIndex(colorsArray.length)
       setRandomNumber(dailyIndex)
+      setRandomNumberColor(dailyIndexColor)
     }, [])
 
     // Data states
@@ -111,6 +114,7 @@ export const Hero = () => {
       <HeroComponentSmall
         myData = {myData}
         category = {categoryParams === "t0" ? "tv" :  "movie"}
+        colorBg = {colorsArray[randomNumberColor]}
       />
 
       {/* On Larger Screens */}

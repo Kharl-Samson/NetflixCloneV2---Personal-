@@ -303,7 +303,7 @@ export const slidersLatest: SliderInfo[] = [
     queryType: "Top 10 TV Shows", 
     queryKey: "top10TVshow", 
     classCount: 0, 
-    sliderStyle: "sm:mt-[7rem] z-[39]",
+    sliderStyle: "mt-[7rem] z-[39]",
   },
   { 
     componentType: "Slider", 

@@ -28,6 +28,8 @@ export const Hero = () => {
       "movie", // Fast X
     ]
 
+    const colorsArray : string[] = ["#7A1E9A", "#153A70", "#2C3D2E", "#BF742E", "#37B19B", "#BF2E2E", "#636011", "#470A2B", "#03472F", "#053477"]
+
     // Function to generate a pseudo-random number, changes when the website is closed and reopened
     const generateSessionRandomIndex = (arrayLength: number): number => {
       // Check if there's a timestamp in localStorage
@@ -50,13 +52,16 @@ export const Hero = () => {
 
    // Set the random number once a day without dependencies in the array
     const [randomNumber, setRandomNumber] = useState<number>(-1)
+    const [randomNumberColor, setRandomNumberColor] = useState<number>(-1)
     useEffect(() => {
       setMyData({
         id: "",
         genres: []
       }) 
-      const dailyIndex = generateSessionRandomIndex(showArray.length);
+      const dailyIndex = generateSessionRandomIndex(showArray.length)
+      const dailyIndexColor = generateSessionRandomIndex(colorsArray.length)
       setRandomNumber(dailyIndex)
+      setRandomNumberColor(dailyIndexColor)
     }, [])
 
     // Data states
@@ -106,6 +111,7 @@ export const Hero = () => {
       <HeroComponentSmall
         myData = {myData}
         category = {categoryArray[randomNumber]}
+        colorBg = {colorsArray[randomNumberColor]}
       />
 
       {/* On Larger Screens */}

@@ -1,7 +1,6 @@
 import { useAppStore } from "../../../store/ZustandStore"
 import play from "../../../assets/images/icons/play.png"
 import add from "../../../assets/images/icons/add.png"
-import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 type HeroProps = {
@@ -16,32 +15,23 @@ type HeroProps = {
     }[]
   }
   category : string
+  colorBg : string
 }
 
-export const HeroComponentSmall = ( {myData, category} : HeroProps ) => {
+export const HeroComponentSmall = ( {myData, category, colorBg} : HeroProps ) => {
     // Navigate
     const navigate = useNavigate()
 
     // State from zustand
     const {screenWidth} = useAppStore()
 
-    // Random Color
-    const colorsArray : string[] = ["#7A1E9A", "#153A70", "#2C3D2E", "#BF742E", "#37B19B", "#BF2E2E", "#636011", "#470A2B", "#03472F", "#053477"]
-    const [color, setColor] = useState<string>("")
-    
-    // Generate random color
-    useEffect(() => {
-      const randomIndex = Math.floor(Math.random() * colorsArray.length)
-      setColor(colorsArray[randomIndex])
-    },[])
-
   return (
   /* Image Banner */
   screenWidth < 640 && 
-    <div className="sm:hidden pt-[12rem] 211size:pt-[9rem] 329size:pt-[6.5rem] sm:mt-4 w-full h-auto px-5" style={{ background : `linear-gradient(173deg, ${color} -40.63%, #181414 75.27%)`}}>
+    <div className="sm:hidden pt-[12rem] 211size:pt-[9rem] 329size:pt-[6.5rem] sm:mt-4 w-full h-auto px-5" style={{ background : `linear-gradient(173deg, ${colorBg} -40.63%, #181414 75.27%)`}}>
       <div 
         style = {{
-          backgroundImage: `linear-gradient(176deg, rgba(0, 0, 0, 0.20) 60%, ${color} 140%),
+          backgroundImage: `linear-gradient(176deg, rgba(0, 0, 0, 0.20) 60%, ${colorBg} 140%),
             url(${myData?.backdrop_path && import.meta.env.VITE_BASE_IMAGE_URL}${myData?.backdrop_path})`
         }}
         className="bg-custom-color-hero-1 w-full px-4 h-[30rem] rounded-xl bg-cover bg-top flex flex-col justify-end"

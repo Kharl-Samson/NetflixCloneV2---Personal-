@@ -65,7 +65,7 @@ export const Page = () => {
 			<LightTooltip title="Close">
       	<p className="text-5xl mt-[-2px] text-white cursor-pointer absolute right-5 top-1" onClick={goBack}>&#215;</p>
 			</LightTooltip>
-      <iframe src={url} {...iframeProps} className="h-screen w-full" />
+      <iframe src={url} {...iframeProps} className="h-screen w-full"/>
     </>
   )
 }

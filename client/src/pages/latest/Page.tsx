@@ -80,7 +80,7 @@ export const Page = ( {scrollDirection, isAtTop} : NavbarProps ) => {
           <NavbarSmall scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>
         :
         screenWidth <= 800 ?
-          <NavbarMedium scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>
+          <NavbarMedium scrollDirection = {scrollDirection} isAtTop = {isAtTop} active = "New & Popular"/>
         :
         screenWidth <= 1050 ?
           <NavbarNormal scrollDirection = {scrollDirection} isAtTop = {isAtTop} active = "New & Popular"/>

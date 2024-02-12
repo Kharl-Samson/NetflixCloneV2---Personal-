@@ -6,7 +6,7 @@ import { useQuery } from "react-query"
 import Skeleton from "@mui/material/Skeleton"
 import { handleImageError } from "../../../types/errorTypes"
 import { LazyLoadImage } from "react-lazy-load-image-component"
-import { useRouteAndQueryParams } from "../../../utils/itemsFunction"
+import { useClickHandlers, useRouteAndQueryParams } from "../../../utils/itemsFunction"
 import { useNavigate } from "react-router-dom"
 
 type EpisodeListsProps = {
@@ -109,6 +109,9 @@ export const EpisodeLists = ({showDetailsData, isFetchedShowDetails, isShowDetai
         setCurrentTab(newTab)
       }
     }, [isLoadingSimilarShows, isLoadingTrendingShows, isLoadingCollection, similarShowsData, showDetailsData, collectionData, episodeData, params])
+
+    // Items Functions Util
+    const { navigateToWatch } = useClickHandlers()
 
   return (
     <div className="mx-2 mt-7">
@@ -217,11 +220,13 @@ export const EpisodeLists = ({showDetailsData, isFetchedShowDetails, isShowDetai
             episodeData?.episodes?.map((
               res : {
                 id: number, 
+                season_number: number
                 episode_number: number, 
                 still_path: string,
                 name: string,
                 runtime: number,
                 overview: string
+                show_id: number
               },
               index : number
             ) => (
@@ -235,7 +240,10 @@ export const EpisodeLists = ({showDetailsData, isFetchedShowDetails, isShowDetai
                     onError={handleImageError}
                   />
                   {/* Play Icon */}
-                  <div className="h-[4rem] w-[6.7rem] min-w-[6.7rem] ml-[-7.2rem] flex items-center justify-center relative z-10">
+                  <div 
+                    className="h-[4rem] w-[6.7rem] min-w-[6.7rem] ml-[-7.2rem] flex items-center justify-center relative z-10"
+                    onClick={() => navigateToWatch("tv", res?.show_id, res?.season_number, res?.episode_number)}
+                  >
                     <div className="rounded-full h-[1.9rem] w-[1.9rem] bg-[#000000de] border border-white flex items-center justify-center">
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-white" data-name="Play" aria-hidden="true"><path d="M5 2.69127C5 1.93067 5.81547 1.44851 6.48192 1.81506L23.4069 11.1238C24.0977 11.5037 24.0977 12.4963 23.4069 12.8762L6.48192 22.1849C5.81546 22.5515 5 22.0693 5 21.3087V2.69127Z" fill="currentColor"></path></svg>
                     </div>

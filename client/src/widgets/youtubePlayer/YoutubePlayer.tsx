@@ -43,7 +43,7 @@ export const YoutubePlayer = ({ id, videoId, duration, isFetchedTrailer } : Yout
     }
 
     useLayoutEffect(() => {
-      if (video && videoValid && video.g && video.g.src) {
+      if (video && video.g && video.g.src) {
         // Mute
         isMuted ? video.mute() : video.unMute()
         // Pause
@@ -51,11 +51,11 @@ export const YoutubePlayer = ({ id, videoId, duration, isFetchedTrailer } : Yout
         // Play Again
         playAgain && video.playVideo()
       }
-    },[isMuted, playAgain, pause, video, videoValid])
+    },[isMuted, playAgain, pause, video])
 
     useLayoutEffect(() => {
       // Pause if the user is not on hero section
-      if (video && videoValid && video.g && video.g.src) {
+      if (video && video.g && video.g.src) {
         currentSection === "categorySection" ? video.pauseVideo() : video.playVideo()
       }
     }, [currentSection])

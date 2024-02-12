@@ -52,12 +52,12 @@ export const NavbarLarge = ( {scrollDirection, isAtTop, active} : NavbarProps ) 
                   setMyData({
                     id: "",
                     genres: []
-                  }) ;
-                  setShowVideo(false) ; 
-                  setIsMuted(true) ; 
-                  setSearchClick(false) ; 
-                  setSearchValue(""); 
-                  navigate(arrayUrl[index]);
+                  }) 
+                  setShowVideo(false) 
+                  setIsMuted(true) 
+                  setSearchClick(false) 
+                  setSearchValue("")
+                  navigate(arrayUrl[index])
                   scrollToTop()
                 }}
                 key={res} 

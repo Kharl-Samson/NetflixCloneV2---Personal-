@@ -31,6 +31,7 @@ export const Hero = () => {
       955916,   // Lift
       509967,   // 6 Underground
     ]
+
     const colorsArray : string[] = ["#2C3D2E", "#37B19B", "#BF2E2E", "#03472F", "#636011", "#470A2B", "#053477", "#7A1E9A", "#153A70", "#BF742E"]
 
     // Function to generate a pseudo-random number, changes when the website is closed and reopened
@@ -129,6 +130,7 @@ export const Hero = () => {
           screenWidth <= 950 ? "mx-7" : "mx-14"
         }
         category = {categoryParams === "t0" ? "tv" :  "movie"}
+        trackId = {categoryParams === "t0" ? showArrayTv[randomNumber] : showArrayMovie[randomNumber]}
       />
 
       {/* For shadowing */

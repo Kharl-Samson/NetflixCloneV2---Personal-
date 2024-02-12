@@ -4,6 +4,7 @@ import play from "../../../assets/images/icons/play.png"
 import add from "../../../assets/images/icons/add.png"
 import { convertToHoursAndMinutes } from "../../../utils/getCurrentSection"
 import { OtherInfo } from "./OtherInfo"
+import { useClickHandlers } from "../../../utils/itemsFunction"
 
 type ShowDescriptionProps = {
   castsData : {
@@ -12,6 +13,7 @@ type ShowDescriptionProps = {
     }[]
   }
   showDetailsData : {
+    id: number
     title? : string
     name? : string
     original_title? : string
@@ -55,6 +57,9 @@ export const ShowDescription = ({castsData, showDetailsData} : ShowDescriptionPr
     // Cast, Creator, Genres, and Tagline Modal Controller
     const [isMoreModalStatus, setMoreModalStatus] = useState<boolean>(false)
     
+    // Items Functions Util
+    const { navigateToWatch } = useClickHandlers()
+
   return (
     <div className="mx-2 mt-0">
       {/* If the item is produce by Netflix */
@@ -99,7 +104,10 @@ export const ShowDescription = ({castsData, showDetailsData} : ShowDescriptionPr
       </div>
 
       {/* Play button */}
-      <button className="mt-3 w-full py-1 rounded flex items-center justify-center gap-x-2 bg-white text-base font-bold active:opacity-80">
+      <button 
+        className="mt-3 w-full py-1 rounded flex items-center justify-center gap-x-2 bg-white text-base font-bold active:opacity-80"
+        onClick={() => navigateToWatch(showDetailsData?.number_of_seasons ? "tv" : "movie", showDetailsData?.id)}
+      >
         <img src={play} alt="Play Image" className="h-4"/>
         Play
       </button>

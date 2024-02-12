@@ -1,7 +1,6 @@
 import { useAppStore } from "../../../store/ZustandStore"
 import play from "../../../assets/images/icons/play.png"
 import add from "../../../assets/images/icons/add.png"
-import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 type HeroProps = {

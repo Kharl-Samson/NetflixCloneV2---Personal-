@@ -3,6 +3,7 @@ import { Page } from "./pages/home/Page"
 import { Page as Browse } from "./pages/browseItem/Page"
 import { Page as Genre } from "./pages/genre/Page"
 import { Page as Latest } from "./pages/latest/Page"
+import { Page as Watch } from "./pages/watch/Page"
 import { useAppStore } from "./store/ZustandStore"
 import { useEffect, useState } from "react"
 import { useRouteAndQueryParams } from "./utils/itemsFunction"
@@ -99,6 +100,12 @@ function App() {
         <Route path="/latest" element={<Latest scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>}/>
         {/* Item Modal */}
         <Route path="/browse/latest/:category" element={screenWidth < 640 ? <Browse/> : <Latest scrollDirection = {scrollDirection} isAtTop = {isAtTop}/>}/>
+
+        {/* 
+          * Watch Page
+          * Go to Iframe
+          */}
+        <Route path="/watch/:genreId/:trackId" element={<Watch/>}/>
 
         {/* For Mobile */}
         <Route path="/search" element={<SearchMobile/>}/>

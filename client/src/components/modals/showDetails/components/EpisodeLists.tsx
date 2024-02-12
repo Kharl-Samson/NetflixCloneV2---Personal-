@@ -9,7 +9,7 @@ import { handleImageError } from "../../../../types/errorTypes"
 import { styled } from "@mui/material/styles"
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip"
 import add from "../../../../assets/images/icons/add.png"
-import { useRouteAndQueryParams } from "../../../../utils/itemsFunction"
+import { useClickHandlers, useRouteAndQueryParams } from "../../../../utils/itemsFunction"
 
 const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -183,7 +183,9 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
       )
     }, [collectionData, similarShowsData, trendingShowsData]) 
   
-
+    // Items Functions Util
+    const { navigateToWatch } = useClickHandlers()
+    
   return (
     <div className="relative mt-10 px-11">
 
@@ -267,6 +269,8 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
               name: string,
               runtime: number,
               overview: string
+              show_id: number
+              season_number: number
             },
             index : number
           ) => (
@@ -275,6 +279,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
               className="rounded w-full py-7 border-b border-[#424242] flex items-center gap-x-5 cursor-pointer" 
               onMouseOver={() => hoverEpisodeItem(res?.id)}
               onMouseOut={hoverOutEpisodeItem}
+              onClick={() => navigateToWatch("tv", res?.show_id, res?.season_number, res?.episode_number)}
             >
               {/* Episode Number */}
               <p className="text-[#d2d2d2] text-2xl w-[3.4rem] min-w-[3.4rem] text-right">{index + 1}</p>
@@ -354,6 +359,9 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
                 last_air_date?: string,
                 first_air_date?: string,
                 overview: string
+                season_number?: number
+                episode_number?: number
+                number_of_seasons?: number
               },
               index : number
             ) => (
@@ -362,6 +370,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
                 className="rounded pb-6 bg-[#2f2f2f] cursor-pointer overflow-hidden"
                 onMouseOver={() => hoverEpisodeItemCollection(res?.id)}
                 onMouseOut={hoverOutEpisodeItemCollection}
+                onClick={() => navigateToWatch(res?.number_of_seasons ? "tv" : "movie", res?.id, res?.season_number, res?.episode_number)}
               >
                 {/* Poster */}
                 <LazyLoadImage
@@ -442,7 +451,10 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
               release_date?: string,
               last_air_date?: string,
               first_air_date?: string,
-              overview: string
+              overview: string,
+              media_type?: string
+              season_number?: number
+              episode_number?: number
             },
             index : number
           ) => (
@@ -451,6 +463,7 @@ export const EpisodeLists = ({castsData, showDetailsData, age} : EpisodeListsPro
               className="rounded pb-6 bg-[#2f2f2f] cursor-pointer overflow-hidden"
               onMouseOver={() => hoverEpisodeItemLikeThis(res?.id)}
               onMouseOut={hoverOutEpisodeItemLikeThis}
+              onClick={() => navigateToWatch(res?.media_type ? res?.media_type : "movie", res?.id, res?.season_number, res?.episode_number)}
             >
               {/* Poster */}
               <LazyLoadImage

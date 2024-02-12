@@ -1,6 +1,6 @@
 import play from "../../../../assets/images/icons/play.png"
 import add from "../../../../assets/images/icons/add.png"
-import { toggleVideoSoundModal } from "../../../../utils/itemsFunction"
+import { toggleVideoSoundModal, useClickHandlers } from "../../../../utils/itemsFunction"
 import { styled } from "@mui/material/styles"
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip"
 import { useAppStore } from "../../../../store/ZustandStore"
@@ -21,18 +21,23 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
 
 type BannerDataProps = {
   showDetailsData : {
+    id : number
     title? : string
     name? : string
     original_title? : string
     networks : {
       name : string
     }[]
+    number_of_seasons? : number
   }
 }
 
 export const BannerData = ({showDetailsData} : BannerDataProps) => {
     // React Youtube State
     const { showVideoModal, isMutedModal, videoEndedModal } = useAppStore()
+
+    // Items Functions Util
+    const { navigateToWatch } = useClickHandlers()
 
   return (
     <div 
@@ -60,7 +65,10 @@ export const BannerData = ({showDetailsData} : BannerDataProps) => {
       <div className="mt-8 flex justify-between gap-x-[15px] ">
         {/* Play and Add */}
         <div className="flex items-center gap-x-[15px]">
-          <button className="rounded flex items-center gap-x-[15px] py-[5px] px-[45px] transition duration-400 bg-white hover:opacity-80">
+          <button 
+            className="rounded flex items-center gap-x-[15px] py-[5px] px-[45px] transition duration-400 bg-white hover:opacity-80"
+            onClick={() => navigateToWatch(showDetailsData?.number_of_seasons ? "tv" : "movie", showDetailsData?.id)}
+          >
             <img src={play} alt="Play Icon" className="h-[25px]"/>
             <span className="text-[1.3em] font-semibold">Play</span>
           </button>

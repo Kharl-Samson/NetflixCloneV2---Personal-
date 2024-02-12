@@ -21,9 +21,10 @@ type HeroProps = {
   isDataLoading : boolean
   marginStyle : string
   category : string
+  trackId : number
 }
 
-export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer, isDataLoading, marginStyle, category} : HeroProps ) => {
+export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer, isDataLoading, marginStyle, category, trackId} : HeroProps ) => {
     // Navigate
     const navigate = useNavigate()
 
@@ -76,7 +77,7 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer, isD
     }, [currentSection])
 
     // Items Functions Util
-    const { handleClickModal } = useClickHandlers()
+    const { handleClickModal, navigateToWatch } = useClickHandlers()
 
     // Trigger search page based on screen size
     useEffect(() => {
@@ -139,7 +140,10 @@ export const HeroComponentNormal = ( {myData, trailerData, isFetchedTrailer, isD
           </p>
 
           <div className="mt-10 mb-[16rem] flex gap-x-[15px]">
-            <button className="rounded-md flex items-center gap-x-[15px] font-netflix_regular py-[11px] px-[35px] transition duration-400 bg-white hover:opacity-80">
+            <button 
+              className="rounded-md flex items-center gap-x-[15px] font-netflix_regular py-[11px] px-[35px] transition duration-400 bg-white hover:opacity-80"
+              onClick={() => navigateToWatch(category, trackId)}
+            >
               <img src={play} alt="Play Icon" className="h-[27px]"/>
               <span className="text-[1.4rem] font-semibold">Play</span>
             </button>

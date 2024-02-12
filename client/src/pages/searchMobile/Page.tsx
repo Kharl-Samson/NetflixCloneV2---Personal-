@@ -178,7 +178,7 @@ export const Page = () => {
                       key={index}
                       alt="Show Image"
                       src={`${res?.poster_path && import.meta.env.VITE_BASE_IMAGE_URL}${res?.poster_path}`} 
-                      className="showSkeleton w-full rounded"
+                      className={`showSkeleton w-full rounded min-h-[11.81rem]`}
                       onError={handleImageError}
                       onClick={() => navigate(`/browse/${res?.media_type}?q=${res?.id}`)}
                     />

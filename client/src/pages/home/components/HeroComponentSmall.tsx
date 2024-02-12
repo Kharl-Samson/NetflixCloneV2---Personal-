@@ -49,7 +49,9 @@ export const HeroComponentSmall = ( {myData, category, colorBg} : HeroProps ) =>
 
         {/* Buttons */}
         <div className="flex justify-center gap-x-3 mb-5">
-          <button className="w-full py-2 rounded flex items-center justify-center gap-x-2 bg-white text-sm active:opacity-80">
+          <button 
+            className="w-full py-2 rounded flex items-center justify-center gap-x-2 bg-white text-sm active:opacity-80"
+          >
             <img src={play} alt="Play Image" className="h-4"/>
             Play
           </button>

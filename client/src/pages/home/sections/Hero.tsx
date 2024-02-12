@@ -20,7 +20,7 @@ export const Hero = () => {
     ]
 
     const categoryArray : string[] = [
-      "movie", // Suits
+      "movie", // After Ever Happy
       "tv",    // Blacklist
       "tv",    // Brooklyn Nine-Nine
       "tv",    // Lupin
@@ -126,6 +126,7 @@ export const Hero = () => {
           screenWidth <= 950 ? "mx-7" : "mx-14"
         }
         category = {categoryArray[randomNumber]}
+        trackId = {showArray[randomNumber]}
       />
 
       {/* For shadowing */

@@ -248,7 +248,34 @@ export const useClickHandlers = () => {
       (searchParams !== "1" && currentSection !== "categorySection") && setPause(false);
     }
   
-    return { handleClickModal, handleCloseModalOut }
+    // Navigate in watch page
+    const navigateToWatch = (category: string, trackId: number, seasonId?: number, episodeId?: number) => {
+      // Zustand States
+      const { 
+        setShowVideoItems, setIsMutedItems, setPause, setTriggerAnimItems, setShowVideoModal, 
+        setTrailerData, setVideoId, setShowDetails, setShowVideo, currentSection
+      } = useAppStore.getState()
+
+      // Get search value params
+      const urlParams = new URLSearchParams(window.location.search)
+      const searchParams = urlParams.get("search")
+
+      navigate(`/watch/${category}/${trackId}${category === "tv" ? `?season=${seasonId ? seasonId : "1"}&episode=${episodeId ? `${episodeId}` : "1"}` : ""}`)
+
+      setShowDetails("")
+      setShowVideoModal(false)
+      searchParams !== "1" && setShowVideo(true)
+      setTriggerAnimItems(false)
+
+      setShowVideoItems(false)
+      setTrailerData("")
+      setVideoId("")
+      setIsMutedItems(true);
+
+      (searchParams !== "1" && currentSection !== "categorySection") && setPause(false);
+    }
+
+    return { handleClickModal, handleCloseModalOut, navigateToWatch }
 }
 
 /*

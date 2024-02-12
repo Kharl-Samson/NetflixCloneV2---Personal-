@@ -11,9 +11,6 @@ export const YoutubePlayer = ({ id, videoId, duration, isFetchedTrailer } : Yout
     // React Youtube State
     const { setShowVideo, isMuted, playAgain, pause, currentSection } = useAppStore()
 
-    // Video Valid State
-    const [videoValid, setVideoValid] = useState<boolean>(false)
-
     // Get search value params
     const urlParams = new URLSearchParams(window.location.search)
     const searchParams = urlParams.get("search")
@@ -24,13 +21,11 @@ export const YoutubePlayer = ({ id, videoId, duration, isFetchedTrailer } : Yout
       setVideo(() => event.target)
 
       if(searchParams !== "1" && isFetchedTrailer && videoId && event.target.getVideoData().video_id && event.target.getVideoData().isPlayable) {
-        setVideoValid(true)
         const timeOut = setTimeout(() => setShowVideo(true), duration)
         return () => clearTimeout(timeOut)
       }
       else{
         searchParams !== "1" && setShowVideo(false)
-        setVideoValid(false)
       }
     }
 

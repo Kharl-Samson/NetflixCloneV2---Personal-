@@ -46,9 +46,9 @@ export const Page = () => {
 	const [url, setUrl] = useState<string>("")
 	useEffect(() => {
 		genreId === "tv" ? 
-      setUrl(`https://vidsrc.to/embed/tv/${trackId}/${seasonParams}/${episodeParams}`) 
+      setUrl(`https://vidsrc.cc/v2/embed/tv/${trackId}/${seasonParams}/${episodeParams}`) 
     : 
-      setUrl(`https://vidsrc.to/embed/movie/${trackId}`)
+      setUrl(`https://vidsrc.cc/v2/embed/movie/${trackId}`)
 	},[genreId, trackId])
 
   // Go back

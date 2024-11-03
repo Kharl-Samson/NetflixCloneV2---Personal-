@@ -15,8 +15,12 @@ export const Hero = () => {
       46952,  // Blacklist
       48891,  // Brooklyn Nine-Nine
       96677,  // Lupin
-      146176, // Berlin
+      262955, // Starting 5
       385687, // Fast X
+      99048,  // Startup
+      980489, // Gran Turismo
+      81356,  // Sex Education
+      79525   // The Last Dance
     ]
 
     const categoryArray : string[] = [
@@ -24,8 +28,12 @@ export const Hero = () => {
       "tv",    // Blacklist
       "tv",    // Brooklyn Nine-Nine
       "tv",    // Lupin
-      "tv",    // Berlin
+      "tv",    // Starting 5
       "movie", // Fast X
+      "tv",    // Startup
+      "movie", // Gran Turismo
+      "tv",    // Sex Education
+      "tv"     // The Last Dance
     ]
 
     const colorsArray : string[] = ["#7A1E9A", "#153A70", "#2C3D2E", "#BF742E", "#37B19B", "#BF2E2E", "#636011", "#470A2B", "#03472F", "#053477"]
